@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Optometry Pocket Guide — EssilorLuxottica</title>
+<title>OD Mini Guide</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -17,7 +17,7 @@
     --red-bg: #FCEBEB; --red-text: #791F1F;
     --teal-bg: #E1F5EE; --teal-text: #085041;
     --gray-bg: #F1EFE8; --gray-text: #444441;
-    --el-blue: #003B71; --el-red: #C8102E;
+    --accent: #185FA5;
     --radius: 8px; --radius-lg: 12px;
   }
   @media (prefers-color-scheme: dark) {
@@ -31,7 +31,7 @@
       --red-bg: #2a0a0a; --red-text: #f09090;
       --teal-bg: #052a1c; --teal-text: #55cfa0;
       --gray-bg: #2a2a27; --gray-text: #b0b0aa;
-      --el-blue: #4a8fd4; --el-red: #e04060;
+      --accent: #5ba3e8;
     }
   }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: var(--bg3); color: var(--text); font-size: 15px; line-height: 1.6; min-height: 100vh; }
@@ -41,25 +41,19 @@
   .header { padding: 1.25rem 0 1rem; border-bottom: 0.5px solid var(--border); margin-bottom: 1.25rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; }
   .header-left h1 { font-size: 20px; font-weight: 600; letter-spacing: -0.3px; }
   .header-left p { font-size: 12.5px; color: var(--text2); margin-top: 2px; }
-  .el-brand { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
-  .el-wordmark { display: flex; align-items: center; font-size: 18px; font-weight: 700; letter-spacing: -0.5px; line-height: 1; }
-  .el-essilor { color: var(--el-blue); }
-  .el-sep { color: var(--text3); font-weight: 300; margin: 0 2px; }
-  .el-luxottica { color: var(--el-red); }
-  .el-tagline { font-size: 10px; color: var(--text3); letter-spacing: 0.05em; text-transform: uppercase; }
 
   /* NAV */
   .nav { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.25rem; position: sticky; top: 0; background: var(--bg3); padding: 0.75rem 0; z-index: 10; border-bottom: 0.5px solid var(--border); }
   .nav-btn { font-size: 13px; padding: 6px 14px; border-radius: var(--radius); border: 0.5px solid var(--border2); background: var(--bg); color: var(--text2); cursor: pointer; transition: all 0.15s; white-space: nowrap; font-family: inherit; }
   .nav-btn:hover { background: var(--bg2); color: var(--text); }
-  .nav-btn.active { background: var(--el-blue); border-color: var(--el-blue); color: #fff; }
+  .nav-btn.active { background: var(--blue); border-color: var(--blue); color: #fff; }
 
   .section { display: none; }
   .section.active { display: block; }
 
   /* SEARCH */
   .search-bar { width: 100%; padding: 9px 14px; font-size: 14px; border: 0.5px solid var(--border2); border-radius: var(--radius); background: var(--bg); color: var(--text); margin-bottom: 1rem; font-family: inherit; }
-  .search-bar:focus { outline: none; border-color: var(--el-blue); box-shadow: 0 0 0 3px rgba(0,59,113,0.1); }
+  .search-bar:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(24,95,165,0.1); }
   .search-bar::placeholder { color: var(--text3); }
 
   /* CARDS */
@@ -75,7 +69,7 @@
   .tag-green { background: var(--green-bg); color: var(--green-text); }
   .tag-gray { background: var(--gray-bg); color: var(--gray-text); }
   .tag-teal { background: var(--teal-bg); color: var(--teal-text); }
-  .tag-el { background: var(--el-blue); color: #fff; }
+  .tag-el { background: var(--blue); color: #fff; }
   .chevron { font-size: 14px; color: var(--text3); transition: transform 0.2s; line-height: 1; margin-top: 1px; flex-shrink: 0; }
   .chevron.open { transform: rotate(180deg); }
   .price-inline { font-size: 11px; color: var(--blue-text); background: var(--blue-bg); padding: 2px 8px; border-radius: 99px; font-weight: 500; white-space: nowrap; }
@@ -92,11 +86,11 @@
   .box-warn { background: var(--amber-bg); border-left: 3px solid var(--amber-border); color: var(--amber-text); }
   .box-info { background: var(--blue-bg); border-left: 3px solid var(--blue); color: var(--blue-text); }
   .box-tip { background: var(--green-bg); border-left: 3px solid var(--green-border); color: var(--green-text); }
-  .box-el { background: var(--blue-bg); border-left: 3px solid var(--el-blue); color: var(--blue-text); }
+  .box-el { background: var(--blue-bg); border-left: 3px solid var(--blue); color: var(--blue-text); }
 
   /* FEATURED CARD */
-  .card-featured { background: var(--bg); border: 2px solid var(--el-blue); border-radius: var(--radius-lg); padding: 1rem 1.25rem; margin-bottom: 0.6rem; position: relative; }
-  .featured-badge { position: absolute; top: -1px; right: 14px; background: var(--el-blue); color: #fff; font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; padding: 3px 10px; border-radius: 0 0 var(--radius) var(--radius); }
+  .card-featured { background: var(--bg); border: 2px solid var(--blue); border-radius: var(--radius-lg); padding: 1rem 1.25rem; margin-bottom: 0.6rem; position: relative; }
+  .featured-badge { position: absolute; top: -1px; right: 14px; background: var(--blue); color: #fff; font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; padding: 3px 10px; border-radius: 0 0 var(--radius) var(--radius); }
 
   /* CL PRICING */
   .section-title { font-size: 15px; font-weight: 500; margin: 1.25rem 0 0.6rem; }
@@ -106,7 +100,7 @@
   .price-table td { padding: 9px 14px; border-bottom: 0.5px solid var(--border); vertical-align: middle; }
   .price-table tr:last-child td { border-bottom: none; }
   .price-table tr:hover td { background: var(--bg2); }
-  .price-val { font-weight: 500; color: var(--el-blue); font-variant-numeric: tabular-nums; }
+  .price-val { font-weight: 500; color: var(--blue); font-variant-numeric: tabular-nums; }
   .price-note { font-size: 12px; color: var(--text2); }
   .updated { font-size: 11px; color: var(--text3); margin-top: 0.5rem; text-align: right; }
 
@@ -121,7 +115,6 @@
     .nav-btn { font-size: 12px; padding: 5px 10px; }
     .price-table th:nth-child(3), .price-table td:nth-child(3) { display: none; }
     .header { flex-direction: column; align-items: flex-start; }
-    .el-brand { align-items: flex-start; }
   }
 </style>
 </head>
@@ -130,15 +123,10 @@
 
   <div class="header">
     <div class="header-left">
-      <h1>Optometry Pocket Guide</h1>
+      <h1>OD Mini Guide</h1>
       <p>Clinical reference for optometric practitioners</p>
     </div>
-    <div class="el-brand">
-      <div class="el-wordmark">
-        <span class="el-essilor">Essilor</span><span class="el-sep">|</span><span class="el-luxottica">Luxottica</span>
-      </div>
-      <div class="el-tagline">See more. Be more.</div>
-    </div>
+
   </div>
 
   <div class="nav">
@@ -594,13 +582,12 @@
     <div id="myopia-list">
 
       <div class="card-featured">
-        <div class="featured-badge">EssilorLuxottica — Featured</div>
         <div class="card-header" onclick="toggle(this)" style="padding-top:10px;">
           <div>
-            <div class="card-title" style="font-size:16px;">Essilor Stellest® lenses</div>
+            <div class="card-title" style="font-size:16px;">Stellest® lenses (Essilor)</div>
             <div class="card-subtitle">Highest-efficacy spectacle lens for myopia control</div>
           </div>
-          <div class="card-meta"><span class="tag tag-el">H.A.L.T. Technology</span><span class="chevron">▾</span></div>
+          <div class="card-meta"><span class="tag tag-teal">H.A.L.T. Technology</span><span class="chevron">▾</span></div>
         </div>
         <div class="card-body">
           <table>
@@ -609,9 +596,9 @@
             <tr><td>Ideal candidate</td><td>Myopic children 6–16 years; works from day one; no adaptation period</td></tr>
             <tr><td>Wearing schedule</td><td>Full-time daily wear ≥12 hrs/day — higher efficacy with more hours worn</td></tr>
             <tr><td>Rx range</td><td>Sphere –0.75 to –10.00 D; cylinder up to –4.00 D</td></tr>
-            <tr><td>Availability</td><td>Through EssilorLuxottica wholesale network; lab-processed lens</td></tr>
+            <tr><td>Availability</td><td>Lab-processed lens; available through major optical wholesale distributors</td></tr>
           </table>
-          <div class="box box-el">Stellest demonstrated <strong>67% slowing</strong> of myopia progression in children wearing lenses ≥12 hrs/day — the highest published efficacy of any spectacle lens option. Ideal first choice for children not ready for contact lenses.</div>
+          <div class="box box-tip">Stellest demonstrated <strong>67% slowing</strong> of myopia progression in children wearing lenses ≥12 hrs/day — the highest published efficacy of any spectacle lens option. Ideal first choice for children not ready for contact lenses.</div>
         </div>
       </div>
 
@@ -677,7 +664,7 @@
             <tr><td>PALs</td><td>~25–35% reduction; best in esophoric children with high AC/A</td></tr>
             <tr><td>Executive bifocal</td><td>+2.00 add; greater effect in esophoric children</td></tr>
           </table>
-          <div class="box box-el">For highest spectacle efficacy, prescribe <strong>Essilor Stellest</strong> — see featured card above.</div>
+          <div class="box box-tip">For highest spectacle efficacy, consider <strong>Stellest</strong> — see featured card above.</div>
         </div>
       </div>
 
@@ -701,7 +688,7 @@
 
   <!-- CONTACT LENS PRICING -->
   <div id="tab-lenses" class="section">
-    <p style="font-size:13px;color:var(--text2);margin-bottom:1rem;">Approximate retail pricing as of April 2026. Verify with your EssilorLuxottica distributor or practice account for current wholesale pricing.</p>
+    <p style="font-size:13px;color:var(--text2);margin-bottom:1rem;">Approximate retail pricing as of April 2026. Verify with your distributor or practice account for current wholesale pricing.</p>
 
     <div class="section-title">Daily disposables</div>
     <div class="price-card">
@@ -765,7 +752,7 @@
     <div class="icd-container" id="icd-list"></div>
   </div>
 
-  <p class="disclaimer">⚕ This guide is a clinical reference tool only. Always verify drug dosages with current prescribing information, confirm ICD-10 codes with your billing department, and apply clinical judgment to individual patient cases. Drug prices are approximate retail/GoodRx figures as of April 2026 and subject to change. Provided for educational purposes by EssilorLuxottica.</p>
+  <p class="disclaimer">⚕ This guide is a clinical reference tool only. Always verify drug dosages with current prescribing information, confirm ICD-10 codes with your billing department, and apply clinical judgment to individual patient cases. Drug prices are approximate retail/GoodRx figures as of April 2026 and subject to change. For clinical reference use only.</p>
 
 </div>
 
