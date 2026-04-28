@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Optometry Pocket Guide — EssilorLuxottica</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #ffffff; --bg2: #f7f7f5; --bg3: #f2f1ec;
+    --text: #1a1a18; --text2: #6b6b67; --text3: #9b9b96;
+    --border: rgba(0,0,0,0.09); --border2: rgba(0,0,0,0.16);
+    --blue: #185FA5; --blue-bg: #E6F1FB; --blue-text: #0C447C;
+    --amber-bg: #FAEEDA; --amber-text: #633806; --amber-border: #BA7517;
+    --green-bg: #EAF3DE; --green-text: #27500A; --green-border: #3B6D11;
+    --red-bg: #FCEBEB; --red-text: #791F1F;
+    --teal-bg: #E1F5EE; --teal-text: #085041;
+    --gray-bg: #F1EFE8; --gray-text: #444441;
+    --el-blue: #003B71; --el-red: #C8102E;
+    --radius: 8px; --radius-lg: 12px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1c1a; --bg2: #252523; --bg3: #2e2e2b;
+      --text: #f0efe9; --text2: #a0a09a; --text3: #6b6b65;
+      --border: rgba(255,255,255,0.09); --border2: rgba(255,255,255,0.16);
+      --blue: #5ba3e8; --blue-bg: #0c2a44; --blue-text: #8dc4f5;
+      --amber-bg: #2e2000; --amber-text: #f5c97a; --amber-border: #c88a1a;
+      --green-bg: #0f2200; --green-text: #8fcf55; --green-border: #4a8c1a;
+      --red-bg: #2a0a0a; --red-text: #f09090;
+      --teal-bg: #052a1c; --teal-text: #55cfa0;
+      --gray-bg: #2a2a27; --gray-text: #b0b0aa;
+      --el-blue: #4a8fd4; --el-red: #e04060;
+    }
+  }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: var(--bg3); color: var(--text); font-size: 15px; line-height: 1.6; min-height: 100vh; }
+  .app { max-width: 960px; margin: 0 auto; padding: 0 1rem 3rem; }
+
+  /* HEADER */
+  .header { padding: 1.25rem 0 1rem; border-bottom: 0.5px solid var(--border); margin-bottom: 1.25rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; }
+  .header-left h1 { font-size: 20px; font-weight: 600; letter-spacing: -0.3px; }
+  .header-left p { font-size: 12.5px; color: var(--text2); margin-top: 2px; }
+  .el-brand { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
+  .el-wordmark { display: flex; align-items: center; font-size: 18px; font-weight: 700; letter-spacing: -0.5px; line-height: 1; }
+  .el-essilor { color: var(--el-blue); }
+  .el-sep { color: var(--text3); font-weight: 300; margin: 0 2px; }
+  .el-luxottica { color: var(--el-red); }
+  .el-tagline { font-size: 10px; color: var(--text3); letter-spacing: 0.05em; text-transform: uppercase; }
+
+  /* NAV */
+  .nav { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.25rem; position: sticky; top: 0; background: var(--bg3); padding: 0.75rem 0; z-index: 10; border-bottom: 0.5px solid var(--border); }
+  .nav-btn { font-size: 13px; padding: 6px 14px; border-radius: var(--radius); border: 0.5px solid var(--border2); background: var(--bg); color: var(--text2); cursor: pointer; transition: all 0.15s; white-space: nowrap; font-family: inherit; }
+  .nav-btn:hover { background: var(--bg2); color: var(--text); }
+  .nav-btn.active { background: var(--el-blue); border-color: var(--el-blue); color: #fff; }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* SEARCH */
+  .search-bar { width: 100%; padding: 9px 14px; font-size: 14px; border: 0.5px solid var(--border2); border-radius: var(--radius); background: var(--bg); color: var(--text); margin-bottom: 1rem; font-family: inherit; }
+  .search-bar:focus { outline: none; border-color: var(--el-blue); box-shadow: 0 0 0 3px rgba(0,59,113,0.1); }
+  .search-bar::placeholder { color: var(--text3); }
+
+  /* CARDS */
+  .card { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1rem 1.25rem; margin-bottom: 0.6rem; }
+  .card-header { display: flex; justify-content: space-between; align-items: flex-start; cursor: pointer; user-select: none; }
+  .card-title { font-size: 15px; font-weight: 500; }
+  .card-subtitle { font-size: 12px; color: var(--text2); margin-top: 2px; }
+  .card-meta { display: flex; align-items: center; gap: 8px; flex-shrink: 0; margin-left: 10px; flex-wrap: wrap; justify-content: flex-end; }
+  .tag { font-size: 11px; padding: 3px 9px; border-radius: 99px; white-space: nowrap; font-weight: 500; }
+  .tag-blue { background: var(--blue-bg); color: var(--blue-text); }
+  .tag-amber { background: var(--amber-bg); color: var(--amber-text); }
+  .tag-red { background: var(--red-bg); color: var(--red-text); }
+  .tag-green { background: var(--green-bg); color: var(--green-text); }
+  .tag-gray { background: var(--gray-bg); color: var(--gray-text); }
+  .tag-teal { background: var(--teal-bg); color: var(--teal-text); }
+  .tag-el { background: var(--el-blue); color: #fff; }
+  .chevron { font-size: 14px; color: var(--text3); transition: transform 0.2s; line-height: 1; margin-top: 1px; flex-shrink: 0; }
+  .chevron.open { transform: rotate(180deg); }
+  .price-inline { font-size: 11px; color: var(--blue-text); background: var(--blue-bg); padding: 2px 8px; border-radius: 99px; font-weight: 500; white-space: nowrap; }
+  .card-body { margin-top: 0.85rem; padding-top: 0.85rem; border-top: 0.5px solid var(--border); display: none; font-size: 13.5px; }
+  .card-body.open { display: block; }
+  .card-body table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .card-body td { padding: 5px 0; vertical-align: top; }
+  .card-body td:first-child { color: var(--text2); width: 145px; padding-right: 12px; }
+  .card-body ul { padding-left: 1.3rem; }
+  .card-body li { padding: 2px 0; line-height: 1.55; }
+  .card-body p { margin-bottom: 7px; }
+  .card-body strong { font-weight: 500; }
+  .box { border-radius: 0 var(--radius) var(--radius) 0; padding: 9px 13px; font-size: 12.5px; margin-top: 10px; line-height: 1.55; }
+  .box-warn { background: var(--amber-bg); border-left: 3px solid var(--amber-border); color: var(--amber-text); }
+  .box-info { background: var(--blue-bg); border-left: 3px solid var(--blue); color: var(--blue-text); }
+  .box-tip { background: var(--green-bg); border-left: 3px solid var(--green-border); color: var(--green-text); }
+  .box-el { background: var(--blue-bg); border-left: 3px solid var(--el-blue); color: var(--blue-text); }
+
+  /* FEATURED CARD */
+  .card-featured { background: var(--bg); border: 2px solid var(--el-blue); border-radius: var(--radius-lg); padding: 1rem 1.25rem; margin-bottom: 0.6rem; position: relative; }
+  .featured-badge { position: absolute; top: -1px; right: 14px; background: var(--el-blue); color: #fff; font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; padding: 3px 10px; border-radius: 0 0 var(--radius) var(--radius); }
+
+  /* CL PRICING */
+  .section-title { font-size: 15px; font-weight: 500; margin: 1.25rem 0 0.6rem; }
+  .price-card { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 1.25rem; }
+  .price-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .price-table th { text-align: left; font-weight: 500; font-size: 11.5px; color: var(--text2); padding: 9px 14px; border-bottom: 0.5px solid var(--border); background: var(--bg2); text-transform: uppercase; letter-spacing: 0.03em; }
+  .price-table td { padding: 9px 14px; border-bottom: 0.5px solid var(--border); vertical-align: middle; }
+  .price-table tr:last-child td { border-bottom: none; }
+  .price-table tr:hover td { background: var(--bg2); }
+  .price-val { font-weight: 500; color: var(--el-blue); font-variant-numeric: tabular-nums; }
+  .price-note { font-size: 12px; color: var(--text2); }
+  .updated { font-size: 11px; color: var(--text3); margin-top: 0.5rem; text-align: right; }
+
+  /* ICD */
+  .icd-row { display: flex; align-items: center; padding: 8px 0; border-bottom: 0.5px solid var(--border); font-size: 13px; }
+  .icd-row:last-child { border-bottom: none; }
+  .icd-code { font-family: 'SF Mono','Fira Code',monospace; font-size: 11.5px; background: var(--bg2); padding: 2px 8px; border-radius: var(--radius); margin-right: 14px; min-width: 74px; text-align: center; color: var(--text2); flex-shrink: 0; }
+  .icd-container { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 0.25rem 1.25rem; }
+  .disclaimer { font-size: 11.5px; color: var(--text3); margin-top: 2rem; padding-top: 1rem; border-top: 0.5px solid var(--border); line-height: 1.6; }
+
+  @media (max-width: 600px) {
+    .nav-btn { font-size: 12px; padding: 5px 10px; }
+    .price-table th:nth-child(3), .price-table td:nth-child(3) { display: none; }
+    .header { flex-direction: column; align-items: flex-start; }
+    .el-brand { align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="header">
+    <div class="header-left">
+      <h1>Optometry Pocket Guide</h1>
+      <p>Clinical reference for optometric practitioners</p>
+    </div>
+    <div class="el-brand">
+      <div class="el-wordmark">
+        <span class="el-essilor">Essilor</span><span class="el-sep">|</span><span class="el-luxottica">Luxottica</span>
+      </div>
+      <div class="el-tagline">See more. Be more.</div>
+    </div>
+  </div>
+
+  <div class="nav">
+    <button class="nav-btn active" onclick="switchTab('drugs',this)">Drugs &amp; dosing</button>
+    <button class="nav-btn" onclick="switchTab('eval',this)">Clinical evaluation</button>
+    <button class="nav-btn" onclick="switchTab('myopia',this)">Myopia control</button>
+    <button class="nav-btn" onclick="switchTab('lenses',this)">Contact lens pricing</button>
+    <button class="nav-btn" onclick="switchTab('icd',this)">ICD-10 codes</button>
+  </div>
+
+  <!-- DRUGS -->
+  <div id="tab-drugs" class="section active">
+    <input class="search-bar" placeholder="Search drugs, class, indication, or price..." oninput="filterCards('drugs-list',this.value)" />
+    <div id="drugs-list">
+
+      <div class="card" data-s="erythromycin emycin ointment macrolide antibiotic newborn neonatal blepharitis shortage">
+        <div class="card-header" onclick="toggle(this)">
+          <div><div class="card-title">Erythromycin 0.5% ophthalmic ointment</div><div class="card-subtitle">Macrolide antibiotic ointment (E-Mycin)</div></div>
+          <div class="card-meta"><span class="tag tag-green">Antibiotic</span><span class="price-inline">~$12–20</span><span class="chevron">▾</span></div>
+        </div>
+        <div class="card-body">
+          <table>
+            <tr><td>Bacterial conjunctivitis</td><td>1 cm ribbon in affected eye(s) up to 6×/day × 5–7 days</td></tr>
+            <tr><td>Blepharitis</td><td>Apply to lid margins BID–TID</td></tr>
+            <tr><td>Neonatal prophylaxis</td><td>1 cm ribbon in both eyes once at birth</td></tr>
+            <tr><td>Retail price</td><td>~$12–20 / 3.5 g tube (generic; GoodRx ~$11.79)</td></tr>
+          </table>
+          <div class="box box-warn">⚠ Ongoing shortage since 2022. Consider AzaSite or moxifloxacin as alternatives when unavailable. CDC and AAO recommend AzaSite as erythromycin substitute.</div>
+        </div>
+      </div>
+
+      <div class="card" data-s="azasite azithromycin macrolide antibiotic conjunctivitis blepharitis shortage specialty pharmacy">
+        <div class="card-header" onclick="toggle(this)">
+          <div><div class="card-title">Azithromycin 1% (AzaSite)</div><div class="card-subtitle">Macrolide drops — erythromycin alternative</div></div>
+          <div class="card-meta"><span class="tag tag-green">Antibiotic</span><span class="price-inline">~$60 via EyeRx / ~$205+ retail</span><span class="chevron">▾</span></div>
+        </div>
+        <div class="card-body">
+          <table>
+            <tr><td>Bacterial conjunctivitis</td><td>1 drop BID × 2 days, then QD × 5 days</td></tr>
+            <tr><td>Blepharitis</td><td>1 drop BID × 2 days, then QD</td></tr>
+            <tr><td>Min age</td><td>≥1 year</td></tr>
+            <tr><td>Retail price</td><td>~$205–260 / 2.5 mL (no generic); EyeRx Direct program ~$60; GoodRx ~$205</td></tr>
+          </table>
+          <div class="box box-warn">⚠ In shortage (2026). Distributed exclusively through EyeRx Direct specialty pharmacy (azasite.com) — not available at most retail pharmacies. No FDA-approved generic.</div>
+        </div>
+      </div>
+
+      <div class="card" data-s="tobramycin tobrex aminoglycoside antibiotic keratitis conjunctivitis pseudomonas">
+        <div class="card-header" onclick="toggle(this)">
+          <div><div class="card-title">Tobramycin 0.3% (Tobrex)</div><div class="card-subtitle">Aminoglycoside antibiotic</div></div>
+          <div class="card-meta"><span class="tag tag-green">Antibiotic</span><span class="price-inline">~$25–55</span><span class="chevron">▾</span></div>
+        </div>
+        <div class="card-body">
+          <table>
+            <tr><td>Mild–moderate infection</td><td>1–2 drops Q4H; or ointment 2–3×/day</td></tr>
+            <tr><td>Severe infection</td><td>1–2 drops Q1H until improved, then taper</td></tr>
+            <tr><td>Forms</td><td>0.3% solution (5 mL) and 0.3% ointment (3.5 g)</td></tr>
+            <tr><td>Retail price</td><td>~$25–55 / 5 mL drops (generic); ointment ~$30–60</td></tr>
+          </table>
+          <div class="box box-tip">Good gram-negative coverage including Pseudomonas. Preferred for CL-related keratitis alongside fluoroquinolones.</div>
+        </div>
+      </div>
+
+      <div class="card" data-s="tobradex tobramycin dexamethasone steroid antibiotic combination post-op inflammation">
+        <div class="card-header" onclick="toggle(this)">
+          <div><div class="card-title">Tobramycin / Dexamethasone (Tobradex)</div><div class="card-subtitle">Antibiotic + steroid combination</div></div>
+          <div class="card-meta"><span class="tag tag-red">Steroid + Abx</span><span class="price-inline">Brand ~$214 | Generic ~$30</span><span class="chevron">▾</span></div>
+        </div>
+        <div class="card-body">
+          <table>
+            <tr><td>Infection + inflammation</td><td>1–2 drops Q4–6H; or ointment TID–QID</td></tr>
+            <tr><td>Post-op (mild)</td><td>QID × 1–2 weeks</td></tr>
+            <tr><td>Tobradex ST</td><td>0.05%/0.1% suspension — lower tobramycin concentration; brand ~$149–309</td></tr>
+            <tr><td>Retail price</td><td>Brand drops ~$214/5 mL; brand ointment ~$361–395/3.5 g; generic (tobramycin-dexa) ~$28–30 with GoodRx</td></tr>
+          </table>
+          <div class="box box-warn">⚠ Monitor IOP — steroid-response glaucoma risk. Avoid in viral keratitis. Generic suspension available; ointment is brand-only.</div>
+        </div>
+      </div>
+
+      <div class="card" data-s="moxifloxacin vigamox fluoroquinolone antibiotic keratitis conjunctivitis fourth generation">
+        <div class="card-header" onclick="toggle(this)">
+          <div><div class="card-title">Moxifloxacin 0.5% (Vigamox)</div><div class="card-subtitle">4th-generation fluoroquinolone</div></div>
+          <div class="card-meta"><span class="tag tag-green">Fluoroquinolone</span><span class="price-inline">~$20–45</span><span class="chevron">▾</span></div>
+        </div>
+        <div class="card-body">
+          <table>
+            <tr><td>Bacterial conjunctivitis</td><td>TID × 7 days</td></tr>
+            <tr><td>Bacterial keratitis</td><td>Q1H while awake × 2 days → Q2H × 3 days → QID until resolved</td></tr>
+            <tr><td>Post-procedure prophylaxis</td><td>QID × 7 days</td></tr>
+            <tr><td>Retail price</td><td>~$20–45 / 3 mL (generic available; GoodRx ~$18–25)</td></tr>
+          </table>
+          <div class="box box-tip">Preservative-free. Excellent gram-positive and gram-negative coverage including MRSA. First-choice for bacterial keratitis and post-op prophylaxis.</div>
+        </div>
+      </div>
+
+      <div class="card" data-s="ciprofloxacin ciloxan fluoroquinolone antibiotic keratitis conjunctivitis corneal ulcer cheap">
+        <div class="card-header" onclick="toggle(this)">
+          <div><div class="card-title">Ciprofloxacin 0.3% (Ciloxan)</div><div class="card-subtitle">Fluoroquinolone — drops &amp; ointment</div></div>
+          <div class="card-meta"><span class="tag tag-green">Fluoroquinolone</span><span class="price-inline">~$10–20</span><span class="chevron">▾</span></div>
+        </div>
+        <div class="card-body">
+          <table>
+            <tr><td>Bacterial conjunctivitis</td><td>Drops: 1–2 drops Q2H × 2 days, then Q4H × 5 days<br>Ointment: ½ in TID × 2 days, then BID × 5 days</td></tr>
+            <tr><td>Corneal ulcer</td><td>Q15 min × 6H → Q30 min × 18H → Q1H day 3 → Q4H days 4–14</td></tr>
+            <tr><td>Retail price</td><td>~$10–20 / 5 mL drops (GoodRx ~$10.57); ointment ~$30–50</td></tr>
+          </table>
+          <div class="box box-info">Most affordable fluoroquinolone. Corneal white precipitates can occur with intensive dosing — benign, resolve on discontinuation.</div>
+        </div>
+      </div>
+
+      <div class="card" data-s="ofloxacin ocuflox fluoroquinolone antibiotic keratitis conjunctivitis ulcer third generation">
+        <div class="card-header" onclick="toggle(this)">
+          <div><div class="card-title">Ofloxacin 0.3% (Ocuflox)</div><div class="card-subtitle">3rd-generation fluoroquinolone</div></div>
+          <div class="card-meta"><span class="tag tag-green">Fluoroquinolone</span><span class="price-inline">~$15–30</span><span class="chevron">▾</span></div>
+        </div>
+        <div class="card-body">
+          <table>
+            <tr><td>Bacterial conjunctivitis</td><td>1–2 drops Q2–4H × 2 days, then QID × 5 days</td></tr>
+            <tr><td>Corneal ulcer</td><td>Q30 min while awake + Q4–6H at night × 2 days → QH while awake × 5 days → QID</td></tr>
+            <tr><td>Retail price</td><td>~$15–30 / 5 mL (generic)</td></tr>
+          </table>
+          <div class="box box-info">Broader spectrum than ciprofloxacin; slightly less MRSA activity than moxifloxacin. Good cost-efficacy balance.</div>
+        </div>
+      </div>
+
+      <div class="card" data-s="besifloxacin besivance fluoroquinolone antibiotic conjunctivitis resistant mrsa">
+        <div class="card-header" onclick="toggle(this)">
+          <div><div class="card-title">Besifloxacin 0.6% (Besivance)</div><div class="card-subtitle">Ophthalmic-only fluoroquinolone — lower resistance</div></div>
+          <div class="card-meta"><span class="tag tag-green">Fluoroquinolone</span><span class="price-inline">~$150–200</span><span class="chevron">▾</span></div>
+        </div>
+        <div class="card-body">
+          <table>
+            <tr><td>Bacterial conjunctivitis</td><td>1 drop TID (8H apart) × 7 days; shake well</td></tr>
+            <tr><td>Unique advantage</td><td>Not used systemically → lower resistance rates vs. other FQs</td></tr>
+            <tr><td>Retail price</td><td>~$150–200 / 5 mL suspension (brand only)</td></tr>
+          </table>
+          <div class="box box-tip">Reserve for resistant organisms or when MRSA/MRSE is suspected. No generic available.</div>
+        </div>
+      </div>
+
+      <div class="card" data-s="prednisolone pred forte steroid corticosteroid uveitis inflammation anterior">
+        <div class="card-header" onclick="toggle(this)">
+          <div><div class="card-title">Prednisolone acetate 1% (Pred Forte)</div><div class="card-subtitle">Topical corticosteroid</div></div>
+          <div class="card-meta"><span class="tag tag-red">Steroid</span><span class="price-inline">~$15–30</span><span class="chevron">▾</span></div>
+        </div>
+        <div class="card-body">
+          <table>
+            <tr><td>Anterior uveitis</td><td>Q1H while awake (acute) → taper weekly</td></tr>
+            <tr><td>Post-op</td><td>QID × 1 wk → TID × 1 wk → BID × 1 wk → QD × 1 wk</td></tr>
+            <tr><td>Episcleritis</td><td>QID × 5–7 days</td></tr>
+            <tr><td>Retail price</td><td>~$15–30 / 5 mL (generic); brand ~$50–80. Shake well.</td></tr>
+          </table>
+          <div class="box box-warn">⚠ Monitor IOP. Risk of steroid-response glaucoma and PSC cataract with prolonged use. Avoid in HSV keratitis without antiviral cover.</div>
+        </div>
+      </div>
+
+      <div class="card" data-s="loteprednol lotemax alrex steroid retrometabolic safer IOP allergy inflammation">
+        <div class="card-header" onclick="toggle(this)">
+          <div><div class="card-title">Loteprednol etabonate 0.5% (Lotemax)</div><div class="card-subtitle">Retrometabolic steroid — lower IOP risk</div></div>
+          <div class="card-meta"><span class="tag tag-red">Steroid</span><span class="price-inline">~$50–120</span><span class="chevron">▾</span></div>
+        </div>
+        <div class="card-body">
+          <table>
+            <tr><td>Post-op inflammation</td><td>QID beginning 24H pre-op, × 2 weeks post-op</td></tr>
+            <tr><td>Seasonal allergy (0.2% Alrex)</td><td>QID</td></tr>
+            <tr><td>Lotemax SM 0.38% gel</td><td>BID — better retention, less blurring</td></tr>
+            <tr><td>Retail price</td><td>~$50–120 brand; limited generics available</td></tr>
+          </table>
+          <div class="box box-tip">Preferred over prednisolone in steroid responders or for long-term use — metabolized locally before significant systemic absorption.</div>
+        </div>
+      </div>
+
+      <div class="card" data-s="ketorolac acular nsaid anti-inflammatory allergic cme pain post-op">
+        <div class="card-header" onclick="toggle(this)">
+          <div><div class="card-title">Ketorolac 0.5% (Acular)</div><div class="card-subtitle">Topical NSAID</div></div>
+          <div class="card-meta"><span class="tag tag-amber">NSAID</span><span class="price-inline">~$15–35</span><span class="chevron">▾</span></div>
+        </div>
+        <div class="card-body">
+          <table>
+            <tr><td>Allergic conjunctivitis</td><td>QID up to 2 weeks</td></tr>
+            <tr><td>Post-op pain/inflammation</td><td>QID × 2 weeks</td></tr>
+            <tr><td>CME prevention</td><td>QID starting 1 day pre-op, × 4 weeks post-op</td></tr>
+            <tr><td>Retail price</td><td>~$15–35 / 5 mL (generic)</td></tr>
+          </table>
+          <div class="box box-warn">⚠ Risk of corneal melting with prolonged use or compromised epithelium. Caution in contact lens wearers.</div>
+        </div>
+      </div>
+
+      <div class="card" data-s="olopatadine pataday patanol antihistamine mast cell allergic itching seasonal OTC">
+        <div class="card-header" onclick="toggle(this)">
+          <div><div class="card-title">Olopatadine (Pataday)</div><div class="card-subtitle">Antihistamine / mast cell stabilizer</div></div>
+          <div class="card-meta"><span class="tag tag-green">Allergy</span><span class="price-inline">OTC ~$15–25</span><span class="chevron">▾</span></div>
+        </div>
+        <div class="card-body">
+          <table>
+            <tr><td>0.1% Patanol (Rx)</td><td>BID × up to 6 weeks; ~$20–40 Rx</td></tr>
+            <tr><td>0.2% Pataday (OTC)</td><td>QD; OTC ~$15–22</td></tr>
+            <tr><td>0.7% Pataday Once (OTC)</td><td>QD — highest concentration; OTC ~$18–25</td></tr>
+          </table>
+          <div class="box box-tip">First-line for allergic conjunctivitis. Now OTC (0.2% and 0.7%). Insert 10 min before contact lenses.</div>
+        </div>
+      </div>
+
+      <div class="card" data-s="cyclopentolate cyclogyl cycloplegic dilation mydriasis refraction pediatric">
+        <div class="card-header" onclick="toggle(this)">
+          <div><div class="card-title">Cyclopentolate 1% (Cyclogyl)</div><div class="card-subtitle">Cycloplegic / mydriatic</div></div>
+          <div class="card-meta"><span class="tag tag-blue">Cycloplegic</span><span class="price-inline">~$15–25</span><span class="chevron">▾</span></div>
+        </div>
+        <div class="card-body">
+          <table>
+            <tr><td>Dose</td><td>1–2 drops; repeat in 5 min if needed</td></tr>
+            <tr><td>Onset</td><td>25–75 min (peak cycloplegia)</td></tr>
+            <tr><td>Duration</td><td>6–24 hr (cycloplegia); up to 24 hr (mydriasis)</td></tr>
+            <tr><td>Pediatric</td><td>0.5% for infants &lt;1 yr; 1% for children ≥1 yr</td></tr>
+            <tr><td>Retail price</td><td>~$15–25 / 15 mL (generic)</td></tr>
+          </table>
+          <div class="box box-warn">⚠ CNS toxicity risk in infants/children (irritability, hallucinations, ataxia). Use lower concentration and limit drops.</div>
+        </div>
+      </div>
+
+      <div class="card" data-s="tropicamide mydriacyl mydriatic dilation fundus short acting">
+        <div class="card-header" onclick="toggle(this)">
+          <div><div class="card-title">Tropicamide 1% (Mydriacyl)</div><div class="card-subtitle">Short-acting mydriatic</div></div>
+          <div class="card-meta"><span class="tag tag-blue">Mydriatic</span><span class="price-inline">~$12–18</span><span class="chevron">▾</span></div>
+        </div>
+        <div class="card-body">
+          <table>
+            <tr><td>Dose</td><td>1–2 drops; repeat in 5 min</td></tr>
+            <tr><td>Onset</td><td>20–40 min</td></tr>
+            <tr><td>Duration</td><td>4–8 hr (mydriasis); poor cycloplegia</td></tr>
+            <tr><td>Retail price</td><td>~$12–18 / 15 mL (generic)</td></tr>
+          </table>
+          <div class="box box-info">Often combined with phenylephrine 2.5% for enhanced dilation, especially in dark irides.</div>
+        </div>
+      </div>
+
+      <div class="card" data-s="phenylephrine sympathomimetic dilation cardiovascular hypertension">
+        <div class="card-header" onclick="toggle(this)">
+          <div><div class="card-title">Phenylephrine 2.5% / 10%</div><div class="card-subtitle">Sympathomimetic mydriatic</div></div>
+          <div class="card-meta"><span class="tag tag-blue">Mydriatic</span><span class="price-inline">~$10–20</span><span class="chevron">▾</span></div>
+        </div>
+        <div class="card-body">
+          <table>
+            <tr><td>Dose</td><td>1–2 drops; may repeat ×1</td></tr>
+            <tr><td>Onset / Duration</td><td>15–20 min / 4–6 hr</td></tr>
+            <tr><td>Use</td><td>Adjunct to tropicamide; 2.5% preferred over 10%</td></tr>
+            <tr><td>Retail price</td><td>~$10–20 / 5 mL</td></tr>
+          </table>
+          <div class="box box-warn">⚠ Avoid 10% in children, elderly, CVD, or narrow angles. Risk of hypertensive crisis.</div>
+        </div>
+      </div>
+
+      <div class="card" data-s="atropine sulfate cycloplegic myopia control compounded">
+        <div class="card-header" onclick="toggle(this)">
+          <div><div class="card-title">Atropine sulfate</div><div class="card-subtitle">Cycloplegic / myopia control</div></div>
+          <div class="card-meta"><span class="tag tag-teal">Myopia</span><span class="price-inline">~$40–80/mo compounded</span><span class="chevron">▾</span></div>
+        </div>
+        <div class="card-body">
+          <table>
+            <tr><td>Cycloplegia</td><td>1% — 1 drop TID × 3 days before exam; duration 7–14 days</td></tr>
+            <tr><td>Myopia control</td><td>0.01%–0.05% — 1 drop QHS OU</td></tr>
+            <tr><td>Retail price</td><td>~$40–80/mo compounded (0.01–0.05%); standard 1% ~$15–30</td></tr>
+          </table>
+          <div class="box box-tip">See Myopia control tab for full protocol. Low-dose 0.01% has minimal side effects with good efficacy.</div>
+        </div>
+      </div>
+
+      <div class="card" data-s="proparacaine anesthetic numbing tonometry foreign body">
+        <div class="card-header" onclick="toggle(this)">
+          <div><div class="card-title">Proparacaine 0.5%</div><div class="card-subtitle">Topical anesthetic</div></div>
+          <div class="card-meta"><span class="tag tag-gray">Anesthetic</span><span class="price-inline">~$12–20</span><span class="chevron">▾</span></div>
+        </div>
+        <div class="card-body">
+          <table>
+            <tr><td>Dose / Onset / Duration</td><td>1–2 drops / 30 sec / 10–15 min</td></tr>
+            <tr><td>Use</td><td>Tonometry, foreign body removal, gonioscopy, CL fitting</td></tr>
+            <tr><td>Retail price</td><td>~$12–20 / 15 mL (generic)</td></tr>
+          </table>
+          <div class="box box-warn">⚠ Never prescribe for home use — chronic use causes corneal epithelial toxicity and erosion.</div>
+        </div>
+      </div>
+
+      <div class="card" data-s="fluorescein sodium staining cornea tonometry seidel diagnostic">
+        <div class="card-header" onclick="toggle(this)">
+          <div><div class="card-title">Sodium fluorescein</div><div class="card-subtitle">Diagnostic dye — staining &amp; tonometry</div></div>
+          <div class="card-meta"><span class="tag tag-gray">Diagnostic</span><span class="price-inline">~$5–15</span><span class="chevron">▾</span></div>
+        </div>
+        <div class="card-body">
+          <table>
+            <tr><td>Strips</td><td>Touch to inferior fornix with 1 drop saline or proparacaine</td></tr>
+            <tr><td>Tonometry (Fluress)</td><td>NaFl 0.25% + proparacaine 0.5% — 1 drop; ~$15 / 5 mL</td></tr>
+            <tr><td>Staining patterns</td><td>Abrasion: bright green; dendrite: branching; Seidel: fluorescein flow</td></tr>
+          </table>
+          <div class="box box-info">Use cobalt blue filter + yellow Wratten #12 filter for enhanced staining visualization.</div>
+        </div>
+      </div>
+
+      <div class="card" data-s="dorzolamide timolol cosopt glaucoma IOP pressure lowering beta blocker carbonic anhydrase">
+        <div class="card-header" onclick="toggle(this)">
+          <div><div class="card-title">Dorzolamide 2% / Timolol 0.5% (Cosopt)</div><div class="card-subtitle">CAI + beta-blocker combo — IOP lowering</div></div>
+          <div class="card-meta"><span class="tag tag-gray">Glaucoma</span><span class="price-inline">~$30–60 generic</span><span class="chevron">▾</span></div>
+        </div>
+        <div class="card-body">
+          <table>
+            <tr><td>Dose</td><td>1 drop BID</td></tr>
+            <tr><td>IOP reduction</td><td>~25–30% reduction</td></tr>
+            <tr><td>Retail price</td><td>~$30–60 / 10 mL (generic; Cosopt PF preservative-free also available)</td></tr>
+          </table>
+          <div class="box box-warn">⚠ Timolol: avoid in asthma, COPD, bradycardia, heart block. Dorzolamide: caution in sulfa allergy. Counsel on systemic absorption.</div>
+        </div>
+      </div>
+
+      <div class="card" data-s="latanoprost xalatan prostaglandin glaucoma IOP lowering once daily">
+        <div class="card-header" onclick="toggle(this)">
+          <div><div class="card-title">Latanoprost 0.005% (Xalatan)</div><div class="card-subtitle">Prostaglandin analogue — IOP lowering</div></div>
+          <div class="card-meta"><span class="tag tag-gray">Glaucoma</span><span class="price-inline">~$15–30 generic</span><span class="chevron">▾</span></div>
+        </div>
+        <div class="card-body">
+          <table>
+            <tr><td>Dose</td><td>1 drop QHS — evening dosing critical for efficacy</td></tr>
+            <tr><td>IOP reduction</td><td>~25–33% reduction</td></tr>
+            <tr><td>Onset / Peak</td><td>3–4 hr / 8–12 hr</td></tr>
+            <tr><td>Retail price</td><td>~$15–30 / 2.5 mL (generic); brand ~$80–120</td></tr>
+          </table>
+          <div class="box box-info">Counsel on: iris pigmentation change, lash growth, periorbital fat atrophy. Refrigerate unopened; opened bottles room temp × 6 weeks.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CLINICAL EVALUATION -->
+  <div id="tab-eval" class="section">
+    <input class="search-bar" placeholder="Search clinical evaluations..." oninput="filterCards('eval-list',this.value)" />
+    <div id="eval-list">
+
+      <div class="card" data-s="diplopia double vision cover test binocular cn iii iv vi cranial nerve">
+        <div class="card-header" onclick="toggle(this)">
+          <div><div class="card-title">Diplopia evaluation</div><div class="card-subtitle">Binocular diplopia workup</div></div>
+          <div class="card-meta"><span class="tag tag-blue">Binocular</span><span class="chevron">▾</span></div>
+        </div>
+        <div class="card-body">
+          <p><strong>Step 1 — Monocular vs binocular:</strong> Cover one eye. Diplopia resolves → binocular (ocular motor). Persists → monocular (optical: dry eye, irregular astigmatism, cataract, wrong Rx).</p>
+          <p><strong>Step 2 — Characterize:</strong> Horizontal, vertical, or oblique? Constant or intermittent? Distance, near, or both? Gaze direction?</p>
+          <p><strong>Step 3 — Cover test:</strong> Alternating cover test in all 9 positions of gaze. Note direction and magnitude.</p>
+          <p><strong>Red flags → urgent referral:</strong></p>
+          <ul>
+            <li>New vertical diplopia (CN IV palsy, skew deviation)</li>
+            <li>Ptosis + diplopia (CN III palsy — rule out aneurysm)</li>
+            <li>Diplopia with headache, pain, or neurological signs</li>
+            <li>Pupil-involving CN III → urgent MRI/MRA same day</li>
+          </ul>
+          <div class="box box-info">Maddox rod: red rod OS, white light at 6m. Horizontal diplopia → vertical prism; vertical diplopia → horizontal prism.</div>
+        </div>
+      </div>
+
+      <div class="card" data-s="headache migraine tension cluster gca visual ocular ICP papilledema">
+        <div class="card-header" onclick="toggle(this)">
+          <div><div class="card-title">Headache evaluation</div><div class="card-subtitle">Visual &amp; ocular causes</div></div>
+          <div class="card-meta"><span class="tag tag-amber">Neuro</span><span class="chevron">▾</span></div>
+        </div>
+        <div class="card-body">
+          <p><strong>Ocular causes to rule out:</strong></p>
+          <ul>
+            <li><strong>Uncorrected refractive error</strong> — frontal/brow ache with near work; worse as day progresses</li>
+            <li><strong>Convergence insufficiency</strong> — bifrontal HA with reading; NPC &gt;10 cm</li>
+            <li><strong>Acute angle closure</strong> — severe unilateral HA + red eye + halos + nausea; IOP often &gt;40 mmHg</li>
+            <li><strong>Giant cell arteritis (≥50 yrs)</strong> — temporal HA + scalp tenderness + jaw claudication + elevated ESR/CRP</li>
+          </ul>
+          <p style="margin-top:8px"><strong>Red flags:</strong></p>
+          <ul>
+            <li>Thunderclap onset ("worst headache of life")</li>
+            <li>New HA with fever, stiff neck, or rash</li>
+            <li>Positional HA worse lying down → elevated ICP</li>
+            <li>Visual field loss, APD, or papilledema</li>
+          </ul>
+          <div class="box box-warn">⚠ GCA is an emergency — same-day ESR/CRP + urgent rheumatology. Start steroids before biopsy if vision is threatened.</div>
+        </div>
+      </div>
+
+      <div class="card" data-s="pupils rapd apd horner cn iii adie argyll anisocoria swinging flashlight">
+        <div class="card-header" onclick="toggle(this)">
+          <div><div class="card-title">Pupil evaluation</div><div class="card-subtitle">RAPD, anisocoria, Horner's, CN III</div></div>
+          <div class="card-meta"><span class="tag tag-blue">Neuro</span><span class="chevron">▾</span></div>
+        </div>
+        <div class="card-body">
+          <table>
+            <tr><td>RAPD</td><td>Swinging flashlight: affected eye dilates when light swings to it → optic nerve or severe retinal disease</td></tr>
+            <tr><td>Horner's syndrome</td><td>Miosis + ptosis + anhidrosis. Cocaine 4% confirms. Hydroxyamphetamine differentiates pre vs. post-ganglionic.</td></tr>
+            <tr><td>CN III palsy</td><td>"Down and out" + ptosis. Pupil-involving → posterior communicating artery aneurysm. Urgent MRI/MRA.</td></tr>
+            <tr><td>Adie's tonic pupil</td><td>Large, poorly reactive; near-light dissociation; 0.1% pilocarpine → constriction</td></tr>
+            <tr><td>Argyll Robertson</td><td>Small, irregular; light-near dissociation. Associated with neurosyphilis.</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="card" data-s="visual field vf defect scotoma hemianopia quadrantanopia perimetry chiasm">
+        <div class="card-header" onclick="toggle(this)">
+          <div><div class="card-title">Visual field defect localization</div><div class="card-subtitle">Anatomy-based interpretation</div></div>
+          <div class="card-meta"><span class="tag tag-blue">Perimetry</span><span class="chevron">▾</span></div>
+        </div>
+        <div class="card-body">
+          <table>
+            <tr><td>Monocular loss</td><td>Anterior to chiasm (retina or optic nerve)</td></tr>
+            <tr><td>Bitemporal hemianopia</td><td>Chiasm — pituitary adenoma most common</td></tr>
+            <tr><td>Homonymous hemianopia</td><td>Post-chiasmal (optic tract, LGN, optic radiation, occipital cortex)</td></tr>
+            <tr><td>Superior quad defect</td><td>Temporal lobe ("pie in the sky")</td></tr>
+            <tr><td>Inferior quad defect</td><td>Parietal lobe</td></tr>
+            <tr><td>Central scotoma</td><td>Optic neuritis, macular disease</td></tr>
+            <tr><td>Arcuate scotoma</td><td>Glaucoma, ischemic optic neuropathy</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="card" data-s="dry eye meibomian mgd tbut schirmer staining dews osdi deq">
+        <div class="card-header" onclick="toggle(this)">
+          <div><div class="card-title">Dry eye evaluation</div><div class="card-subtitle">DEWS II-based approach</div></div>
+          <div class="card-meta"><span class="tag tag-teal">Anterior seg</span><span class="chevron">▾</span></div>
+        </div>
+        <div class="card-body">
+          <p><strong>Symptom screen:</strong> OSDI or DEQ-5. OSDI ≥23 = moderate-severe.</p>
+          <table style="margin-top:8px">
+            <tr><td>TBUT</td><td>&lt;10 sec non-invasive; &lt;5 sec fluorescein → abnormal</td></tr>
+            <tr><td>Staining</td><td>Oxford scale (corneal), Van Bijsterveld (conjunctival)</td></tr>
+            <tr><td>Schirmer's I</td><td>&lt;5 mm/5 min = severe aqueous deficiency</td></tr>
+            <tr><td>MGD grading</td><td>Meiboscore 0–3 per lid; assess gland expressibility</td></tr>
+          </table>
+          <div class="box box-tip">Classify: Aqueous deficient (Sjögren's vs. non-Sjögren's) vs. Evaporative (MGD most common). Classification guides treatment ladder.</div>
+        </div>
+      </div>
+
+      <div class="card" data-s="glaucoma iop optic nerve cup disc rnfl ntg gonioscopy cct normal tension">
+        <div class="card-header" onclick="toggle(this)">
+          <div><div class="card-title">Glaucoma evaluation</div><div class="card-subtitle">Structural &amp; functional assessment</div></div>
+          <div class="card-meta"><span class="tag tag-gray">Glaucoma</span><span class="chevron">▾</span></div>
+        </div>
+        <div class="card-body">
+          <table>
+            <tr><td>Target IOP</td><td>25–30% reduction from baseline; &lt;15 mmHg if advanced damage</td></tr>
+            <tr><td>C/D concerns</td><td>Asymmetry ≥0.2, vertical elongation, notching, disc hemorrhage, RNFL defects</td></tr>
+            <tr><td>CCT</td><td>Thin (&lt;520 μm) → independent risk factor; GAT overestimates IOP with thick CCT</td></tr>
+            <tr><td>Gonioscopy</td><td>Grade angles before dilation; Shaffer grade &lt;2 = narrow</td></tr>
+            <tr><td>NTG workup</td><td>Rule out systemic hypotension, sleep apnea, vasospasm; 24-hr IOP curve</td></tr>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MYOPIA CONTROL -->
+  <div id="tab-myopia" class="section">
+    <div id="myopia-list">
+
+      <div class="card-featured">
+        <div class="featured-badge">EssilorLuxottica — Featured</div>
+        <div class="card-header" onclick="toggle(this)" style="padding-top:10px;">
+          <div>
+            <div class="card-title" style="font-size:16px;">Essilor Stellest® lenses</div>
+            <div class="card-subtitle">Highest-efficacy spectacle lens for myopia control</div>
+          </div>
+          <div class="card-meta"><span class="tag tag-el">H.A.L.T. Technology</span><span class="chevron">▾</span></div>
+        </div>
+        <div class="card-body">
+          <table>
+            <tr><td>Efficacy</td><td><strong>67% reduction</strong> in myopia progression vs. single-vision lenses (2-year clinical trial)</td></tr>
+            <tr><td>Technology</td><td>H.A.L.T. — 1,021 aspherical lenslets arranged in a constellation pattern, creating a volume of myopic defocus signal</td></tr>
+            <tr><td>Ideal candidate</td><td>Myopic children 6–16 years; works from day one; no adaptation period</td></tr>
+            <tr><td>Wearing schedule</td><td>Full-time daily wear ≥12 hrs/day — higher efficacy with more hours worn</td></tr>
+            <tr><td>Rx range</td><td>Sphere –0.75 to –10.00 D; cylinder up to –4.00 D</td></tr>
+            <tr><td>Availability</td><td>Through EssilorLuxottica wholesale network; lab-processed lens</td></tr>
+          </table>
+          <div class="box box-el">Stellest demonstrated <strong>67% slowing</strong> of myopia progression in children wearing lenses ≥12 hrs/day — the highest published efficacy of any spectacle lens option. Ideal first choice for children not ready for contact lenses.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header" onclick="toggle(this)">
+          <div><div class="card-title">Low-dose atropine</div><div class="card-subtitle">Evidence-based pharmacological intervention</div></div>
+          <div class="card-meta"><span class="tag tag-teal">Pharmacological</span><span class="chevron">▾</span></div>
+        </div>
+        <div class="card-body">
+          <table>
+            <tr><td>Dose</td><td>0.01%–0.05% atropine, 1 drop QHS OU</td></tr>
+            <tr><td>Efficacy</td><td>0.01%: ~50–60% slowing; 0.05%: ~60–70% slowing</td></tr>
+            <tr><td>Rebound</td><td>Minimal at 0.01% vs. higher doses</td></tr>
+            <tr><td>Side effects</td><td>Minimal at 0.01% (slight mydriasis, mild photophobia)</td></tr>
+            <tr><td>Duration</td><td>Until ~18 yrs or ≥2 yrs of stability</td></tr>
+            <tr><td>Cost</td><td>~$40–80/mo compounded; not commercially available in US</td></tr>
+          </table>
+          <div class="box box-tip">Start at 0.01%. If progressing &gt;0.50 D/yr, step up to 0.025% or 0.05%. Annual side-effect review.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header" onclick="toggle(this)">
+          <div><div class="card-title">Orthokeratology (Ortho-K)</div><div class="card-subtitle">Overnight corneal reshaping lenses</div></div>
+          <div class="card-meta"><span class="tag tag-blue">Optical</span><span class="chevron">▾</span></div>
+        </div>
+        <div class="card-body">
+          <table>
+            <tr><td>Efficacy</td><td>~40–60% reduction in axial elongation</td></tr>
+            <tr><td>Ideal candidate</td><td>Myopia –1.00 to –6.00 D, astigmatism ≤1.50 D, motivated child/parent</td></tr>
+            <tr><td>Best age</td><td>6–10 years old</td></tr>
+            <tr><td>Follow-up</td><td>1 day → 1 week → 1 month → q3–6 months</td></tr>
+            <tr><td>MK risk</td><td>~7–8 per 10,000 patient-years</td></tr>
+          </table>
+          <div class="box box-warn">⚠ Rigorous hygiene compliance essential. Use H2O2 care system. Thorough patient and parent education is critical.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header" onclick="toggle(this)">
+          <div><div class="card-title">Myopia control soft contact lenses</div><div class="card-subtitle">MiSight, Acuvue Abiliti, NaturalVue</div></div>
+          <div class="card-meta"><span class="tag tag-blue">Optical</span><span class="chevron">▾</span></div>
+        </div>
+        <div class="card-body">
+          <table>
+            <tr><td>MiSight 1 Day</td><td>~59% reduction; FDA-approved ages 8–12; DISC design (CooperVision)</td></tr>
+            <tr><td>Acuvue Abiliti</td><td>~52% reduction; EDOF + peripheral ADD (J&amp;J)</td></tr>
+            <tr><td>NaturalVue</td><td>Extended depth of focus; ~1D add equivalent (Visioneering)</td></tr>
+            <tr><td>Wearing schedule</td><td>≥10 hrs/day, 6+ days/week</td></tr>
+          </table>
+          <div class="box box-info">Compliance is the strongest predictor of outcome. Document hours worn per day at every visit.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header" onclick="toggle(this)">
+          <div><div class="card-title">Other spectacle options</div><div class="card-subtitle">DIMS (MiyoSmart), PALs, bifocals</div></div>
+          <div class="card-meta"><span class="tag tag-gray">Optical</span><span class="chevron">▾</span></div>
+        </div>
+        <div class="card-body">
+          <table>
+            <tr><td>DIMS (MiyoSmart)</td><td>~52% reduction; honeycomb defocus islands (Hoya)</td></tr>
+            <tr><td>PALs</td><td>~25–35% reduction; best in esophoric children with high AC/A</td></tr>
+            <tr><td>Executive bifocal</td><td>+2.00 add; greater effect in esophoric children</td></tr>
+          </table>
+          <div class="box box-el">For highest spectacle efficacy, prescribe <strong>Essilor Stellest</strong> — see featured card above.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header" onclick="toggle(this)">
+          <div><div class="card-title">Lifestyle &amp; environmental factors</div><div class="card-subtitle">Adjunct recommendations for all patients</div></div>
+          <div class="card-meta"><span class="tag tag-green">Lifestyle</span><span class="chevron">▾</span></div>
+        </div>
+        <div class="card-body">
+          <ul>
+            <li><strong>Outdoor time:</strong> ≥90–120 min/day — strongest protective factor; retinal dopamine release</li>
+            <li><strong>Near work breaks:</strong> 20-20-20 rule — every 20 min, look 20 ft away for 20 sec</li>
+            <li><strong>Reading distance:</strong> Harmon distance (elbow to middle knuckle)</li>
+            <li><strong>Axial length monitoring:</strong> Zeiss IOLMaster, Topcon Myah, or Heidelberg Myopia Watch every 6–12 months</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CONTACT LENS PRICING -->
+  <div id="tab-lenses" class="section">
+    <p style="font-size:13px;color:var(--text2);margin-bottom:1rem;">Approximate retail pricing as of April 2026. Verify with your EssilorLuxottica distributor or practice account for current wholesale pricing.</p>
+
+    <div class="section-title">Daily disposables</div>
+    <div class="price-card">
+      <table class="price-table">
+        <thead><tr><th>Brand</th><th>Manufacturer</th><th>Material</th><th>90-pack</th><th>Annual est.</th></tr></thead>
+        <tbody>
+          <tr><td>Acuvue Oasys 1-Day</td><td style="color:var(--text2)">J&amp;J Vision</td><td style="color:var(--text2)">Senofilcon A</td><td class="price-val">$72</td><td class="price-val">~$580</td></tr>
+          <tr><td>Dailies Total1</td><td style="color:var(--text2)">Alcon</td><td style="color:var(--text2)">Delefilcon A</td><td class="price-val">$80</td><td class="price-val">~$640</td></tr>
+          <tr><td>TOTAL30 Daily</td><td style="color:var(--text2)">Alcon</td><td style="color:var(--text2)">Lehfilcon A</td><td class="price-val">$72</td><td class="price-val">~$575</td></tr>
+          <tr><td>Precision1</td><td style="color:var(--text2)">Alcon</td><td style="color:var(--text2)">Verofilcon A</td><td class="price-val">$52</td><td class="price-val">~$415</td></tr>
+          <tr><td>MyDay</td><td style="color:var(--text2)">CooperVision</td><td style="color:var(--text2)">Stenfilcon A</td><td class="price-val">$58</td><td class="price-val">~$465</td></tr>
+          <tr><td>Biotrue ONEday</td><td style="color:var(--text2)">Bausch + Lomb</td><td style="color:var(--text2)">Nesofilcon A</td><td class="price-val">$48</td><td class="price-val">~$385</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-title">Monthly / biweekly</div>
+    <div class="price-card">
+      <table class="price-table">
+        <thead><tr><th>Brand</th><th>Manufacturer</th><th>Material</th><th>6-pack</th><th>Annual est.</th></tr></thead>
+        <tbody>
+          <tr><td>Acuvue Oasys 2-Week</td><td style="color:var(--text2)">J&amp;J Vision</td><td style="color:var(--text2)">Senofilcon A</td><td class="price-val">$42</td><td class="price-val">~$170</td></tr>
+          <tr><td>Air Optix + HydraGlyde</td><td style="color:var(--text2)">Alcon</td><td style="color:var(--text2)">Lotrafilcon B</td><td class="price-val">$38</td><td class="price-val">~$152</td></tr>
+          <tr><td>Biofinity</td><td style="color:var(--text2)">CooperVision</td><td style="color:var(--text2)">Comfilcon A</td><td class="price-val">$40</td><td class="price-val">~$160</td></tr>
+          <tr><td>PureVision2</td><td style="color:var(--text2)">Bausch + Lomb</td><td style="color:var(--text2)">Balafilcon A</td><td class="price-val">$34</td><td class="price-val">~$136</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-title">Toric &amp; multifocal</div>
+    <div class="price-card">
+      <table class="price-table">
+        <thead><tr><th>Brand</th><th>Type</th><th>Material</th><th>Box price</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Acuvue Oasys for Astigmatism</td><td><span class="tag tag-gray">Toric biweekly</span></td><td style="color:var(--text2)">Senofilcon A</td><td class="price-val">$50 / 6pk</td><td class="price-note">Accelerated Stabilisation Design</td></tr>
+          <tr><td>Dailies Total1 Toric</td><td><span class="tag tag-gray">Toric daily</span></td><td style="color:var(--text2)">Delefilcon A</td><td class="price-val">$90 / 90pk</td><td class="price-note">Water gradient; limited axes available</td></tr>
+          <tr><td>MyDay Toric</td><td><span class="tag tag-gray">Toric daily</span></td><td style="color:var(--text2)">Stenfilcon A</td><td class="price-val">$68 / 90pk</td><td class="price-note">Optimised Toric Lens Geometry</td></tr>
+          <tr><td>Biofinity Multifocal</td><td><span class="tag tag-blue">Multifocal monthly</span></td><td style="color:var(--text2)">Comfilcon A</td><td class="price-val">$48 / 6pk</td><td class="price-note">D &amp; N designs available</td></tr>
+          <tr><td>Acuvue Oasys Multifocal</td><td><span class="tag tag-blue">Multifocal biweekly</span></td><td style="color:var(--text2)">Senofilcon A</td><td class="price-val">$52 / 6pk</td><td class="price-note">Pupil Intelligent Design</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section-title">Myopia control lenses</div>
+    <div class="price-card">
+      <table class="price-table">
+        <thead><tr><th>Brand</th><th>Type</th><th>Material</th><th>Box price</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>MiSight 1 Day</td><td><span class="tag tag-teal">Myopia daily</span></td><td style="color:var(--text2)">Omafilcon A</td><td class="price-val">$75 / 90pk</td><td class="price-note">FDA-approved ages 8–12; DISC design</td></tr>
+          <tr><td>Acuvue Abiliti 1-Day</td><td><span class="tag tag-teal">Myopia daily</span></td><td style="color:var(--text2)">Senofilcon A</td><td class="price-val">$80 / 90pk</td><td class="price-note">EDOF + peripheral ADD</td></tr>
+          <tr><td>NaturalVue Multifocal 1-Day</td><td><span class="tag tag-teal">Myopia daily</span></td><td style="color:var(--text2)">Etafilcon A</td><td class="price-val">$68 / 90pk</td><td class="price-note">Extended depth of focus</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="updated">Last manually updated: April 2026 — verify pricing before quoting to patients.</p>
+  </div>
+
+  <!-- ICD-10 -->
+  <div id="tab-icd" class="section">
+    <input class="search-bar" placeholder="Search codes or conditions..." oninput="filterICD(this.value)" />
+    <div class="icd-container" id="icd-list"></div>
+  </div>
+
+  <p class="disclaimer">⚕ This guide is a clinical reference tool only. Always verify drug dosages with current prescribing information, confirm ICD-10 codes with your billing department, and apply clinical judgment to individual patient cases. Drug prices are approximate retail/GoodRx figures as of April 2026 and subject to change. Provided for educational purposes by EssilorLuxottica.</p>
+
+</div>
+
+<script>
+function switchTab(tab, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  btn.classList.add('active');
+}
+function toggle(header) {
+  const body = header.nextElementSibling;
+  const chev = header.querySelector('.chevron');
+  const open = body.classList.toggle('open');
+  chev.classList.toggle('open', open);
+}
+function filterCards(listId, q) {
+  q = q.toLowerCase();
+  document.querySelectorAll('#' + listId + ' .card, #' + listId + ' .card-featured').forEach(card => {
+    const hay = (card.dataset.s || '') + ' ' + card.textContent.toLowerCase();
+    card.style.display = hay.includes(q) ? '' : 'none';
+  });
+}
+function filterICD(q) {
+  q = q.toLowerCase();
+  document.querySelectorAll('#icd-list .icd-row').forEach(row => {
+    row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+  });
+}
+const codes = [
+  ['H52.1','Myopia'],['H52.11','Myopia, right eye'],['H52.12','Myopia, left eye'],['H52.13','Myopia, bilateral'],
+  ['H52.0','Hypermetropia'],['H52.01','Hypermetropia, right eye'],['H52.02','Hypermetropia, left eye'],['H52.03','Hypermetropia, bilateral'],
+  ['H52.2','Astigmatism'],['H52.21','Irregular astigmatism'],['H52.22','Regular astigmatism'],['H52.4','Presbyopia'],
+  ['H40.001','Glaucoma suspect, OAG, right eye'],['H40.002','Glaucoma suspect, OAG, left eye'],
+  ['H40.11','Primary open-angle glaucoma'],['H40.20','Primary angle-closure glaucoma, unspecified'],
+  ['H40.211','Acute angle-closure glaucoma, right eye'],['H40.212','Acute angle-closure glaucoma, left eye'],
+  ['H10.9','Unspecified conjunctivitis'],['H10.10','Acute atopic conjunctivitis, unspecified'],
+  ['H10.30','Unspecified acute conjunctivitis'],['H10.40','Chronic conjunctivitis, unspecified'],
+  ['H16.009','Unspecified corneal ulcer, unspecified eye'],['H16.011','Central corneal ulcer, right eye'],['H16.012','Central corneal ulcer, left eye'],
+  ['H04.123','Dry eye syndrome, bilateral'],['H04.121','Dry eye syndrome, right eye'],['H04.122','Dry eye syndrome, left eye'],
+  ['H20.00','Unspecified iridocyclitis'],['H20.011','Primary iridocyclitis, right eye'],['H20.012','Primary iridocyclitis, left eye'],
+  ['H35.30','Unspecified macular degeneration'],['H35.31','Nonexudative AMD, unspecified'],['H35.32','Exudative AMD, unspecified'],
+  ['H33.001','Retinal detachment with single break, right eye'],['H33.05','Total retinal detachment, unspecified'],
+  ['H54.7','Unspecified visual loss'],['H54.0','Blindness, both eyes'],
+  ['H49.00','CN III palsy, unspecified eye'],['H49.10','CN IV palsy, unspecified eye'],['H49.20','CN VI palsy, unspecified eye'],
+  ['H51.11','Convergence insufficiency'],['H51.12','Convergence excess'],['H51.0','Palsy of conjugate gaze'],
+  ['H53.2','Diplopia'],['H53.10','Unspecified subjective visual disturbances'],['H53.14','Visual discomfort'],
+  ['H57.00','Unspecified anomaly of pupillary function'],['H57.01','Argyll Robertson pupil, atypical'],
+  ['Z01.00','Exam of eyes/vision, no abnormal findings'],['Z01.01','Exam of eyes/vision, abnormal findings'],
+  ['H00.011','Hordeolum externum, right upper eyelid'],['H00.012','Hordeolum externum, right lower eyelid'],
+  ['H00.14','Chalazion, left upper eyelid'],['H00.15','Chalazion, left lower eyelid'],
+  ['H02.401','Unspecified ptosis, right eye'],['H02.402','Unspecified ptosis, left eye'],
+  ['H11.001','Unspecified pterygium, right eye'],['H11.002','Unspecified pterygium, left eye'],
+  ['H26.9','Unspecified cataract'],['H25.011','Cortical age-related cataract, right eye'],
+  ['H26.001','Infantile/juvenile cortical cataract, right eye'],
+  ['H01.001','Unspecified blepharitis, right upper eyelid'],['H01.002','Unspecified blepharitis, right lower eyelid'],
+  ['H30.9','Unspecified chorioretinal inflammation'],['H31.001','Choroidal neovascularization, right eye'],
+];
+(function buildICD(){
+  const list = document.getElementById('icd-list');
+  codes.forEach(([code, desc]) => {
+    const row = document.createElement('div');
+    row.className = 'icd-row';
+    row.innerHTML = `<span class="icd-code">${code}</span><span class="icd-desc">${desc}</span>`;
+    list.appendChild(row);
+  });
+})();
+</script>
+</body>
+</html>
