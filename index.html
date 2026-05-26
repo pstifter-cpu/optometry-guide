@@ -8,31 +8,30 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg: #ffffff; --bg2: #f7f7f5; --bg3: #f2f1ec;
-    --text: #1a1a18; --text2: #6b6b67; --text3: #9b9b96;
-    --border: rgba(0,0,0,0.09); --border2: rgba(0,0,0,0.16);
-    --blue: #185FA5; --blue-bg: #E6F1FB; --blue-text: #0C447C;
-    --amber-bg: #FAEEDA; --amber-text: #633806; --amber-border: #BA7517;
-    --green-bg: #EAF3DE; --green-text: #27500A; --green-border: #3B6D11;
-    --red-bg: #FCEBEB; --red-text: #791F1F;
-    --teal-bg: #E1F5EE; --teal-text: #085041;
-    --gray-bg: #F1EFE8; --gray-text: #444441;
-    --accent: #185FA5;
+    --bg: #111111; --bg2: #1a1a1a; --bg3: #0d0d0d;
+    --text: #f0f0ee; --text2: #a0a09a; --text3: #606060;
+    --border: rgba(255,255,255,0.08); --border2: rgba(255,255,255,0.15);
+    --blue: #5ba3e8; --blue-bg: #0c2236; --blue-text: #8dc4f5;
+    --amber-bg: #2a1c00; --amber-text: #f5c97a; --amber-border: #c88a1a;
+    --green-bg: #0a1f00; --green-text: #7ecf45; --green-border: #3d7a10;
+    --red-bg: #200808; --red-text: #f08080;
+    --teal-bg: #031a10; --teal-text: #45c990;
+    --gray-bg: #1e1e1e; --gray-text: #b0b0aa;
     --radius: 8px; --radius-lg: 12px;
   }
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #1c1c1a; --bg2: #252523; --bg3: #2e2e2b;
-      --text: #f0efe9; --text2: #a0a09a; --text3: #6b6b65;
-      --border: rgba(255,255,255,0.09); --border2: rgba(255,255,255,0.16);
-      --blue: #5ba3e8; --blue-bg: #0c2a44; --blue-text: #8dc4f5;
-      --amber-bg: #2e2000; --amber-text: #f5c97a; --amber-border: #c88a1a;
-      --green-bg: #0f2200; --green-text: #8fcf55; --green-border: #4a8c1a;
-      --red-bg: #2a0a0a; --red-text: #f09090;
-      --teal-bg: #052a1c; --teal-text: #55cfa0;
-      --gray-bg: #2a2a27; --gray-text: #b0b0aa;
-      --accent: #5ba3e8;
-    }
+
+  .app-wrap { display: flex; min-height: 100vh; }
+  .sidebar { width: 185px; flex-shrink: 0; background: var(--bg2); border-right: 0.5px solid var(--border); position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+  .sidebar-hdr { padding: 0.85rem 1rem 0.6rem; border-bottom: 0.5px solid var(--border); margin-bottom: 0.4rem; }
+  .sidebar-hdr h1 { font-size: 15px; font-weight: 600; }
+  .sidebar-hdr p { font-size: 10.5px; color: var(--text3); margin-top: 1px; }
+  .grp-lbl { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); padding: 0.6rem 1rem 0.2rem; }
+  .main-wrap { flex: 1; min-width: 0; padding: 1.25rem 1.5rem 3rem; }
+  @media(max-width:680px){
+    .app-wrap { flex-direction: column; }
+    .sidebar { width: 100%; height: auto; position: relative; display: flex; flex-wrap: wrap; padding: 0.5rem; gap: 3px; }
+    .sidebar-hdr, .grp-lbl { display: none; }
+    .nav-btn { width: auto !important; padding: 5px 10px !important; border-radius: var(--radius) !important; border: 0.5px solid var(--border2) !important; font-size: 11.5px; }
   }
   body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: var(--bg3); color: var(--text); font-size: 15px; line-height: 1.6; min-height: 100vh; }
   .app { max-width: 960px; margin: 0 auto; padding: 0 1rem 3rem; }
@@ -44,9 +43,9 @@
 
   /* NAV */
   .nav { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 1.25rem; position: sticky; top: 0; background: var(--bg3); padding: 0.75rem 0; z-index: 10; border-bottom: 0.5px solid var(--border); }
-  .nav-btn { font-size: 13px; padding: 6px 14px; border-radius: var(--radius); border: 0.5px solid var(--border2); background: var(--bg); color: var(--text2); cursor: pointer; transition: all 0.15s; white-space: nowrap; font-family: inherit; }
-  .nav-btn:hover { background: var(--bg2); color: var(--text); }
-  .nav-btn.active { background: var(--blue); border-color: var(--blue); color: #fff; }
+  .nav-btn { display: block; width: 100%; text-align: left; font-size: 12.5px; padding: 5px 1rem; border: none; background: transparent; color: var(--text2); cursor: pointer; transition: all 0.12s; font-family: inherit; }
+  .nav-btn:hover { background: var(--bg3); color: var(--text); }
+  .nav-btn.active { background: var(--blue-bg); color: var(--blue); border-left: 2px solid var(--blue); padding-left: calc(1rem - 2px); }
 
   .section { display: none; }
   .section.active { display: block; }
@@ -119,27 +118,39 @@
 </style>
 </head>
 <body>
-<div class="app">
+<div class="app-wrap">
+<nav style="width:185px;flex-shrink:0;background:var(--bg2);border-right:0.5px solid var(--border);position:sticky;top:0;height:100vh;overflow-y:auto;padding:0 0 1rem;">
+  <div style="padding:0.85rem 1rem 0.6rem;border-bottom:0.5px solid var(--border);margin-bottom:0.4rem"><strong style="font-size:15px;letter-spacing:-0.3px">OD Mini Guide</strong><div style="font-size:10.5px;color:var(--text3);margin-top:1px">Clinical reference</div></div>
+<div class="grp-lbl">Neuro / Anterior</div>
+  <button class="nav-btn" onclick="switchTab('pupils',this)">Pupils</button>
+  <button class="nav-btn" onclick="switchTab('headache',this)">Headache</button>
+  <button class="nav-btn" onclick="switchTab('diplopia',this)">Diplopia</button>
+  <button class="nav-btn" onclick="switchTab('nystagmus',this)">Nystagmus</button>
+  <button class="nav-btn" onclick="switchTab('vf',this)">Visual Fields</button>
+  <button class="nav-btn" onclick="switchTab('glaucoma2',this)">Glaucoma</button>
+  <div class="grp-lbl">Binocular Vision</div>
+  <button class="nav-btn" onclick="switchTab('binoc',this)">Binocular Workup</button>
+  <button class="nav-btn" onclick="switchTab('vergence',this)">Vergence</button>
+  <button class="nav-btn" onclick="switchTab('accomm',this)">Accommodation</button>
+  <div class="grp-lbl">Clinical</div>
+  <button class="nav-btn active" onclick="switchTab('drugs',this)">Drugs &amp; Dosing</button>
+  <button class="nav-btn" onclick="switchTab('dryeye2',this)">Dry Eye</button>
+  <button class="nav-btn" onclick="switchTab('myopia',this)">Myopia Control</button>
+  <div class="grp-lbl">CL / Optics</div>
+  <button class="nav-btn" onclick="switchTab('cl',this)">CL Fitting</button>
+  <button class="nav-btn" onclick="switchTab('optics',this)">Optics</button>
+  <button class="nav-btn" onclick="switchTab('lenses',this)">CL Pricing</button>
+  <div class="grp-lbl">Tools</div>
+  <button class="nav-btn" onclick="switchTab('parks',this)">Parks 3-Step</button>
+  <button class="nav-btn" onclick="switchTab('plaquenil',this)">Plaquenil Risk</button>
+  <button class="nav-btn" onclick="switchTab('icd',this)">ICD-10 Codes</button>
+</nav>
+</nav>
 
-  <div class="header">
-    <div class="header-left">
-      <h1>OD Mini Guide</h1>
-      <p>Clinical reference for optometric practitioners</p>
-    </div>
-
-  </div>
-
-  <div class="nav">
-    <button class="nav-btn active" onclick="switchTab('drugs',this)">Drugs &amp; dosing</button>
-    <button class="nav-btn" onclick="switchTab('eval',this)">Clinical evaluation</button>
-    <button class="nav-btn" onclick="switchTab('myopia',this)">Myopia control</button>
-    <button class="nav-btn" onclick="switchTab('lenses',this)">Contact lens pricing</button>
-    <button class="nav-btn" onclick="switchTab('icd',this)">ICD-10 codes</button>
-    <button class="nav-btn" onclick="switchTab('tools',this)">Tools</button>
-  </div>
+<div class="main-wrap" style="flex:1;min-width:0;padding:1.25rem 1.5rem 3rem;overflow-y:auto;">
 
   <!-- DRUGS -->
-  <div id="tab-drugs" class="section active">
+  <div id="tab-drugs" class="section">
     <input class="search-bar" placeholder="Search drugs, class, indication, or price..." oninput="filterCards('drugs-list',this.value)" />
     <div id="drugs-list">
 
@@ -749,9 +760,16 @@
 
 
   <!-- TOOLS -->
-  <div id="tab-tools" class="section">
+  <div id="tab-parks" class="section">
+<p style="font-size:18px;font-weight:600;letter-spacing:-0.3px;margin-bottom:0.2rem">Parks 3-Step Test</p>
+<p style="font-size:12.5px;color:var(--text2);margin-bottom:1.25rem">Isolate a paretic cyclovertical muscle from 8 candidates</p>
 
-    <!-- PLAQUENIL RISK CALCULATOR -->
+</div>
+
+<div id="tab-plaquenil" class="section">
+<p style="font-size:18px;font-weight:600;letter-spacing:-0.3px;margin-bottom:0.2rem">Plaquenil Risk Calculator</p>
+<p style="font-size:12.5px;color:var(--text2);margin-bottom:1.25rem">Hydroxychloroquine toxicity screening — AAO 2016 guidelines</p>
+<!-- PLAQUENIL RISK CALCULATOR -->
     <div class="card" style="margin-bottom:1rem;">
       <div class="card-header" onclick="toggle(this)">
         <div>
@@ -853,16 +871,633 @@
         </div>
       </div>
     </div>
-
-  </div><!-- end tab-tools -->
-
-  <!-- ICD-10 -->
+</div>
+ <!-- ICD-10 -->
   <div id="tab-icd" class="section">
     <input class="search-bar" placeholder="Search codes or conditions..." oninput="filterICD(this.value)" />
     <div class="icd-container" id="icd-list"></div>
   </div>
 
-  <p class="disclaimer">⚕ This guide is a clinical reference tool only. Always verify drug dosages with current prescribing information, confirm ICD-10 codes with your billing department, and apply clinical judgment to individual patient cases. Drug prices are approximate retail/GoodRx figures as of April 2026 and subject to change. For clinical reference use only.</p>
+  
+<!-- PUPILS -->
+<div id="tab-pupils" class="section active">
+<p style="font-size:18px;font-weight:600;letter-spacing:-0.3px;margin-bottom:0.2rem">Pupils</p>
+<p style="font-size:12.5px;color:var(--text2);margin-bottom:1.25rem">Anisocoria, RAPD, Horner's, tonic pupil</p>
+
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">The 4 anisocoria questions</div><div class="card-subtitle">First steps in any pupil asymmetry</div></div>
+  <div class="card-meta"><span class="tag tag-blue">Workup</span><span class="toggle-icon">▾</span></div>
+</div><div class="card-body">
+  <ul><li>Is the anisocoria equal in bright and dim light?</li><li>Are there motility problems?</li><li>Do pupils react to light and near?</li><li>Is it physiologic (asymmetry &lt;1mm, no other signs)?</li></ul>
+  <h4 style="font-size:13px;font-weight:600;margin:10px 0 4px">Afferent (RAPD)</h4>
+  <p>Swinging flashlight: affected eye dilates when light swings to it → optic nerve or severe retinal disease.</p>
+  <p><strong>Causes of RAPD:</strong> optic neuritis, extensive retinal disease, optic tract/prechiasmal lesion, rim pallor, VF defect, NLP eye. "Can't get an APD at or beyond the LGN."</p>
+  <h4 style="font-size:13px;font-weight:600;margin:10px 0 4px">5 reasons for light-near dissociation:</h4>
+  <ul><li>Tecal (dorsal midbrain syndrome)</li><li>Blind Eye (NLP — Amaurotic pupil)</li><li>Adie's tonic pupil</li><li>Argyll Robertson</li><li>Aberrant regeneration of CN III</li></ul>
+</div></div>
+
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">Horner's syndrome</div><div class="card-subtitle">1st, 2nd &amp; 3rd order localization</div></div>
+  <div class="card-meta"><span class="tag tag-amber">Neuro</span><span class="toggle-icon">▾</span></div>
+</div><div class="card-body">
+  <p><strong>Classic triad:</strong> miosis + ptosis + anhidrosis (ipsilateral)</p>
+  <table><tr><td>Cocaine 4%</td><td>Confirms Horner's — no dilation in any order</td></tr>
+  <tr><td>Hydroxyamphetamine</td><td>Dilates in 1st/2nd order; NO dilation in 3rd order (postganglionic)</td></tr>
+  <tr><td>Apraclonidine 0.5%</td><td>Reversal of anisocoria confirms Horner's (denervation hypersensitivity)</td></tr></table>
+  <h4 style="font-size:13px;font-weight:600;margin:10px 0 4px">1st Order (central):</h4><ul><li>Wallenburg's (lateral medullary syndrome)</li><li>Spinal cord lesion</li></ul>
+  <h4 style="font-size:13px;font-weight:600;margin:10px 0 4px">2nd Order (preganglionic):</h4><ul><li>Lung apex tumor (Pancoast)</li><li>Brachial plexus injury</li><li>Neck or shoulder injury</li></ul>
+  <h4 style="font-size:13px;font-weight:600;margin:10px 0 4px">3rd Order (postganglionic):</h4><ul><li>Cluster headache</li><li>Trauma/carotid dissection</li><li>Cavernous sinus lesion</li></ul>
+  <div class="warn-box">⚠ New Horner's + neck pain → carotid dissection until proven otherwise. Urgent vascular imaging.</div>
+</div></div>
+
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">Adie's tonic pupil &amp; others</div><div class="card-subtitle">Postganglionic denervation, pharmacologic, CN III</div></div>
+  <div class="card-meta"><span class="tag tag-blue">Neuro</span><span class="toggle-icon">▾</span></div>
+</div><div class="card-body">
+  <table>
+    <tr><td>Adie's</td><td>Large, poorly reactive; near-light dissociation; sectoral iris movement; young females; 0.1% pilocarpine → constriction (denervation hypersensitivity)</td></tr>
+    <tr><td>Argyll Robertson</td><td>Small, irregular; constrict to near NOT light; bilateral; neurosyphilis</td></tr>
+    <tr><td>Pharmacologic mydriasis</td><td>No response to 1% pilocarpine; anticholinergics (atropine, scopolamine patch)</td></tr>
+    <tr><td>CN III palsy</td><td>"Down and out" + ptosis; pupil-involving = posterior communicating aneurysm until proven otherwise. Urgent MRI/MRA.</td></tr>
+  </table>
+  <div class="warn-box">⚠ Pupil-involving CN III palsy is a neurosurgical emergency — call immediately.</div>
+</div></div>
+</div>
+
+<!-- HEADACHE -->
+<div id="tab-headache" class="section">
+<p style="font-size:18px;font-weight:600;letter-spacing:-0.3px;margin-bottom:0.2rem">Headache</p>
+<p style="font-size:12.5px;color:var(--text2);margin-bottom:1.25rem">Primary types, emergency red flags, ocular causes</p>
+
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">Primary headache types</div><div class="card-subtitle">Tension, migraine, cluster</div></div>
+  <div class="card-meta"><span class="tag tag-blue">Primary</span><span class="toggle-icon">▾</span></div>
+</div><div class="card-body">
+  <h4 style="font-size:13px;font-weight:600;margin:0 0 4px">1. Tension</h4><ul><li>Usually bilateral; band/pressure over temples and occipital region; no nausea</li></ul>
+  <h4 style="font-size:13px;font-weight:600;margin:10px 0 4px">2. Cluster</h4><ul><li>Periorbital, unilateral; autonomic features; lasts 15–180 min; photophobia</li></ul>
+  <h4 style="font-size:13px;font-weight:600;margin:10px 0 4px">3. Migraine</h4><ul><li>Unilateral; pulsating; with/without aura; nausea; photophobia; 4–72 hrs</li><li>Visual aura in 30–50% — scintillating scotoma, fortification spectra</li></ul>
+  <p><strong>Workup:</strong> r/o ocular disease — EOMs, pupils, CVF, refraction. Order VF for new aura to r/o occipital lesions. Caused by cortical spreading excitation.</p>
+</div></div>
+
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">Emergency secondary headaches</div><div class="card-subtitle">Must-not-miss diagnoses</div></div>
+  <div class="card-meta"><span class="tag tag-red">Emergency</span><span class="toggle-icon">▾</span></div>
+</div><div class="card-body">
+  <ul>
+    <li><strong>Giant cell arteritis (≥50 yrs)</strong> — temporal HA + scalp tenderness + jaw claudication. Same-day ESR/CRP. Start steroids before biopsy if vision threatened.</li>
+    <li><strong>Papilledema / raised ICP</strong> — transient visual obscurations, disc edema. MRI to r/o mass &amp; venous sinus thrombosis.</li>
+    <li><strong>Pituitary apoplexy</strong> — sudden HA, vision loss, motility problems, ptosis, hormonal dysfunction</li>
+    <li><strong>Aneurysm (PCoA)</strong> — thunderclap onset; CN III palsy with blown pupil</li>
+    <li><strong>Carotid artery dissection</strong> — neck pain + Horner's; urgent MRA</li>
+    <li><strong>Acute angle closure</strong> — unilateral HA + red eye + halos + nausea; IOP often &gt;40 mmHg</li>
+  </ul>
+  <div class="warn-box">⚠ "Worst HA of life", new HA + fever/stiff neck, positional HA worse supine, papilledema, APD, or new VF loss → refer same day.</div>
+</div></div>
+
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">Ocular causes of headache</div><div class="card-subtitle">Rule out at every headache presentation</div></div>
+  <div class="card-meta"><span class="tag tag-amber">Ocular</span><span class="toggle-icon">▾</span></div>
+</div><div class="card-body">
+  <table>
+    <tr><td>Refractive error</td><td>Frontal/brow ache with near work; worse as day progresses; resolves with correction</td></tr>
+    <tr><td>Convergence insufficiency</td><td>Bifrontal HA with reading; NPC &gt;10 cm; high exophoria at near</td></tr>
+    <tr><td>Accommodative dysfunction</td><td>End-of-day HA; especially under-corrected hyperopes or early presbyopes</td></tr>
+    <tr><td>Dry eye</td><td>End-of-day brow ache; often misattributed to tension HA</td></tr>
+    <tr><td>Acute angle closure</td><td>Severe unilateral HA + red eye + halos + nausea; fixed mid-dilated pupil; IOP &gt;40 mmHg</td></tr>
+    <tr><td>GCA ≥50 yrs</td><td>Temporal HA + scalp tenderness + jaw claudication; AION risk</td></tr>
+  </table>
+</div></div>
+</div>
+
+<!-- DIPLOPIA -->
+<div id="tab-diplopia" class="section">
+<p style="font-size:18px;font-weight:600;letter-spacing:-0.3px;margin-bottom:0.2rem">Diplopia</p>
+<p style="font-size:12.5px;color:var(--text2);margin-bottom:1.25rem">Monocular vs binocular, horizontal &amp; vertical workup, CN syndromes</p>
+
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">Initial workup</div><div class="card-subtitle">4 key questions + history</div></div>
+  <div class="card-meta"><span class="tag tag-blue">Workup</span><span class="toggle-icon">▾</span></div>
+</div><div class="card-body">
+  <ul><li>Does it go away when you cover either eye? (monocular vs binocular)</li><li>Is it worse at distance or near?</li><li>Worse in which direction of gaze?</li><li>Is it up/down or side to side?</li></ul>
+  <p><strong>Key history:</strong> DM, HTN, cancer, thyroid, MS, prior orbital surgery, strabismus, amblyopia</p>
+  <div class="warn-box">⚠ New vertical diplopia, ptosis + diplopia, pupil-involving CN III, or diplopia + headache → urgent same-day referral/imaging.</div>
+</div></div>
+
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">Horizontal diplopia DDx</div><div class="card-subtitle">Etiology and distinguishing features</div></div>
+  <div class="card-meta"><span class="tag tag-blue">Horizontal</span><span class="toggle-icon">▾</span></div>
+</div><div class="card-body">
+  <table>
+    <tr><td>CN VI palsy</td><td>Esotropia at distance; limited abduction; microvascular (DM/HTN) vs elevated ICP</td></tr>
+    <tr><td>Thyroid eye disease</td><td>Lid retraction, proptosis, restrictive; IR most commonly affected; worse upgaze</td></tr>
+    <tr><td>Myasthenia gravis</td><td>Variable/fatigable; worse end of day; Cogan lid twitch; ice pack test positive</td></tr>
+    <tr><td>INO</td><td>Adduction deficit + contralateral abduction nystagmus; MLF lesion; stroke or MS</td></tr>
+    <tr><td>Decompensated phoria</td><td>Gradual onset; prior strabismus history; recent illness/stress</td></tr>
+  </table>
+</div></div>
+
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">CN III — six localizing syndromes</div><div class="card-subtitle">Brainstem through orbit</div></div>
+  <div class="card-meta"><span class="tag tag-amber">CN III</span><span class="toggle-icon">▾</span></div>
+</div><div class="card-body">
+  <ul>
+    <li><strong>Brainstem</strong> — Benedikt, Weber; look for other CN involvement, cerebellar signs, nystagmus</li>
+    <li><strong>Subarachnoid space</strong> — PCoA aneurysm; pupil-involving → emergent MRI/MRA</li>
+    <li><strong>Posterior communicating artery</strong> — pupil-blown = aneurysm until proven otherwise</li>
+    <li><strong>Cavernous sinus</strong> — CN 3,4,5 V1, Horner's; parasellar mass</li>
+    <li><strong>Orbital</strong> — co-involvement of all orbital structures</li>
+    <li><strong>Microvascular (DM/HTN)</strong> — typically pupil-sparing; improves in 3–6 months</li>
+  </ul>
+  <table style="margin-top:8px">
+    <tr><td>Complete CN III palsy</td><td>Eye "down and out"; ptosis; no elevation, depression, or adduction</td></tr>
+    <tr><td>Pupil blown</td><td>Aneurysm until proven otherwise — emergent imaging</td></tr>
+    <tr><td>Pupil sparing</td><td>Likely microvascular; monitor; watch for aberrant regeneration</td></tr>
+  </table>
+</div></div>
+
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">CN IV &amp; EOM actions reference</div><div class="card-subtitle">Trochlear nerve, bilateral palsy, H-pattern</div></div>
+  <div class="card-meta"><span class="tag tag-amber">CN IV</span><span class="toggle-icon">▾</span></div>
+</div><div class="card-body">
+  <ul>
+    <li>Only CN that fully decussates dorsally — right nucleus → left SO palsy</li>
+    <li>Most common cause: trauma (dorsal midbrain impact)</li>
+    <li>Bilateral CN IV palsy: reversing hypertropia on alternating cover test, large excyclotorsion, V-pattern eso</li>
+  </ul>
+  <h4 style="font-size:13px;font-weight:600;margin:10px 0 4px">EOM actions (H-pattern):</h4>
+  <table>
+    <tr><td>SR/IR</td><td>Elevate/depress in abduction (CN III)</td></tr>
+    <tr><td>LR</td><td>Abducts (CN VI)</td></tr>
+    <tr><td>MR</td><td>Adducts (CN III)</td></tr>
+    <tr><td>SO</td><td>Depresses in adduction; intorts (CN IV)</td></tr>
+    <tr><td>IO</td><td>Elevates in adduction; extorts (CN III)</td></tr>
+  </table>
+  <p style="font-size:12px;color:var(--text2);margin-top:6px">See Parks 3-Step tab for full calculator.</p>
+</div></div>
+</div>
+
+<!-- NYSTAGMUS -->
+<div id="tab-nystagmus" class="section">
+<p style="font-size:18px;font-weight:600;letter-spacing:-0.3px;margin-bottom:0.2rem">Nystagmus</p>
+<p style="font-size:12.5px;color:var(--text2);margin-bottom:1.25rem">Classification, peripheral vs central, specific acquired forms</p>
+
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">Classifying nystagmus</div><div class="card-subtitle">Jerk vs pendular, congenital vs acquired</div></div>
+  <div class="card-meta"><span class="tag tag-blue">Classification</span><span class="toggle-icon">▾</span></div>
+</div><div class="card-body">
+  <table>
+    <tr><td>Direction</td><td>Jerk (fast/slow phase) or pendular</td></tr>
+    <tr><td>Conjugate?</td><td>Both eyes same vs. dissociated</td></tr>
+    <tr><td>Plane</td><td>Horizontal, vertical, torsional, or mixed</td></tr>
+  </table>
+  <h4 style="font-size:13px;font-weight:600;margin:10px 0 4px">Congenital:</h4>
+  <ul><li>Null point present; dampens with convergence; worsens with Frenzel goggles</li><li>Horizontal in primary gaze; usually benign — MRI if no null point or worsening</li></ul>
+  <h4 style="font-size:13px;font-weight:600;margin:10px 0 4px">Acquired:</h4>
+  <ul><li>No null point; does not dampen with convergence; often associated with CNS pathology</li></ul>
+</div></div>
+
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">Peripheral vs central nystagmus</div><div class="card-subtitle">Key distinguishing features</div></div>
+  <div class="card-meta"><span class="tag tag-amber">Localization</span><span class="toggle-icon">▾</span></div>
+</div><div class="card-body">
+  <table>
+    <tr><td style="color:var(--text2);font-size:12px;font-weight:600">Feature</td><td style="color:var(--text2);font-size:12px;font-weight:600">Peripheral</td><td style="color:var(--text2);font-size:12px;font-weight:600">Central</td></tr>
+    <tr><td>Direction</td><td>Fixed (horizontal)</td><td>Direction-changing or vertical</td></tr>
+    <tr><td>Fixation effect</td><td>Suppressed by fixation</td><td>NOT suppressed</td></tr>
+    <tr><td>Fast phase</td><td>Away from lesion (toward good ear)</td><td>Gaze-directed</td></tr>
+    <tr><td>Vertigo</td><td>Often severe, episodic</td><td>Usually mild or absent</td></tr>
+    <tr><td>Associated Sx</td><td>Hearing loss, tinnitus</td><td>Other neuro signs</td></tr>
+  </table>
+  <div class="warn-box">⚠ Direction-changing nystagmus or vertical nystagmus = central until proven otherwise. MRI brain.</div>
+</div></div>
+
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">Specific acquired types</div><div class="card-subtitle">Upbeat, downbeat, see-saw, periodic alternating</div></div>
+  <div class="card-meta"><span class="tag tag-amber">Acquired</span><span class="toggle-icon">▾</span></div>
+</div><div class="card-body">
+  <table>
+    <tr><td>Upbeat</td><td>Cervicomedullary junction or dorsal vermis; DDx: MS, tumor, Wernicke's</td></tr>
+    <tr><td>Downbeat</td><td>Cervicomedullary junction; DDx: Arnold-Chiari (check for disc edema from 4th ventricle compression), MS, tumor</td></tr>
+    <tr><td>See-saw</td><td>One eye rises &amp; intorts; other falls &amp; extorts; associated with bitemporal hemianopia; localizes to parasellar/midbrain</td></tr>
+    <tr><td>Periodic alternating (PAN)</td><td>Direction reverses every ~90 sec; cervicomedullary junction or cerebellar flocculus; DDx: MS, tumor, phenytoin</td></tr>
+    <tr><td>Gaze-evoked</td><td>Beats in direction of gaze; returns to midline at rest; medications (anticonvulsants, alcohol) or cerebellar disease</td></tr>
+  </table>
+  <div class="info-box">Don't confuse PAN with normal physiologic end-gaze nystagmus, which only occurs at extreme (&gt;45°) gaze positions.</div>
+</div></div>
+</div>
+
+<!-- VISUAL FIELDS -->
+<div id="tab-vf" class="section">
+<p style="font-size:18px;font-weight:600;letter-spacing:-0.3px;margin-bottom:0.2rem">Visual Fields</p>
+<p style="font-size:12.5px;color:var(--text2);margin-bottom:1.25rem">Defect localization by anatomy and DDx</p>
+
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">Pre-chiasmal defects</div><div class="card-subtitle">Monocular — retina or optic nerve</div></div>
+  <div class="card-meta"><span class="tag tag-blue">Pre-chiasmal</span><span class="toggle-icon">▾</span></div>
+</div><div class="card-body">
+  <table>
+    <tr><td>Monocular total loss</td><td>Optic nerve: ischemic, compressive, inflammatory (optic neuritis)</td></tr>
+    <tr><td>Central scotoma</td><td>Optic neuritis, macular disease, toxic optic neuropathy</td></tr>
+    <tr><td>Cecocentral scotoma</td><td>Toxic/nutritional optic neuropathy (B12, ethambutol, methanol)</td></tr>
+    <tr><td>Arcuate scotoma</td><td>Glaucoma, NAION, tilted disc</td></tr>
+    <tr><td>Altitudinal defect</td><td>NAION, BRVO, retinal artery occlusion</td></tr>
+    <tr><td>Enlarged blind spot</td><td>Disc edema, coloboma, drusen, staphyloma, high myopia</td></tr>
+    <tr><td>Constricting peripheral</td><td>RP, chronic papilledema, glaucoma, post-PRP, toxic neuropathy</td></tr>
+  </table>
+</div></div>
+
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">Chiasmal &amp; post-chiasmal defects</div><div class="card-subtitle">Bitemporal, homonymous, quadrantanopia</div></div>
+  <div class="card-meta"><span class="tag tag-blue">Chiasmal</span><span class="toggle-icon">▾</span></div>
+</div><div class="card-body">
+  <table>
+    <tr><td>Bitemporal hemianopia</td><td>Chiasm (decussating fibers); DDx: pituitary adenoma, craniopharyngioma, meningioma, hypothalamic tumor, tilted discs</td></tr>
+    <tr><td>Nasal hemianopia (monocular)</td><td>Lateral chiasm compression — aneurysm of ACA, pituitary adenoma</td></tr>
+    <tr><td>Homonymous hemianopia</td><td>Post-chiasmal; less congruent = more anterior; more congruent = more posterior (occipital)</td></tr>
+    <tr><td>Superior homonymous quadrantanopia</td><td>Temporal lobe ("pie in the sky"); DDx: temporal lobe tumor</td></tr>
+    <tr><td>Inferior homonymous quadrantanopia</td><td>Parietal lobe ("pie on the floor")</td></tr>
+    <tr><td>HH with macular sparing</td><td>Occipital cortex — dual blood supply (MCA + PCA); DDx: PCA occlusion</td></tr>
+    <tr><td>Bilateral field loss</td><td>Glaucoma, RP, bilateral ICA aneurysm, bilateral occipital infarction</td></tr>
+  </table>
+  <div class="info-box">Most lesions at the chiasm are tumors. Most lesions beyond the chiasm are vascular.</div>
+</div></div>
+
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">VF interpretation pearls</div><div class="card-subtitle">Congruence rules, macular sparing, testing tips</div></div>
+  <div class="card-meta"><span class="tag tag-gray">Tips</span><span class="toggle-icon">▾</span></div>
+</div><div class="card-body">
+  <ul>
+    <li>Anterior to nodal point: superior VF defect = inferior pathology on retina</li>
+    <li>Posterior to nodal point: inferior VF defect = superior pathology</li>
+    <li>Incorrect Rx causes overall constriction — always verify correction before perimetry</li>
+    <li>Reliability indices matter: fixation losses, false positives/negatives &gt;33% = unreliable</li>
+    <li>Pattern deviation preferred over total deviation when diffuse loss is present</li>
+    <li>GHT (Glaucoma Hemifield Test) outside normal limits = significant asymmetry</li>
+  </ul>
+</div></div>
+</div>
+
+<!-- GLAUCOMA2 (new dedicated tab) -->
+<div id="tab-glaucoma2" class="section">
+<p style="font-size:18px;font-weight:600;letter-spacing:-0.3px;margin-bottom:0.2rem">Glaucoma</p>
+<p style="font-size:12.5px;color:var(--text2);margin-bottom:1.25rem">Assessment framework, IOP medications, angle closure emergency</p>
+
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">Glaucoma evaluation framework</div><div class="card-subtitle">Disc, IOP, CCT, angle, RNFL</div></div>
+  <div class="card-meta"><span class="tag tag-blue">Assessment</span><span class="toggle-icon">▾</span></div>
+</div><div class="card-body">
+  <table>
+    <tr><td>Target IOP</td><td>25–30% reduction from baseline; &lt;15 mmHg if advanced damage</td></tr>
+    <tr><td>C/D ratio concerns</td><td>Asymmetry ≥0.2; vertical elongation; notching; disc hemorrhage; RNFL defects</td></tr>
+    <tr><td>CCT</td><td>Thin (&lt;520 μm) = independent risk factor; GAT overestimates IOP with thick corneas</td></tr>
+    <tr><td>Gonioscopy</td><td>Always grade before dilation; Shaffer grade &lt;2 = narrow/occludable</td></tr>
+    <tr><td>OCT RNFL</td><td>Focal thinning often precedes VF loss by years; track serially</td></tr>
+    <tr><td>NTG workup</td><td>Systemic hypotension, sleep apnea, vasospasm; nocturnal dips; 24-hr IOP curve</td></tr>
+  </table>
+</div></div>
+
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">IOP-lowering medications</div><div class="card-subtitle">Mechanism, expected reduction, cost</div></div>
+  <div class="card-meta"><span class="tag tag-gray">Pharm</span><span class="toggle-icon">▾</span></div>
+</div><div class="card-body">
+  <table>
+    <tr><td>Latanoprost 0.005% (Xalatan)</td><td>Prostaglandin; QHS; ~25–33% ↓; ~$15–30 generic</td></tr>
+    <tr><td>Bimatoprost 0.03% (Lumigan)</td><td>Prostamide; QHS; ~27–33% ↓; ~$20–40 generic</td></tr>
+    <tr><td>Timolol 0.5%</td><td>Beta-blocker; BID; ~20–25% ↓; ~$10–20 generic</td></tr>
+    <tr><td>Cosopt (dorzolamide/timolol)</td><td>CAI + BB combo; BID; ~25–30% ↓; ~$30–60 generic</td></tr>
+    <tr><td>Brimonidine 0.2% (Alphagan)</td><td>Alpha-2 agonist; BID-TID; ~20% ↓; ~$15–35</td></tr>
+    <tr><td>Netarsudil 0.02% (Rhopressa)</td><td>Rho-kinase inhibitor; QHS; ~20% ↓; ~$200 brand</td></tr>
+  </table>
+  <div class="warn-box">⚠ Timolol: avoid in asthma/COPD/bradycardia. Prostaglandins: counsel on iris pigmentation, lash growth, fat atrophy.</div>
+</div></div>
+
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">Acute angle closure — emergency management</div><div class="card-subtitle">Recognition &amp; immediate steps</div></div>
+  <div class="card-meta"><span class="tag tag-red">Emergency</span><span class="toggle-icon">▾</span></div>
+</div><div class="card-body">
+  <table>
+    <tr><td>Presentation</td><td>Severe HA, nausea/vomiting, halos, blurred vision, fixed mid-dilated pupil, corneal edema; IOP &gt;40–60 mmHg</td></tr>
+    <tr><td>Immediate Rx</td><td>Timolol 0.5% + brimonidine 0.2% + dorzolamide 2% + acetazolamide 500 mg PO or IV; pilocarpine 1–2% after IOP begins to drop</td></tr>
+    <tr><td>Definitive Tx</td><td>Laser peripheral iridotomy (LPI) OU — treat fellow eye prophylactically</td></tr>
+  </table>
+  <div class="warn-box">⚠ IOP &gt;40 mmHg with symptoms = ophthalmic emergency. Refer immediately.</div>
+</div></div>
+</div>
+
+<!-- BINOCULAR WORKUP -->
+<div id="tab-binoc" class="section">
+<p style="font-size:18px;font-weight:600;letter-spacing:-0.3px;margin-bottom:0.2rem">Binocular Vision Workup</p>
+<p style="font-size:12.5px;color:var(--text2);margin-bottom:1.25rem">Distance phoria, vergences, von Graefe, FCC, MEM</p>
+
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">Distance lateral phoria — von Graefe</div><div class="card-subtitle">Step-by-step technique</div></div>
+  <div class="card-meta"><span class="tag tag-blue">Technique</span><span class="toggle-icon">▾</span></div>
+</div><div class="card-body">
+  <p><strong>Setup:</strong> Distance correction &amp; PD in phoropter; OD: 12 BI (measuring); OS: 6 BU (dissociating)</p>
+  <ol style="padding-left:1.3rem;font-size:13px">
+    <li style="padding:2px 0">Isolate one letter — one line larger than best VA</li>
+    <li style="padding:2px 0">Patient sees two images: one up and to the right</li>
+    <li style="padding:2px 0">"Tell me when the two targets line up like buttons"</li>
+    <li style="padding:2px 0">Reduce BI prism until alignment, then overshoot</li>
+    <li style="padding:2px 0">Bring back; average two values if within 3Δ; if not, repeat</li>
+  </ol>
+  <table style="margin-top:8px">
+    <tr><td>Expected</td><td>N: 3Δ (±3) for presbyopes; Ortho for younger patients</td></tr>
+    <tr><td>AC/A ratio</td><td>Repeat through +1.00D or –1.00D. Expected 4:1 ± 2.</td></tr>
+  </table>
+</div></div>
+
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">Distance horizontal vergences (BI &amp; BO)</div><div class="card-subtitle">Break and recovery measurement</div></div>
+  <div class="card-meta"><span class="tag tag-blue">Technique</span><span class="toggle-icon">▾</span></div>
+</div><div class="card-body">
+  <ul>
+    <li>Increase prism slowly — note blur point, break point, recovery point</li>
+    <li>Detect suppression: OD → target drifts right; OS → target drifts left</li>
+    <li>If no blur point with BO, common — record as "x/break/recovery"</li>
+    <li>BI and BO on same isolated letter, larger than best VA</li>
+  </ul>
+  <table style="margin-top:8px">
+    <tr><td>Expected (Sheedy &amp; Saladin)</td><td>BI: 7/15/12 &nbsp;&nbsp; BO: 15/28/20</td></tr>
+  </table>
+</div></div>
+
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">FCC &amp; MEM</div><div class="card-subtitle">Functional accommodative tests at near</div></div>
+  <div class="card-meta"><span class="tag tag-gray">Testing</span><span class="toggle-icon">▾</span></div>
+</div><div class="card-body">
+  <h4 style="font-size:13px;font-weight:600;margin:0 0 4px">FCC (Fused Cross-Cylinder):</h4>
+  <ul>
+    <li>FCC card (grid) at 40 cm in dim illumination; red dots at 90°</li>
+    <li>Ask: "Which lines sharper — going up/down or side to side?"</li>
+    <li>Add (+) OU until lines appear equal</li>
+  </ul>
+  <p><strong>Expected:</strong> +0.25 to +0.50 D</p>
+  <h4 style="font-size:13px;font-weight:600;margin:10px 0 4px">MEM (Monocular Estimate Method):</h4>
+  <ul>
+    <li>Attach MEM card to retinoscope; patient wears habitual Rx at working distance</li>
+    <li>Quickly neutralize reflex with trial lens — don't let patient accommodate to the lens</li>
+    <li>Record power needed OU</li>
+  </ul>
+  <p><strong>Expected:</strong> +0.25 to +0.50 D (lag of accommodation)</p>
+</div></div>
+</div>
+
+<!-- VERGENCE ANOMALIES -->
+<div id="tab-vergence" class="section">
+<p style="font-size:18px;font-weight:600;letter-spacing:-0.3px;margin-bottom:0.2rem">Vergence Anomalies</p>
+<p style="font-size:12.5px;color:var(--text2);margin-bottom:1.25rem">CI, CE, basic exo/eso, divergence anomalies</p>
+
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">Convergence insufficiency (CI)</div><div class="card-subtitle">Most common binocular vision disorder</div></div>
+  <div class="card-meta"><span class="tag tag-blue">Vergence</span><span class="toggle-icon">▾</span></div>
+</div><div class="card-body">
+  <p><strong>Symptoms (near):</strong> Headaches; blurred or double vision; eyestrain; movement of print; pulling sensation</p>
+  <p><strong>Signs:</strong> Low AC/A; high exo at near &gt; distance; ortho/suppresses at distance; receded NPC (improves with +); low NRA; high MEM; poor BO near recovery; poor facility with (+) OU</p>
+  <table style="margin-top:8px">
+    <tr><td>Primary Tx</td><td>Vision therapy (VT) — office-based preferred</td></tr>
+    <tr><td>Secondary Tx</td><td>BO prism at near; beware prism adaptation</td></tr>
+    <tr><td>Pseudo-CI</td><td>Same symptoms/signs; NPC improves with (+) → treat underlying AI first</td></tr>
+  </table>
+</div></div>
+
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">Convergence excess (CE)</div><div class="card-subtitle">High AC/A esophoria at near</div></div>
+  <div class="card-meta"><span class="tag tag-blue">Vergence</span><span class="toggle-icon">▾</span></div>
+</div><div class="card-body">
+  <p><strong>Symptoms (near):</strong> Headache; blurred vision; eyestrain; diplopia at near</p>
+  <p><strong>Signs:</strong> High AC/A; high eso at near &gt; distance; ortho at distance; high MEM &amp; FCC; low NRA; poor facility with (+) OD, OS, OU; normal-high amplitude</p>
+  <table style="margin-top:8px">
+    <tr><td>Primary Tx</td><td>Added (+) lenses at near</td></tr>
+    <tr><td>Secondary Tx</td><td>VT</td></tr>
+  </table>
+</div></div>
+
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">Basic exo &amp; eso, divergence anomalies</div><div class="card-subtitle">Equal deviation &amp; distance-predominant conditions</div></div>
+  <div class="card-meta"><span class="tag tag-blue">Vergence</span><span class="toggle-icon">▾</span></div>
+</div><div class="card-body">
+  <table>
+    <tr><td><strong>Basic Exophoria</strong></td><td>Equal exo distance &amp; near; low MEM; poor BO both distances; facility worse with (+). Tx: VT; BO prism secondary. CFV = (1/3) phoria.</td></tr>
+    <tr><td><strong>Basic Esophoria</strong></td><td>Equal eso distance &amp; near; often with hyperopia; poor BI; facility worse with (–). Tx: VT; BI prism or Rx update.</td></tr>
+    <tr><td><strong>Divergence insufficiency</strong></td><td>Higher eso at distance than near; diplopia at distance; halos in car/train. Tx: BI prism primary.</td></tr>
+    <tr><td><strong>Divergence excess</strong></td><td>Higher exo at distance than near; high AC/A; may close one eye in bright light. Tx: minus lenses primary.</td></tr>
+  </table>
+</div></div>
+
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">Quick reference — vergence anomaly summary</div><div class="card-subtitle">AC/A, phorias, and primary treatment</div></div>
+  <div class="card-meta"><span class="tag tag-gray">Reference</span><span class="toggle-icon">▾</span></div>
+</div><div class="card-body">
+  <table>
+    <tr style="font-size:12px;color:var(--text2)"><td>Condition</td><td>AC/A</td><td>Distance</td><td>Near</td><td>Primary Tx</td></tr>
+    <tr><td>CI</td><td>Low</td><td>Ortho</td><td>High exo</td><td>VT</td></tr>
+    <tr><td>CE</td><td>High</td><td>Ortho</td><td>High eso</td><td>Add (+)</td></tr>
+    <tr><td>Basic exo</td><td>Normal</td><td>Exo</td><td>Equal exo</td><td>VT / prism</td></tr>
+    <tr><td>Basic eso</td><td>Normal</td><td>Eso</td><td>Equal eso</td><td>VT / prism</td></tr>
+    <tr><td>Div. insuff.</td><td>Low</td><td>High eso</td><td>Ortho</td><td>BI prism</td></tr>
+    <tr><td>Div. excess</td><td>High</td><td>High exo</td><td>Ortho</td><td>Minus lenses</td></tr>
+  </table>
+</div></div>
+</div>
+
+<!-- ACCOMMODATION -->
+<div id="tab-accomm" class="section">
+<p style="font-size:18px;font-weight:600;letter-spacing:-0.3px;margin-bottom:0.2rem">Accommodative Anomalies</p>
+<p style="font-size:12.5px;color:var(--text2);margin-bottom:1.25rem">Insufficiency, infacility, excess, spasm</p>
+
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">Accommodative insufficiency (AI)</div><div class="card-subtitle">Low amplitude, poor sustaining</div></div>
+  <div class="card-meta"><span class="tag tag-blue">Accommodation</span><span class="toggle-icon">▾</span></div>
+</div><div class="card-body">
+  <p><strong>Symptoms:</strong> Blurry near vision; eyestrain; print movement; difficulty reading</p>
+  <p><strong>Signs:</strong> Low amplitude (below Hofstetter minimum); low PRA; high MEM &amp; FCC; reduced facility with (–); eso at near or XT</p>
+  <table style="margin-top:8px">
+    <tr><td>Primary Tx</td><td>Added (+) at near</td></tr>
+    <tr><td>Secondary Tx</td><td>VT (accommodative facility training)</td></tr>
+  </table>
+  <p style="font-size:12px;color:var(--text2);margin-top:6px">Hofstetter's: Minimum = 15 – 0.25(age); Expected = 18.5 – 0.30(age)</p>
+</div></div>
+
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">Accommodative infacility (AF)</div><div class="card-subtitle">Slow or inconsistent focusing</div></div>
+  <div class="card-meta"><span class="tag tag-blue">Accommodation</span><span class="toggle-icon">▾</span></div>
+</div><div class="card-body">
+  <p><strong>Symptoms:</strong> Blurry vision after near work; headaches; difficulty switching focus; light sensitivity</p>
+  <p><strong>Signs:</strong> Normal-high amplitude; low NRA and PRA; low MEM &amp; FCC; poor facility with both (+) and (–) OD, OS, OU</p>
+  <table style="margin-top:8px"><tr><td>Primary Tx</td><td>VT (accommodative facility training)</td></tr></table>
+</div></div>
+
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">Accommodative excess &amp; spasm</div><div class="card-subtitle">Over-accommodation, pseudomyopia</div></div>
+  <div class="card-meta"><span class="tag tag-amber">Accommodation</span><span class="toggle-icon">▾</span></div>
+</div><div class="card-body">
+  <h4 style="font-size:13px;font-weight:600;margin:0 0 4px">Accommodative Excess (AE):</h4>
+  <p><strong>Sx:</strong> Blurry distance vision after near work; headaches; eyestrain</p>
+  <p><strong>Signs:</strong> High MEM &amp; FCC; low PRA; poor facility with (+); eso tendency at near; high amplitude</p>
+  <p><strong>Tx:</strong> VT</p>
+  <h4 style="font-size:13px;font-weight:600;margin:10px 0 4px">Accommodative Spasm:</h4>
+  <p><strong>Sx:</strong> Pseudomyopia; intermittent blurry distance; diplopia; miotic pupils; rare</p>
+  <p><strong>Signs:</strong> Miotic pupils; variable refraction; triad: over-accommodation + convergence + miosis; may be psychogenic or organic</p>
+  <p><strong>Tx:</strong> Cycloplegic refraction essential; VT; cycloplegic drops if severe; rule out drug cause (pilocarpine, organophosphate) and organic cause (dorsal midbrain tumor)</p>
+</div></div>
+</div>
+
+<!-- DRY EYE (new dedicated tab) -->
+<div id="tab-dryeye2" class="section">
+<p style="font-size:18px;font-weight:600;letter-spacing:-0.3px;margin-bottom:0.2rem">Dry Eye</p>
+<p style="font-size:12.5px;color:var(--text2);margin-bottom:1.25rem">DEWS II classification, testing, treatment ladder</p>
+
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">Dry eye evaluation — DEWS II</div><div class="card-subtitle">Symptom screen, TBUT, staining, Schirmer, MGD</div></div>
+  <div class="card-meta"><span class="tag tag-teal">Assessment</span><span class="toggle-icon">▾</span></div>
+</div><div class="card-body">
+  <p><strong>Symptom screen:</strong> OSDI or DEQ-5. OSDI ≥23 = moderate-severe.</p>
+  <table style="margin-top:8px">
+    <tr><td>TBUT</td><td>&lt;10 sec non-invasive; &lt;5 sec fluorescein → abnormal</td></tr>
+    <tr><td>Staining</td><td>Oxford scale (corneal 0–5); Van Bijsterveld (conjunctival)</td></tr>
+    <tr><td>Schirmer's I</td><td>&lt;5 mm/5 min = severe aqueous deficiency</td></tr>
+    <tr><td>Phenol red thread</td><td>&lt;10 mm = aqueous deficiency; less reflex tearing than Schirmer</td></tr>
+    <tr><td>MGD grading</td><td>Meiboscore 0–3 per lid; assess gland expressibility and secretion quality</td></tr>
+  </table>
+  <div class="tip-box">Classify first: Aqueous deficient (Sjögren's vs. non-Sjögren's) vs. Evaporative (MGD most common). Classification drives treatment.</div>
+</div></div>
+
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">Treatment ladder</div><div class="card-subtitle">Step-up approach by severity</div></div>
+  <div class="card-meta"><span class="tag tag-teal">Treatment</span><span class="toggle-icon">▾</span></div>
+</div><div class="card-body">
+  <h4 style="font-size:13px;font-weight:600;margin:0 0 4px">Step 1 — Mild:</h4>
+  <ul><li>Patient education; omega-3 supplementation</li><li>Preserved artificial tears QID or PRN</li><li>Eyelid hygiene; warm compresses for MGD</li></ul>
+  <h4 style="font-size:13px;font-weight:600;margin:10px 0 4px">Step 2 — Moderate:</h4>
+  <ul><li>Non-preserved artificial tears</li><li>Cyclosporine 0.05% (Restasis) BID or lifitegrast 5% (Xiidra) BID</li><li>LipiFlow or thermal pulsation for MGD</li><li>Punctal plugs (lower first)</li><li>Topical azithromycin for meibomian gland disease</li></ul>
+  <h4 style="font-size:13px;font-weight:600;margin:10px 0 4px">Step 3 — Severe:</h4>
+  <ul><li>Autologous serum tears</li><li>Scleral lenses</li><li>Short-term topical steroids (loteprednol BID)</li><li>Amniotic membrane</li></ul>
+  <h4 style="font-size:13px;font-weight:600;margin:10px 0 4px">Step 4 — Very severe:</h4>
+  <ul><li>Systemic anti-inflammatory agents</li><li>Surgical punctal occlusion</li><li>Tarsorrhaphy</li></ul>
+</div></div>
+</div>
+
+<!-- CL FITTING -->
+<div id="tab-cl" class="section">
+<p style="font-size:18px;font-weight:600;letter-spacing:-0.3px;margin-bottom:0.2rem">Contact Lens Fitting</p>
+<p style="font-size:12.5px;color:var(--text2);margin-bottom:1.25rem">RGP fitting, BC selection, residual astigmatism, toric designs</p>
+
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">RGP — spherical BC selection</div><div class="card-subtitle">Fitting philosophy &amp; power compensation</div></div>
+  <div class="card-meta"><span class="tag tag-blue">RGP</span><span class="toggle-icon">▾</span></div>
+</div><div class="card-body">
+  <table>
+    <tr><td>Large diameters (10.0)</td><td>Kavg – 1.500</td></tr>
+    <tr><td>Small diameters (9.6)</td><td>Kavg – 0.500</td></tr>
+    <tr><td>Plano</td><td>–0.18 mm</td></tr>
+    <tr><td>Minus lenses</td><td>Subtract 0.01 mm per diopter; e.g. –3.00 D: 3.00 × 0.01 = 0.03 mm</td></tr>
+    <tr><td>Plus lenses</td><td>+0.18 D: 0.18 + 30.02 = 0.24 mm</td></tr>
+    <tr><td>Secondary curves</td><td>PCr = BCr + 1.5 mm; SCr = BCr + 1.5 mm</td></tr>
+  </table>
+  <h4 style="font-size:13px;font-weight:600;margin:10px 0 4px">Conversion formulas:</h4>
+  <table>
+    <tr><td>D = 337.5 / r(mm)</td><td>Convert radius to power</td></tr>
+    <tr><td>+0.05 mm = –0.250 D</td><td>Approximation (flatter BC = more minus power in TL)</td></tr>
+  </table>
+  <h4 style="font-size:13px;font-weight:600;margin:10px 0 4px">Vertex distance power compensation:</h4>
+  <table>
+    <tr><td>4.00–5.87 D</td><td>Add +0.25</td></tr>
+    <tr><td>6.00–7.87 D</td><td>Add +0.50</td></tr>
+    <tr><td>8.00–9.87 D</td><td>Add +0.75</td></tr>
+  </table>
+  <p style="font-size:12px;color:var(--text2);margin-top:8px">Use SAM-FAP to determine CLP change when BC is changed.</p>
+</div></div>
+
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">Lacrimal lens &amp; residual astigmatism</div><div class="card-subtitle">What the tear layer corrects</div></div>
+  <div class="card-meta"><span class="tag tag-blue">RGP</span><span class="toggle-icon">▾</span></div>
+</div><div class="card-body">
+  <table>
+    <tr><td>Lacrimal lens</td><td>LL = BC – K</td></tr>
+    <tr><td>Residual astigmatism</td><td>RA = Spectacle Rx cyl – Keratometric cyl (approximate)</td></tr>
+  </table>
+  <div class="info-box">If RA &lt;0.75 D → spherical RGP works well. If RA ≥0.75 D → consider front surface toric or soft toric.</div>
+</div></div>
+
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">RGP toric designs — design selection guide</div><div class="card-subtitle">Thin-flex, BST, SPE bitoric, CPE bitoric, FT toric</div></div>
+  <div class="card-meta"><span class="tag tag-blue">RGP</span><span class="toggle-icon">▾</span></div>
+</div><div class="card-body">
+  <table>
+    <tr style="font-size:12px;color:var(--text2)"><td>Design</td><td>Corneal cyl</td><td>RA (residual astigmatism)</td></tr>
+    <tr><td>Spherical RGP</td><td>≥1.00 D</td><td>≤0.75 D</td></tr>
+    <tr><td>Back surface toric (BST)</td><td>≥2.00 D</td><td>≤0.75 D</td></tr>
+    <tr><td>SPE bitoric</td><td>≥2.00 D</td><td>≤0.75 D</td></tr>
+    <tr><td>CPE bitoric</td><td>≥2.00 D</td><td>≥0.75 D</td></tr>
+    <tr><td>Front surface toric (FT)</td><td>&lt;2.00 D</td><td>≥0.75 D</td></tr>
+  </table>
+  <p style="font-size:12px;margin-top:8px"><strong>BST:</strong> Back surface toric; front spherical. Good for corneal cyl with minimal RA.</p>
+  <p style="font-size:12px;margin-top:4px"><strong>SPE bitoric:</strong> Both surfaces toric; equal power effect in all meridians — appears spherical to patient. For high corneal cyl with minimal RA.</p>
+  <p style="font-size:12px;margin-top:4px"><strong>CPE bitoric:</strong> Both surfaces toric; corrects both corneal and residual astigmatism.</p>
+</div></div>
+</div>
+
+<!-- OPTICS -->
+<div id="tab-optics" class="section">
+<p style="font-size:18px;font-weight:600;letter-spacing:-0.3px;margin-bottom:0.2rem">Optics</p>
+<p style="font-size:12.5px;color:var(--text2);margin-bottom:1.25rem">Lens materials, design strategies, Abbe values, prism formulas</p>
+
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">Design strategies for thinner, lighter lenses</div><div class="card-subtitle">6 approaches to optimize lens design</div></div>
+  <div class="card-meta"><span class="tag tag-blue">Design</span><span class="toggle-icon">▾</span></div>
+</div><div class="card-body">
+  <ol style="padding-left:1.3rem;font-size:13px">
+    <li style="padding:3px 0">Higher index material</li>
+    <li style="padding:3px 0">Minimal decentration</li>
+    <li style="padding:3px 0">Rounder frame shape</li>
+    <li style="padding:3px 0">Aspheric lens design</li>
+    <li style="padding:3px 0">Thinner center</li>
+    <li style="padding:3px 0">Smaller frame (smaller ED)</li>
+  </ol>
+</div></div>
+
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">Lens material comparison</div><div class="card-subtitle">Index, Abbe value, properties</div></div>
+  <div class="card-meta"><span class="tag tag-blue">Materials</span><span class="toggle-icon">▾</span></div>
+</div><div class="card-body">
+  <table>
+    <tr style="font-size:12px;color:var(--text2)"><td>Material</td><td>Index</td><td>Abbe Value</td><td>Notes</td></tr>
+    <tr><td>Crown Glass</td><td>1.523</td><td>58</td><td>Reference standard</td></tr>
+    <tr><td>CR-39</td><td>1.498</td><td>58</td><td>Duller sound; most optical clarity</td></tr>
+    <tr><td>Trivex</td><td>1.54</td><td>43–45</td><td>Impact resistant; lighter than CR-39</td></tr>
+    <tr><td>Polycarbonate</td><td>1.586</td><td>30–31</td><td>Highest impact resistance; higher ring sound; most chromatic aberration</td></tr>
+    <tr><td>High index 1.60</td><td>1.60</td><td>~36</td><td>Thinner; moderate aberration</td></tr>
+    <tr><td>High index 1.67</td><td>1.67</td><td>~32</td><td>Very thin; more aberration</td></tr>
+    <tr><td>High index 1.74</td><td>1.74</td><td>~33</td><td>Thinnest; most aberration</td></tr>
+  </table>
+  <div class="info-box">Higher Abbe value = less chromatic aberration. CR-39 and glass have the best optical clarity. Polycarbonate has the lowest Abbe value but best impact resistance — ideal for children and safety eyewear.</div>
+</div></div>
+
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">Prism formulas &amp; blank size</div><div class="card-subtitle">Prentice rule, decentration, minimum blank</div></div>
+  <div class="card-meta"><span class="tag tag-gray">Formulas</span><span class="toggle-icon">▾</span></div>
+</div><div class="card-body">
+  <table>
+    <tr><td>Prentice Rule</td><td>Δ = (lens power in D) × (decentration in cm)</td></tr>
+    <tr><td>Decentration</td><td>Dec(mm) = Δ ÷ lens power</td></tr>
+    <tr><td>Minimum blank size</td><td>= ED + 2(decentration per eye)</td></tr>
+  </table>
+  <p style="font-size:12px;color:var(--text2);margin-top:8px">Can split prism between both eyes for cosmetic reasons. BI prism for esophoria; BO prism for exophoria.</p>
+  <h4 style="font-size:13px;font-weight:600;margin:10px 0 4px">Power in any meridian (oblique):</h4>
+  <table>
+    <tr style="font-size:12px;color:var(--text2)"><td>Angle from axis</td><td>Difference</td><td>% cyl added to sph</td></tr>
+    <tr><td>30° / 150°</td><td>25</td><td>50%</td></tr>
+    <tr><td>45° / 135°</td><td>50</td><td>75%</td></tr>
+    <tr><td>60° / 120°</td><td>75</td><td>100% (full cyl)</td></tr>
+  </table>
+</div></div>
+</div>
+
+</div><!-- end main-wrap -->
+</div><!-- end app-wrap -->
+
+  <p class="disclaimer" style="max-width:960px;margin:0 auto;padding:0 1.5rem 2rem">⚕ This guide is a clinical reference tool only. Always verify drug dosages with current prescribing information, confirm ICD-10 codes with your billing department, and apply clinical judgment to individual patient cases. Drug prices are approximate retail/GoodRx figures as of April 2026 and subject to change. For clinical reference use only.</p>
 
 </div>
 
