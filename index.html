@@ -1,179 +1,342 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>OD Mini Guide</title>
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* === RESET === */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  :root {
-    --bg: #111111; --bg2: #1a1a1a; --bg3: #0d0d0d;
-    --text: #f0f0ee; --text2: #a0a09a; --text3: #555555;
-    --border: rgba(255,255,255,0.08); --border2: rgba(255,255,255,0.15);
-    --blue: #5ba3e8; --blue-bg: #0c2236; --blue-text: #8dc4f5;
-    --amber-bg: #2a1c00; --amber-text: #f5c97a; --amber-border: #c88a1a;
-    --green-bg: #0a1f00; --green-text: #7ecf45; --green-border: #3d7a10;
-    --red-bg: #200808; --red-text: #f08080; --red-border: #7a2020;
-    --teal-bg: #031a10; --teal-text: #45c990; --teal-border: #1a6644;
-    --gray-bg: #1e1e1e; --gray-text: #b0b0aa;
-    --purple-bg: #1e1030; --purple-text: #c4a8f5;
-    --radius: 8px; --radius-lg: 12px;
-  }
+/* === VARIABLES === */
+:root {
+  --bg:       #111111;
+  --bg2:      #1a1a1a;
+  --bg3:      #0d0d0d;
+  --text:     #f0f0ee;
+  --text2:    #a0a09a;
+  --text3:    #505050;
+  --border:   rgba(255,255,255,0.08);
+  --border2:  rgba(255,255,255,0.16);
+  --blue:        #5ba3e8;
+  --blue-bg:     #0c2236;
+  --blue-text:   #8dc4f5;
+  --amber-bg:    #2a1c00;
+  --amber-text:  #f5c97a;
+  --amber-border:#c88a1a;
+  --green-bg:    #0a1f00;
+  --green-text:  #7ecf45;
+  --green-border:#3d7a10;
+  --red-bg:      #200808;
+  --red-text:    #f08080;
+  --red-border:  #7a2020;
+  --teal-bg:     #031a10;
+  --teal-text:   #45c990;
+  --teal-border: #1a6644;
+  --gray-bg:     #242424;
+  --gray-text:   #b0b0aa;
+  --purple-bg:   #1e1030;
+  --purple-text: #c4a8f5;
+  --r:  8px;
+  --rl: 12px;
+}
 
-  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: var(--bg3); color: var(--text); font-size: 16px; line-height: 1.65; min-height: 100vh; }
+/* === BASE === */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  background: var(--bg3);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.65;
+}
 
-  /* ── LAYOUT ── */
-  .app-wrap { display: flex; min-height: 100vh; }
-  .sidebar { width: 185px; flex-shrink: 0; background: var(--bg2); border-right: 0.5px solid var(--border); position: sticky; top: 0; height: 100vh; overflow-y: auto; }
-  .main-wrap { flex: 1; min-width: 0; padding: 1.5rem 2rem 3rem; }
+/* === LAYOUT === */
+.app-wrap {
+  display: flex;
+  min-height: 100vh;
+}
 
-  /* ── SIDEBAR ── */
-  .grp-lbl { font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); padding: 0.6rem 1rem 0.2rem; }
-  .nav-btn { display: block; width: 100%; text-align: left; font-size: 13px; padding: 6px 1rem; border: none; background: transparent; color: var(--text2); cursor: pointer; transition: background 0.12s; font-family: inherit; }
-  .nav-btn:hover { background: var(--bg3); color: var(--text); }
-  .nav-btn.active { background: var(--blue-bg); color: var(--blue); border-left: 2px solid var(--blue); padding-left: calc(1rem - 2px); }
+.sidebar {
+  width: 190px;
+  flex-shrink: 0;
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
 
-  /* ── SEARCH ── */
-  .search-wrap { padding: 0.6rem 0.75rem 0.5rem; border-bottom: 0.5px solid var(--border); position: relative; }
-  .global-search { width: 100%; padding: 7px 10px; font-size: 13px; border: 0.5px solid var(--border2); border-radius: var(--radius); background: var(--bg3); color: var(--text); font-family: inherit; }
-  .global-search:focus { outline: none; border-color: var(--blue); }
-  .global-search::placeholder { color: var(--text3); font-size: 12px; }
-  .search-results { position: absolute; left: 0; right: 0; top: 100%; background: var(--bg2); border: 0.5px solid var(--border2); border-top: none; border-radius: 0 0 var(--radius-lg) var(--radius-lg); max-height: 340px; overflow-y: auto; z-index: 100; display: none; }
-  .search-results.open { display: block; }
-  .search-result-item { padding: 9px 12px; cursor: pointer; border-bottom: 0.5px solid var(--border); }
-  .search-result-item:last-child { border-bottom: none; }
-  .search-result-item:hover { background: var(--bg3); }
-  .sri-title { font-size: 13px; font-weight: 500; color: var(--text); }
-  .sri-meta { font-size: 11.5px; color: var(--text2); margin-top: 2px; display: flex; gap: 6px; align-items: center; }
-  .sri-tab { font-size: 10.5px; background: var(--blue-bg); color: var(--blue-text); padding: 1px 6px; border-radius: 99px; }
-  .search-no-results { padding: 12px; font-size: 13px; color: var(--text3); text-align: center; }
-  mark.sh { background: rgba(91,163,232,0.25); color: var(--blue-text); border-radius: 2px; padding: 0 1px; }
-  .card-highlight { animation: cardFlash 1.2s ease; }
-  @keyframes cardFlash { 0%,100%{background:var(--bg)} 20%,60%{background:rgba(91,163,232,0.12)} }
+.main-content {
+  flex: 1;
+  min-width: 0;
+  padding: 1.5rem 2rem 4rem;
+}
 
-  /* ── SECTIONS ── */
-  .section { display: none; }
-  .section.active { display: block; }
+/* === SIDEBAR ELEMENTS === */
+.sidebar-hdr {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0.5rem;
+}
+.sidebar-hdr h1 { font-size: 15px; font-weight: 600; letter-spacing: -0.3px; }
+.sidebar-hdr p  { font-size: 11px; color: var(--text3); margin-top: 2px; }
 
-  /* ── CARDS ── */
-  .card { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 1rem 1.25rem; margin-bottom: 0.6rem; }
-  .card-feat { background: var(--bg); border: 2px solid var(--blue); border-radius: var(--radius-lg); padding: 1rem 1.25rem; margin-bottom: 0.6rem; position: relative; }
-  .feat-badge { position: absolute; top: -1px; right: 14px; background: var(--blue); color: #fff; font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; padding: 3px 10px; border-radius: 0 0 var(--radius) var(--radius); }
-  .ch { display: flex; justify-content: space-between; align-items: flex-start; cursor: pointer; user-select: none; }
-  .ct { font-size: 16px; font-weight: 500; }
-  .cs { font-size: 13px; color: var(--text2); margin-top: 2px; }
-  .cm { display: flex; align-items: center; gap: 8px; flex-shrink: 0; margin-left: 10px; flex-wrap: wrap; justify-content: flex-end; }
-  .chevron { font-size: 14px; color: var(--text3); transition: transform 0.2s; line-height: 1; flex-shrink: 0; }
-  .chevron.open { transform: rotate(180deg); }
-  .pi { font-size: 12px; color: var(--blue-text); background: var(--blue-bg); padding: 2px 8px; border-radius: 99px; font-weight: 500; white-space: nowrap; }
-  .cb { margin-top: 0.85rem; padding-top: 0.85rem; border-top: 0.5px solid var(--border); display: none; font-size: 14px; }
-  .cb.open { display: block; }
-  .cb table { width: 100%; border-collapse: collapse; font-size: 14px; }
-  .cb td { padding: 6px 0; vertical-align: top; }
-  .cb td:first-child { color: var(--text2); width: 150px; padding-right: 12px; }
-  .cb ul { padding-left: 1.3rem; }
-  .cb li { padding: 3px 0; line-height: 1.6; }
-  .cb p { margin-bottom: 7px; }
-  .cb strong { font-weight: 500; }
-  .cb h4 { font-size: 14px; font-weight: 600; margin: 10px 0 4px; color: var(--text); }
-  .card-header { display: flex; justify-content: space-between; align-items: flex-start; cursor: pointer; user-select: none; }
-  .card-title { font-size: 16px; font-weight: 500; }
-  .card-subtitle { font-size: 13px; color: var(--text2); margin-top: 2px; }
-  .card-meta { display: flex; align-items: center; gap: 8px; flex-shrink: 0; margin-left: 10px; flex-wrap: wrap; justify-content: flex-end; }
-  .card-body { margin-top: 0.85rem; padding-top: 0.85rem; border-top: 0.5px solid var(--border); display: none; font-size: 14px; }
-  .card-body.open { display: block; }
-  .card-body table { width: 100%; border-collapse: collapse; font-size: 14px; }
-  .card-body td { padding: 6px 0; vertical-align: top; }
-  .card-body td:first-child { color: var(--text2); width: 150px; padding-right: 12px; }
-  .card-body ul { padding-left: 1.3rem; }
-  .card-body li { padding: 3px 0; line-height: 1.6; }
+.grp-lbl {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text3);
+  padding: 0.7rem 1rem 0.25rem;
+}
 
-  /* ── TAGS ── */
-  .tag { font-size: 12px; padding: 3px 9px; border-radius: 99px; white-space: nowrap; font-weight: 500; }
-  .tag-blue   { background: var(--blue-bg);   color: var(--blue-text); }
-  .tag-amber  { background: var(--amber-bg);  color: var(--amber-text); }
-  .tag-red    { background: var(--red-bg);    color: var(--red-text); }
-  .tag-green  { background: var(--green-bg);  color: var(--green-text); }
-  .tag-teal   { background: var(--teal-bg);   color: var(--teal-text); }
-  .tag-gray   { background: var(--gray-bg);   color: var(--gray-text); }
-  .tag-purple { background: var(--purple-bg); color: var(--purple-text); }
-  .tag-el     { background: var(--blue);      color: #fff; }
+.nav-btn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font-size: 13px;
+  padding: 6px 1rem;
+  border: none;
+  background: transparent;
+  color: var(--text2);
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.1s;
+}
+.nav-btn:hover  { background: var(--bg3); color: var(--text); }
+.nav-btn.active { background: var(--blue-bg); color: var(--blue); border-left: 2px solid var(--blue); padding-left: calc(1rem - 2px); }
 
-  /* ── CALLOUT BOXES ── */
-  .box { border-radius: 0 var(--radius) var(--radius) 0; padding: 9px 13px; font-size: 13px; margin-top: 10px; line-height: 1.55; }
-  .bwarn  { background: var(--amber-bg); border-left: 3px solid var(--amber-border); color: var(--amber-text); }
-  .binfo  { background: var(--blue-bg);  border-left: 3px solid var(--blue);         color: var(--blue-text); }
-  .btip   { background: var(--green-bg); border-left: 3px solid var(--green-border); color: var(--green-text); }
-  .bred   { background: var(--red-bg);   border-left: 3px solid var(--red-border);   color: var(--red-text); }
-  .warn-box { background: var(--amber-bg); border-left: 3px solid var(--amber-border); color: var(--amber-text); border-radius: 0 var(--radius) var(--radius) 0; padding: 9px 13px; font-size: 13px; margin-top: 10px; }
-  .info-box { background: var(--blue-bg);  border-left: 3px solid var(--blue); color: var(--blue-text); border-radius: 0 var(--radius) var(--radius) 0; padding: 9px 13px; font-size: 13px; margin-top: 10px; }
-  .tip-box  { background: var(--green-bg); border-left: 3px solid var(--green-border); color: var(--green-text); border-radius: 0 var(--radius) var(--radius) 0; padding: 9px 13px; font-size: 13px; margin-top: 10px; }
+/* === GLOBAL SEARCH === */
+.search-wrap {
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.global-search {
+  width: 100%;
+  padding: 7px 10px;
+  font-size: 13px;
+  border: 1px solid var(--border2);
+  border-radius: var(--r);
+  background: var(--bg3);
+  color: var(--text);
+  font-family: inherit;
+}
+.global-search:focus { outline: none; border-color: var(--blue); }
+.global-search::placeholder { color: var(--text3); font-size: 12px; }
+.search-results {
+  position: absolute;
+  left: 0; right: 0; top: 100%;
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-top: none;
+  border-radius: 0 0 var(--rl) var(--rl);
+  max-height: 340px;
+  overflow-y: auto;
+  z-index: 200;
+  display: none;
+}
+.search-results.open { display: block; }
+.search-result-item { padding: 9px 12px; cursor: pointer; border-bottom: 1px solid var(--border); }
+.search-result-item:last-child { border-bottom: none; }
+.search-result-item:hover { background: var(--bg3); }
+.sri-title { font-size: 13px; font-weight: 500; }
+.sri-meta  { font-size: 11px; color: var(--text2); margin-top: 2px; display: flex; gap: 6px; align-items: center; }
+.sri-tab   { font-size: 10px; background: var(--blue-bg); color: var(--blue-text); padding: 1px 6px; border-radius: 99px; }
+.search-no-results { padding: 12px; font-size: 13px; color: var(--text3); text-align: center; }
+mark.sh { background: rgba(91,163,232,0.25); color: var(--blue-text); border-radius: 2px; }
+.card-highlight { animation: flash 1.2s ease; }
+@keyframes flash { 0%,100%{ background: var(--bg) } 25%,65%{ background: rgba(91,163,232,0.12) } }
 
-  /* ── PAGE TITLES ── */
-  .stitle { font-size: 15px; font-weight: 500; margin: 1.25rem 0 0.6rem; }
+/* === SECTIONS === */
+.section { display: none; }
+.section.active { display: block; }
 
-  /* ── PRICE TABLES ── */
-  .pcard { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 1.25rem; }
-  .ptbl { width: 100%; border-collapse: collapse; font-size: 14px; }
-  .ptbl th { text-align: left; font-weight: 500; font-size: 12px; color: var(--text2); padding: 9px 14px; border-bottom: 0.5px solid var(--border); background: var(--bg2); text-transform: uppercase; letter-spacing: 0.03em; }
-  .ptbl td { padding: 9px 14px; border-bottom: 0.5px solid var(--border); vertical-align: middle; }
-  .ptbl tr:last-child td { border-bottom: none; }
-  .ptbl tr:hover td { background: var(--bg2); }
-  .price-card { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 1.25rem; }
-  .price-table { width: 100%; border-collapse: collapse; font-size: 14px; }
-  .price-table th { text-align: left; font-weight: 500; font-size: 12px; color: var(--text2); padding: 9px 14px; border-bottom: 0.5px solid var(--border); background: var(--bg2); text-transform: uppercase; letter-spacing: 0.03em; }
-  .price-table td { padding: 9px 14px; border-bottom: 0.5px solid var(--border); vertical-align: middle; }
-  .price-table tr:last-child td { border-bottom: none; }
-  .price-table tr:hover td { background: var(--bg2); }
-  .pval  { font-weight: 500; color: var(--blue); }
-  .price-val { font-weight: 500; color: var(--blue); }
-  .pnote { font-size: 12px; color: var(--text2); }
-  .price-note { font-size: 12px; color: var(--text2); }
-  .updated { font-size: 11px; color: var(--text3); margin-top: 0.5rem; text-align: right; }
+/* === CARDS === */
+.card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--rl);
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.6rem;
+}
+.card-feat {
+  background: var(--bg);
+  border: 2px solid var(--blue);
+  border-radius: var(--rl);
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.6rem;
+  position: relative;
+}
+.feat-badge {
+  position: absolute; top: -1px; right: 14px;
+  background: var(--blue); color: #fff;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 0 0 var(--r) var(--r);
+}
 
-  /* ── ICD ── */
-  .icd-row { display: flex; align-items: center; padding: 9px 0; border-bottom: 0.5px solid var(--border); font-size: 14px; }
-  .icd-row:last-child { border-bottom: none; }
-  .icd-code { font-family: 'SF Mono','Fira Code',monospace; font-size: 12px; background: var(--bg2); padding: 2px 8px; border-radius: var(--radius); margin-right: 14px; min-width: 74px; text-align: center; color: var(--text2); flex-shrink: 0; }
-  .icd-container { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 0.25rem 1.25rem; }
-  .icd-wrap { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-lg); padding: 0.25rem 1.25rem; }
+/* Card header — works for both .ch and .card-header */
+.ch, .card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  cursor: pointer;
+  user-select: none;
+}
+.ct, .card-title    { font-size: 16px; font-weight: 500; }
+.cs, .card-subtitle { font-size: 13px; color: var(--text2); margin-top: 2px; }
+.cm, .card-meta     { display: flex; align-items: center; gap: 8px; flex-shrink: 0; margin-left: 10px; flex-wrap: wrap; justify-content: flex-end; }
 
-  /* ── CALC INPUTS ── */
-  .ci { width: 100%; padding: 8px 10px; background: var(--bg2); border: 0.5px solid var(--border2); border-radius: var(--radius); color: var(--text); font-size: 14px; font-family: inherit; }
-  .calc-input { width: 100%; padding: 8px 10px; background: var(--bg2); border: 0.5px solid var(--border2); border-radius: var(--radius); color: var(--text); font-size: 14px; font-family: inherit; }
-  .calc-select { width: 100%; padding: 8px 10px; background: var(--bg2); border: 0.5px solid var(--border2); border-radius: var(--radius); color: var(--text); font-size: 14px; font-family: inherit; }
-  .cl { font-size: 12px; color: var(--text2); display: block; margin-bottom: 4px; }
-  .calc-label { font-size: 12px; color: var(--text2); display: block; margin-bottom: 4px; }
-  .cgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
-  .rbtn { font-size: 13px; display: flex; align-items: center; gap: 6px; padding: 7px 13px; background: var(--bg2); border: 0.5px solid var(--border2); border-radius: var(--radius); cursor: pointer; }
-  .rgrp { display: flex; gap: 10px; flex-wrap: wrap; }
-  .twocol { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+.chevron, .toggle-icon { font-size: 14px; color: var(--text3); transition: transform 0.18s; flex-shrink: 0; }
+.chevron.open, .toggle-icon.open { transform: rotate(180deg); }
 
-  /* ── MISC ── */
-  .search-bar { width: 100%; padding: 8px 13px; font-size: 14px; border: 0.5px solid var(--border2); border-radius: var(--radius); background: var(--bg); color: var(--text); margin-bottom: 1rem; font-family: inherit; }
-  .search-bar:focus { outline: none; border-color: var(--blue); }
-  .search-bar::placeholder { color: var(--text3); }
-  .disc { font-size: 11.5px; color: var(--text3); margin-top: 2rem; padding-top: 1rem; border-top: 0.5px solid var(--border); line-height: 1.6; }
-  .disclaimer { font-size: 11.5px; color: var(--text3); margin-top: 2rem; padding-top: 1rem; border-top: 0.5px solid var(--border); line-height: 1.6; }
-  .section-title { font-size: 15px; font-weight: 500; margin: 1.25rem 0 0.6rem; }
+.pi, .price-inline {
+  font-size: 11px; font-weight: 500; white-space: nowrap;
+  background: var(--blue-bg); color: var(--blue-text);
+  padding: 2px 8px; border-radius: 99px;
+}
 
-  /* ── MOBILE ── */
-  @media(max-width:680px) {
-    .app-wrap { flex-direction: column; }
-    .sidebar { width: 100%; height: auto; position: relative; display: flex; flex-wrap: wrap; padding: 0.5rem; gap: 3px; overflow-x: auto; }
-    .grp-lbl { display: none; }
-    .nav-btn { width: auto !important; padding: 5px 10px !important; border-radius: var(--radius) !important; border: 0.5px solid var(--border2) !important; font-size: 11.5px; }
-    .nav-btn.active { border-left: 0.5px solid var(--blue) !important; padding-left: 10px !important; }
-    .twocol, .cgrid { grid-template-columns: 1fr; }
-    .price-table th:nth-child(3), .price-table td:nth-child(3) { display: none; }
-  }
+/* Card body — works for both .cb and .card-body */
+.cb, .card-body {
+  margin-top: 0.85rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--border);
+  display: none;
+  font-size: 14px;
+}
+.cb.open, .card-body.open { display: block; }
+
+.cb table, .card-body table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.cb td, .card-body td { padding: 6px 0; vertical-align: top; }
+.cb td:first-child, .card-body td:first-child { color: var(--text2); width: 150px; padding-right: 12px; }
+.cb ul, .card-body ul { padding-left: 1.3rem; }
+.cb li, .card-body li { padding: 3px 0; line-height: 1.6; }
+.cb p,  .card-body p  { margin-bottom: 7px; }
+.cb strong, .card-body strong { font-weight: 500; }
+.cb h4, .card-body h4 { font-size: 14px; font-weight: 600; margin: 10px 0 4px; }
+ol.cb-list { padding-left: 1.3rem; }
+ol.cb-list li { padding: 3px 0; font-size: 14px; }
+
+/* === TAGS === */
+.tag { font-size: 12px; padding: 3px 9px; border-radius: 99px; white-space: nowrap; font-weight: 500; }
+.tag-blue   { background: var(--blue-bg);   color: var(--blue-text);   }
+.tag-amber  { background: var(--amber-bg);  color: var(--amber-text);  }
+.tag-red    { background: var(--red-bg);    color: var(--red-text);    }
+.tag-green  { background: var(--green-bg);  color: var(--green-text);  }
+.tag-teal   { background: var(--teal-bg);   color: var(--teal-text);   }
+.tag-gray   { background: var(--gray-bg);   color: var(--gray-text);   }
+.tag-purple { background: var(--purple-bg); color: var(--purple-text); }
+.tag-el     { background: var(--blue);      color: #fff;               }
+
+/* === CALLOUT BOXES === */
+.box, .warn-box, .info-box, .tip-box {
+  border-radius: 0 var(--r) var(--r) 0;
+  padding: 9px 13px;
+  font-size: 13px;
+  margin-top: 10px;
+  line-height: 1.55;
+}
+.bwarn, .warn-box { background: var(--amber-bg);  border-left: 3px solid var(--amber-border); color: var(--amber-text); }
+.binfo, .info-box { background: var(--blue-bg);   border-left: 3px solid var(--blue);         color: var(--blue-text);  }
+.btip,  .tip-box  { background: var(--green-bg);  border-left: 3px solid var(--green-border); color: var(--green-text); }
+.bred              { background: var(--red-bg);    border-left: 3px solid var(--red-border);   color: var(--red-text);   }
+
+/* === SEARCH BAR (in-tab) === */
+.search-bar {
+  width: 100%;
+  padding: 9px 13px;
+  font-size: 14px;
+  border: 1px solid var(--border2);
+  border-radius: var(--r);
+  background: var(--bg);
+  color: var(--text);
+  margin-bottom: 1rem;
+  font-family: inherit;
+}
+.search-bar:focus { outline: none; border-color: var(--blue); }
+.search-bar::placeholder { color: var(--text3); }
+
+/* === PRICE TABLES === */
+.price-card, .pcard {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--rl);
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+}
+.price-table, .ptbl { width: 100%; border-collapse: collapse; font-size: 14px; }
+.price-table th, .ptbl th {
+  text-align: left; font-size: 11px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.04em; color: var(--text2);
+  padding: 9px 14px; background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+}
+.price-table td, .ptbl td { padding: 9px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.price-table tr:last-child td, .ptbl tr:last-child td { border-bottom: none; }
+.price-table tr:hover td, .ptbl tr:hover td { background: var(--bg2); }
+.price-val, .pval { font-weight: 500; color: var(--blue); }
+.price-note, .pnote { font-size: 12px; color: var(--text2); }
+.updated { font-size: 11px; color: var(--text3); margin-top: 0.5rem; text-align: right; }
+.section-title { font-size: 15px; font-weight: 500; margin: 1.25rem 0 0.6rem; }
+
+/* === ICD === */
+.icd-wrap, .icd-container {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--rl);
+  padding: 0.25rem 1.25rem;
+}
+.icd-row { display: flex; align-items: center; padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
+.icd-row:last-child { border-bottom: none; }
+.icd-code {
+  font-family: "SF Mono", "Fira Code", monospace; font-size: 12px;
+  background: var(--bg2); padding: 2px 8px; border-radius: var(--r);
+  margin-right: 14px; min-width: 74px; text-align: center;
+  color: var(--text2); flex-shrink: 0;
+}
+
+/* === CALC INPUTS === */
+.ci, .calc-input, .calc-select {
+  width: 100%; padding: 8px 10px;
+  background: var(--bg2); border: 1px solid var(--border2);
+  border-radius: var(--r); color: var(--text);
+  font-size: 14px; font-family: inherit;
+}
+.cl, .calc-label { font-size: 12px; color: var(--text2); display: block; margin-bottom: 4px; }
+.cgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+.rbtn { font-size: 13px; display: flex; align-items: center; gap: 6px; padding: 7px 13px; background: var(--bg2); border: 1px solid var(--border2); border-radius: var(--r); cursor: pointer; }
+.rgrp { display: flex; gap: 10px; flex-wrap: wrap; }
+.twocol { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+
+/* === MISC === */
+.disclaimer {
+  font-size: 12px; color: var(--text3);
+  margin-top: 2rem; padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  line-height: 1.6;
+}
+
+/* === MOBILE === */
+@media (max-width: 680px) {
+  .app-wrap { flex-direction: column; }
+  .sidebar { width: 100%; height: auto; position: relative; display: flex; flex-wrap: wrap; padding: 0.5rem; gap: 3px; overflow-x: auto; }
+  .sidebar-hdr, .grp-lbl { display: none; }
+  .nav-btn { width: auto !important; padding: 5px 10px !important; border-radius: var(--r) !important; border: 1px solid var(--border2) !important; font-size: 11.5px; }
+  .nav-btn.active { border-left: 1px solid var(--blue) !important; }
+  .main-content { padding: 1rem 1rem 3rem; }
+  .twocol, .cgrid { grid-template-columns: 1fr; }
+  .price-table th:nth-child(3), .price-table td:nth-child(3) { display: none; }
+}
 </style>
 </head>
 <body>
 <div class="app-wrap">
-<nav style="width:185px;flex-shrink:0;background:var(--bg2);border-right:0.5px solid var(--border);position:sticky;top:0;height:100vh;overflow-y:auto;padding:0 0 1rem;">
-  <div style="padding:0.85rem 1rem 0.6rem;border-bottom:0.5px solid var(--border);margin-bottom:0.4rem"><strong style="font-size:15px;letter-spacing:-0.3px">OD Mini Guide</strong><div style="font-size:10.5px;color:var(--text3);margin-top:1px">Clinical reference</div></div>
+
+<nav class="sidebar">
+  <div class="sidebar-hdr"><h1>OD Mini Guide</h1><p>Clinical reference</p></div>
 <div class="search-wrap">
   <input class="global-search" type="text" placeholder="🔍 Search all topics..."
     oninput="globalSearch(this.value)"
@@ -204,10 +367,34 @@
   <div class="grp-lbl">Tools</div>
   <button class="nav-btn" onclick="switchTab('parks',this)">Parks 3-Step</button>
   <button class="nav-btn" onclick="switchTab('plaquenil',this)">Plaquenil Risk</button>
+<div class="grp-lbl">Retina / Anterior</div>
+  <button class="nav-btn" onclick="switchTab('retina',this)">Retinal Disease</button>
+  <button class="nav-btn" onclick="switchTab('amd',this)">AMD</button>
+  <button class="nav-btn" onclick="switchTab('oct',this)">OCT Findings</button>
+  <button class="nav-btn" onclick="switchTab('redeyediff',this)">Red Eye DDx</button>
+  <button class="nav-btn" onclick="switchTab('eyelid',this)">Eyelid Disorders</button>
+  <button class="nav-btn" onclick="switchTab('vitaldyes',this)">Vital Dyes</button>
+  <button class="nav-btn" onclick="switchTab('gradings',this)">Grading Scales</button>
+  <div class="grp-lbl">Pharmacology</div>
+  <button class="nav-btn" onclick="switchTab('tearguide',this)">Artificial Tears</button>
+  <button class="nav-btn" onclick="switchTab('dryeyrx',this)">Dry Eye Rx</button>
+  <button class="nav-btn" onclick="switchTab('nutra',this)">Nutraceuticals</button>
+  <div class="grp-lbl">Contact Lens</div>
+  <button class="nav-btn" onclick="switchTab('clmodality',this)">CL Modality Guide</button>
+  <div class="grp-lbl">Neuro / BV</div>
+  <button class="nav-btn" onclick="switchTab('cranialnerves',this)">Cranial Nerves</button>
+  <button class="nav-btn" onclick="switchTab('bvkey',this)">Binocular Vision Keys</button>
+  <div class="grp-lbl">Optics</div>
+  <button class="nav-btn" onclick="switchTab('vertexconv',this)">Vertex Conversion</button>
+  <div class="grp-lbl">Practice</div>
+  <button class="nav-btn" onclick="switchTab('billing',this)">Billing &amp; Coding</button>
+  <button class="nav-btn" onclick="switchTab('revenue',this)">Revenue Guide</button>
   <button class="nav-btn" onclick="switchTab('icd',this)">ICD-10 Codes</button>
+
 </nav>
 
-<div class="main-wrap">
+<div class="main-content">
+
 
   <!-- DRUGS -->
   <div id="tab-drugs" class="section">
@@ -989,7 +1176,804 @@
     </div>
 </div>
  <!-- ICD-10 -->
-  <div id="tab-icd" class="section">
+  
+<!-- ══ RETINAL DISEASE ══ -->
+<div id="tab-retina" class="section">
+<p style="font-size:18px;font-weight:600;margin-bottom:.2rem">Retinal Disease</p>
+<p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">Inherited retinal dystrophies, fundus exam approach, key pathology</p>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Inherited retinal dystrophies — quick reference</div><div class="cs">RP, Stargardt, Best, cone dystrophy, CSNB</div></div>
+  <div class="cm"><span class="tag tag-blue">IRD</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td><strong>Retinitis Pigmentosa (RP)</strong></td><td>Rod-cone dystrophy; bone spicule pigmentation; attenuated vessels; waxy disc pallor; night blindness → peripheral field loss → central loss. ERG: extinguished rods early.</td></tr>
+    <tr><td><strong>Stargardt disease</strong></td><td>ABCA4 mutation; macular atrophy; pisciform flecks; dark choroid on FA; onset teens–30s; presents as decreased VA with normal-appearing fundus early.</td></tr>
+    <tr><td><strong>Best vitelliform</strong></td><td>BEST1 mutation; "egg yolk" macular lesion; EOG abnormal (Arden ratio &lt;1.5) even in carriers; VA may be preserved for years.</td></tr>
+    <tr><td><strong>Cone dystrophy</strong></td><td>Central vision loss &gt; peripheral; photophobia; color vision affected early; ERG: reduced photopic, relatively preserved scotopic.</td></tr>
+    <tr><td><strong>CSNB</strong></td><td>Congenital stationary night blindness; non-progressive; ERG: absent or reduced scotopic b-wave; may present with nystagmus.</td></tr>
+    <tr><td><strong>Choroideremia</strong></td><td>X-linked; progressive degeneration of RPE + choriocapillaris + photoreceptors; scalloped peripheral atrophy; male patients most affected.</td></tr>
+  </table>
+  <div class="binfo box">Key: refer all suspected IRD for genetic testing (Blueprint Genetics, Invitae). Low vision referral early. Gene therapy trials available for RPE65, RPGR, CNGB3.</div>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Fundus exam approach for retinal pathology</div><div class="cs">Systematic evaluation at the slit lamp and indirect</div></div>
+  <div class="cm"><span class="tag tag-blue">Technique</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <h4>Systematic approach (posterior pole first):</h4>
+  <ul>
+    <li><strong>Disc:</strong> C/D ratio, rim color, neuroretinal rim integrity (ISNT rule), disc hemorrhage, peripapillary atrophy</li>
+    <li><strong>Macula:</strong> foveal reflex, drusen, pigment changes, fluid, exudate, hemorrhage, atrophy</li>
+    <li><strong>Vessels:</strong> A/V ratio (normal 2:3), nicking, caliber changes, neovascularization</li>
+    <li><strong>Periphery:</strong> lattice, holes, tears, detachment, pigment, ora serrata</li>
+  </ul>
+  <h4>Indirect ophthalmoscopy indentation landmarks:</h4>
+  <ul>
+    <li>Ora serrata: ~7 mm posterior to limbus (temporal), ~6 mm nasal</li>
+    <li>Vitreous base: straddles ora ~2 mm anterior + 3 mm posterior</li>
+  </ul>
+  <div class="bwarn box">⚠ New floaters + flashes: rule out PVD, retinal tear, or detachment. Dilate same day. Refer if tear or RD found.</div>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Retinal vascular occlusions</div><div class="cs">CRVO, BRVO, CRAO, BRAO — presentation and management</div></div>
+  <div class="cm"><span class="tag tag-red">Urgent</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td>CRAO</td><td>Sudden painless monocular vision loss; cherry red spot; retinal whitening; box-carring of vessels. &lt;4.5 hr window — urgent ER referral for thrombolysis consideration. Workup: carotid US, echo, CBC, ESR/CRP (rule out GCA).</td></tr>
+    <tr><td>BRAO</td><td>Sectoral whitening; may be asymptomatic if peripheral. Embolic workup essential (Hollenhorst plaque = carotid source).</td></tr>
+    <tr><td>CRVO</td><td>"Blood and thunder" fundus; disc edema; tortuous dilated veins all 4 quadrants. Ischemic vs non-ischemic: &gt;10 disc areas of NRH = ischemic → higher NV risk. Monthly anti-VEGF if CME present.</td></tr>
+    <tr><td>BRVO</td><td>Sectoral hemorrhage; flame hemorrhages follow nerve fiber layer. CME common. Anti-VEGF first-line for vision loss from CME.</td></tr>
+  </table>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Diabetic retinopathy staging</div><div class="cs">ETDRS classification and referral thresholds</div></div>
+  <div class="cm"><span class="tag tag-amber">Staging</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td>No DR</td><td>No abnormalities; annual exam</td></tr>
+    <tr><td>Mild NPDR</td><td>Microaneurysms only; annual</td></tr>
+    <tr><td>Moderate NPDR</td><td>More than mild; less than severe; q6 months</td></tr>
+    <tr><td>Severe NPDR</td><td>4-2-1 rule: ≥20 intraretinal hemorrhages in 4 quads, venous beading in ≥2 quads, IRMA in ≥1 quad; refer retina q3–4 months</td></tr>
+    <tr><td>PDR</td><td>Neovascularization of disc/elsewhere; refer retina urgently. High-risk: NVD &gt;1/4–1/3 disc area or any NVD with vitreous hemorrhage.</td></tr>
+    <tr><td>CI-DME</td><td>Center-involving diabetic macular edema: anti-VEGF first line. OCT essential for diagnosis.</td></tr>
+  </table>
+  <div class="binfo box">A1c &gt;10%, rapid glucose lowering, hypertension, pregnancy, and renal disease all worsen DR progression. Document and co-manage with PCP.</div>
+</div></div>
+</div>
+
+<!-- ══ AMD ══ -->
+<div id="tab-amd" class="section">
+<p style="font-size:18px;font-weight:600;margin-bottom:.2rem">Age-Related Macular Degeneration</p>
+<p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">Staging, treatment guidelines, monitoring</p>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">AMD staging — AREDS classification</div><div class="cs">No AMD → early → intermediate → late</div></div>
+  <div class="cm"><span class="tag tag-amber">Staging</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td><strong>No AMD</strong></td><td>No drusen or small drusen only (&lt;63 μm); no pigment changes</td></tr>
+    <tr><td><strong>Early AMD</strong></td><td>Small drusen (&lt;63 μm) + pigmentary changes, OR medium drusen (63–124 μm); no late AMD in either eye</td></tr>
+    <tr><td><strong>Intermediate AMD</strong></td><td>Large drusen (≥125 μm) and/or geographic atrophy not involving center; significant pigmentary changes; high 5-year risk</td></tr>
+    <tr><td><strong>Late AMD</strong></td><td>Geographic atrophy involving foveal center, OR neovascular AMD (wet/exudative) with CNV</td></tr>
+  </table>
+  <div class="binfo box">AREDS2 supplement (lutein 10mg + zeaxanthin 2mg + Vit C + Vit E + zinc) recommended for intermediate AMD or late AMD in one eye. Reduces progression risk by ~25%.</div>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Neovascular (wet) AMD — treatment</div><div class="cs">Anti-VEGF agents, dosing, monitoring</div></div>
+  <div class="cm"><span class="tag tag-teal">Treatment</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td>Bevacizumab (Avastin)</td><td>1.25 mg/0.05 mL; off-label; most cost-effective; ~$50/injection</td></tr>
+    <tr><td>Ranibizumab (Lucentis)</td><td>0.5 mg/0.05 mL; FDA approved; monthly or PRN; ~$1,200/injection</td></tr>
+    <tr><td>Aflibercept (Eylea)</td><td>2 mg/0.05 mL; monthly ×3 then q8 weeks; ~$1,850/injection</td></tr>
+    <tr><td>Faricimab (Vabysmo)</td><td>Anti-VEGF-A + Ang-2; up to q16 weeks after loading; newest option</td></tr>
+    <tr><td>Brolucizumab (Beovu)</td><td>6 mg; q12 weeks after loading; risk of intraocular inflammation</td></tr>
+  </table>
+  <h4>Monitoring:</h4>
+  <ul>
+    <li>OCT monthly during loading phase (3 monthly injections)</li>
+    <li>PRN or treat-and-extend after stability achieved</li>
+    <li>Watch for: subretinal fluid, intraretinal fluid (IRF worse prognosis than SRF), RPE detachment</li>
+  </ul>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Amsler grid &amp; home monitoring</div><div class="cs">Patient instructions and conversion to ForeseeHome</div></div>
+  <div class="cm"><span class="tag tag-blue">Monitoring</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <ul>
+    <li>Amsler grid: 20 cm from face, one eye at a time, with reading correction. Report metamorphopsia, missing areas, new distortion immediately.</li>
+    <li>ForeseeHome (Notal Vision): FDA-cleared home monitoring device for intermediate/late AMD. Detects conversion to wet AMD earlier than standard care. Medicare covered.</li>
+    <li>Instruct patients: any new distortion or sudden vision change = call same day, do not wait for scheduled appointment.</li>
+  </ul>
+  <div class="bwarn box">⚠ New metamorphopsia in a known AMD patient = presumed CNV until proven otherwise. Same-day OCT ± FA referral.</div>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Geographic atrophy (GA) — new treatments</div><div class="cs">Pegcetacoplan, avacincaptad pegol</div></div>
+  <div class="cm"><span class="tag tag-teal">Treatment</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td>Syfovre (pegcetacoplan)</td><td>Complement C3 inhibitor; 15 mg intravitreal injection; q25 or q50 days; FDA approved Feb 2023. Slows GA growth ~20–22%.</td></tr>
+    <tr><td>Izervay (avacincaptad pegol)</td><td>Complement C5 inhibitor; 2 mg monthly injection; FDA approved Aug 2023. Slows GA growth ~14–18%.</td></tr>
+  </table>
+  <div class="binfo box">First-ever approved treatments for GA. Neither restores vision — they slow progression. Refer to retina specialist for candidacy assessment. Risk of conversion to neovascular AMD with use (~7%).</div>
+</div></div>
+</div>
+
+<!-- ══ OCT FINDINGS ══ -->
+<div id="tab-oct" class="section">
+<p style="font-size:18px;font-weight:600;margin-bottom:.2rem">Common OCT Findings</p>
+<p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">Macular OCT interpretation — key patterns and what they mean</p>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Macular OCT layers — quick reference</div><div class="cs">What each layer tells you</div></div>
+  <div class="cm"><span class="tag tag-blue">Reference</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td>ILM</td><td>Inner limiting membrane — epiretinal membrane forms here</td></tr>
+    <tr><td>NFL/GCL/IPL</td><td>Inner layers — thinning in glaucoma, ischemia, macular degeneration</td></tr>
+    <tr><td>INL</td><td>Inner nuclear layer — cystoid spaces here = CME (diabetic, post-op, CRVO)</td></tr>
+    <tr><td>OPL/ONL</td><td>Outer layers — photoreceptors; thinning = degeneration</td></tr>
+    <tr><td>IS/OS junction (EZ line)</td><td>Ellipsoid zone — disruption = photoreceptor damage, AMD, retinal dystrophy</td></tr>
+    <tr><td>RPE</td><td>Retinal pigment epithelium — drusen sit between RPE and Bruch's membrane; RPE detachments appear as domed elevations</td></tr>
+    <tr><td>Bruch's membrane / CC</td><td>Choriocapillaris below RPE — CNV grows through Bruch's</td></tr>
+  </table>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Key OCT patterns — what to look for</div><div class="cs">Fluid, drusen, atrophy, membranes</div></div>
+  <div class="cm"><span class="tag tag-blue">Patterns</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td>Intraretinal fluid (IRF)</td><td>Cystoid spaces within retinal layers — DME, CRVO, ERM. Worse prognosis in AMD than SRF.</td></tr>
+    <tr><td>Subretinal fluid (SRF)</td><td>Hyporeflective space between photoreceptors and RPE — wet AMD, CSR, tractional RD</td></tr>
+    <tr><td>Sub-RPE fluid / PED</td><td>Dome-shaped RPE elevation — drusenoid PED (dry AMD), fibrovascular PED (wet AMD), serous PED (CSR)</td></tr>
+    <tr><td>ERM</td><td>Hyperreflective line on ILM; causes retinal folds, decreased VA, metamorphopsia; peel if VA ≤20/50 or symptomatic</td></tr>
+    <tr><td>VMT / MH</td><td>Vitreomacular traction: attached vitreous causing cystoid changes. Full-thickness macular hole: graded Stage 1–4 by OCT. Ocriplasmin (Jetrea) for VMT. Surgery for FTMH.</td></tr>
+    <tr><td>CSR</td><td>Central serous retinopathy: subretinal fluid, often spontaneous in young stressed males; detached neurosensory retina. Usually self-resolving 3–4 months.</td></tr>
+    <tr><td>Drusen</td><td>Small (&lt;63μm), medium (63–124μm), large (≥125μm); soft drusen higher AMD risk; reticular pseudodrusen = high late AMD risk</td></tr>
+    <tr><td>EZ line disruption</td><td>Photoreceptor damage — in AMD, dystrophies, laser scars; correlates with VA</td></tr>
+  </table>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">RNFL OCT — glaucoma interpretation</div><div class="cs">Deviation maps, GCA, TSNIT curves</div></div>
+  <div class="cm"><span class="tag tag-gray">Glaucoma</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <ul>
+    <li><strong>Red &lt;1% (p&lt;0.01)</strong> — outside normal limits; significant thinning</li>
+    <li><strong>Yellow 1–5% (p&lt;0.05)</strong> — borderline; monitor closely</li>
+    <li><strong>Green &gt;5%</strong> — within normal limits</li>
+    <li><strong>Inferior &gt; Superior &gt; Nasal &gt; Temporal</strong> — ISNT rule for rim; reversed for RNFL (inferior thickest)</li>
+    <li><strong>GCA (ganglion cell analysis)</strong> — detects early glaucoma loss often before VF defect</li>
+    <li><strong>Progression analysis</strong> — compare serial scans; &gt;4 μm change over time = significant</li>
+  </ul>
+  <div class="bwarn box">⚠ Thin central cornea, high myopia, and tilted discs can cause false positives on RNFL OCT. Always correlate with clinical exam and VF.</div>
+</div></div>
+</div>
+
+<!-- ══ RED EYE DDx ══ -->
+<div id="tab-redeyediff" class="section">
+<p style="font-size:18px;font-weight:600;margin-bottom:.2rem">Red Eye Differential Diagnosis</p>
+<p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">Conjunctivitis, episcleritis, scleritis — differentiating key anterior conditions</p>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Conjunctivitis — bacterial vs viral vs allergic</div><div class="cs">Key distinguishing features</div></div>
+  <div class="cm"><span class="tag tag-blue">DDx</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td style="font-size:12px;font-weight:600;color:var(--text2)">Feature</td><td style="font-size:12px;font-weight:600;color:var(--text2)">Bacterial</td><td style="font-size:12px;font-weight:600;color:var(--text2)">Viral</td><td style="font-size:12px;font-weight:600;color:var(--text2)">Allergic</td></tr>
+    <tr><td>Discharge</td><td>Mucopurulent</td><td>Watery/serous</td><td>Watery/mucoid</td></tr>
+    <tr><td>Itch</td><td>Mild</td><td>Mild</td><td>Severe</td></tr>
+    <tr><td>Laterality</td><td>Often bilateral (starts uni)</td><td>Bilateral (starts uni)</td><td>Bilateral</td></tr>
+    <tr><td>Preauricular LN</td><td>Rare</td><td>Common</td><td>Absent</td></tr>
+    <tr><td>Follicles/Papillae</td><td>Papillae</td><td>Follicles</td><td>Papillae (giant)</td></tr>
+    <tr><td>Tx</td><td>FQ drops (moxifloxacin)</td><td>Supportive; cold compress</td><td>Olopatadine; avoid allergen</td></tr>
+  </table>
+  <div class="bwarn box">⚠ Hyperacute purulent discharge = gonorrheal conjunctivitis (N. gonorrhoeae) — urgent corneal involvement risk. Same-day referral + systemic antibiotics.</div>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Episcleritis vs scleritis</div><div class="cs">Key clinical differences and management</div></div>
+  <div class="cm"><span class="tag tag-amber">DDx</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td style="font-size:12px;font-weight:600;color:var(--text2)">Feature</td><td style="font-size:12px;font-weight:600;color:var(--text2)">Episcleritis</td><td style="font-size:12px;font-weight:600;color:var(--text2)">Scleritis</td></tr>
+    <tr><td>Pain</td><td>Mild, if any</td><td>Severe, boring, nocturnal</td></tr>
+    <tr><td>Color</td><td>Bright red/salmon</td><td>Deep violaceous/blue-red</td></tr>
+    <tr><td>Blanching with phenylephrine</td><td>Yes — blanches</td><td>No — does not blanch</td></tr>
+    <tr><td>Scleral edema</td><td>None</td><td>Present (nodular or diffuse)</td></tr>
+    <tr><td>Systemic association</td><td>Usually idiopathic</td><td>50% — RA, IBD, Wegener's, SLE</td></tr>
+    <tr><td>VA affected</td><td>No</td><td>May be (posterior scleritis)</td></tr>
+    <tr><td>Treatment</td><td>Oral NSAIDs; topical steroids</td><td>Oral NSAIDs; systemic steroids; immunosuppression; refer rheum</td></tr>
+  </table>
+  <div class="bwarn box">⚠ Posterior scleritis: pain + choroidal folds + exudative RD + disc edema on OCT/B-scan. Often missed. Order B-scan and refer urgently.</div>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Other red eye causes</div><div class="cs">Subconjunctival hemorrhage, pinguecula, pterygium, dry eye, CL-related</div></div>
+  <div class="cm"><span class="tag tag-blue">DDx</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td>Subconjunctival hemorrhage</td><td>Bright red, well-demarcated; no pain; usually benign; resolves 1–2 weeks. Recurrent: check BP, coagulation.</td></tr>
+    <tr><td>Pinguecula/Pterygium</td><td>Pinguecula: yellow-white conjunctival deposit; pterygium: fibrovascular growth onto cornea. Surgery if threatening visual axis or &gt;3 mm onto cornea.</td></tr>
+    <tr><td>Dry eye</td><td>Diffuse injection, worse PM; TBUT &lt;5 sec; inferior SPK on fluorescein; treat underlying cause.</td></tr>
+    <tr><td>Contact lens-related</td><td>GPC (giant papillary conj.): upper tarsal cobblestones; reduce lens wear, switch modality. CLPU (contact lens peripheral ulcer): peripheral sterile infiltrate; off lenses 1–2 weeks + FQ drops.</td></tr>
+    <tr><td>Anterior uveitis</td><td>Ciliary flush (perilimbal injection); pain; photophobia; cells + flare in AC; KPs on corneal endothelium. Treat: prednisolone acetate + cycloplegic.</td></tr>
+  </table>
+</div></div>
+</div>
+
+<!-- ══ EYELID DISORDERS ══ -->
+<div id="tab-eyelid" class="section">
+<p style="font-size:18px;font-weight:600;margin-bottom:.2rem">Eyelid Disorders</p>
+<p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">Differentiating and managing common eyelid conditions</p>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Hordeolum vs chalazion vs other lid lesions</div><div class="cs">Differential diagnosis and treatment</div></div>
+  <div class="cm"><span class="tag tag-blue">DDx</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td><strong>External hordeolum (stye)</strong></td><td>Acute, painful, tender; Zeis/Moll gland; points externally. Warm compresses; topical FQ if cellulitis. Resolves in days.</td></tr>
+    <tr><td><strong>Internal hordeolum</strong></td><td>Meibomian gland abscess; points internally on palpebral conjunctiva; more painful. Warm compresses; oral antibiotics if spreading.</td></tr>
+    <tr><td><strong>Chalazion</strong></td><td>Chronic, non-tender lipogranuloma; Meibomian gland; firm nodule. Warm compresses 4–6 weeks; intralesional triamcinolone 0.1–0.2 mL; I&C if persistent &gt;6 weeks. Biopsy if recurrent (r/o sebaceous cell carcinoma).</td></tr>
+    <tr><td><strong>Preseptal cellulitis</strong></td><td>Periorbital erythema + swelling; no proptosis; no restricted motility; no pain with eye movement. Oral augmentin; CT if not improving or orbital involvement suspected.</td></tr>
+    <tr><td><strong>Orbital cellulitis</strong></td><td>Proptosis + restricted motility + pain with EOM + fever. CT orbits urgently. IV antibiotics; admit.</td></tr>
+  </table>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Ptosis — classification and workup</div><div class="cs">Aponeurotic, myogenic, neurogenic, mechanical</div></div>
+  <div class="cm"><span class="tag tag-amber">Neuro</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td>Aponeurotic</td><td>Most common; dehiscence of levator aponeurosis; high lid crease; good levator function. Involutional or post-op/CL wear.</td></tr>
+    <tr><td>Myogenic</td><td>CPEO, myasthenia gravis, myotonic dystrophy. Variable ptosis (MG: worse PM, fatigue test positive, ice pack test).</td></tr>
+    <tr><td>Neurogenic</td><td>CN III palsy (ptosis + "down and out" + +/- mydriasis); Horner's (partial ptosis + miosis + anhidrosis)</td></tr>
+    <tr><td>Mechanical</td><td>Mass effect — chalazion, tumor, dermatochalasis</td></tr>
+  </table>
+  <p style="margin-top:8px;font-size:13px"><strong>MRD1:</strong> margin-reflex distance (normal ≥3.5 mm). <strong>Levator function:</strong> poor &lt;4 mm, fair 5–7 mm, good ≥8 mm.</p>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Blepharitis — anterior vs posterior</div><div class="cs">Classification, grading, treatment</div></div>
+  <div class="cm"><span class="tag tag-teal">Anterior seg</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td>Anterior blepharitis</td><td>Lid margin debris, crusting at lash bases; staphylococcal (collarettes) or seborrheic (greasy scales). Lid hygiene + dilute baby shampoo scrubs; FQ ointment if bacterial component.</td></tr>
+    <tr><td>Posterior blepharitis (MGD)</td><td>Meibomian gland dysfunction; inspissated secretions; foamy tear film; telangiectatic lid margins. Warm compresses + lid massage; azithromycin drops; oral doxycycline 50–100 mg QD × 3 months; LipiFlow.</td></tr>
+    <tr><td>Demodex blepharitis</td><td>Cylindrical dandruff (sleeves) around lash bases; worse in older patients. Tea tree oil lid scrubs; lotilaner (Xdemvy) 0.25% BID × 6 weeks — first FDA-approved Demodex treatment.</td></tr>
+  </table>
+</div></div>
+</div>
+
+<!-- ══ VITAL DYES ══ -->
+<div id="tab-vitaldyes" class="section">
+<p style="font-size:18px;font-weight:600;margin-bottom:.2rem">Vital Dyes in Optometry</p>
+<p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">Fluorescein, rose bengal, lissamine green — uses and interpretation</p>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Fluorescein sodium</div><div class="cs">Corneal staining, tonometry, contact lens fitting</div></div>
+  <div class="cm"><span class="tag tag-gray">Diagnostic</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td>Mechanism</td><td>Penetrates epithelial defects; does NOT stain intact epithelium. Fluoresces bright green under cobalt blue + Wratten #12 yellow filter.</td></tr>
+    <tr><td>Staining patterns</td><td>Abrasion: uniform bright green; Dendrite (HSV): branching with terminal bulbs; Acanthamoeba: pseudodendrites (no terminal bulbs); Superficial punctate keratitis: fine dots; Seidel test: aqueous dilutes fluorescein = streaming</td></tr>
+    <tr><td>Tear film TBUT</td><td>Instill, wait 30 sec, ask patient NOT to blink. Time from last blink to first break. &lt;5 sec = abnormal.</td></tr>
+    <tr><td>Contact lens fit</td><td>RGP fitting: dark = bearing (touch), bright pooling = clearance, even pattern = alignment. Use high molecular weight fluorescein for SCL.</td></tr>
+    <tr><td>Dosing</td><td>Fluorescein strips (touch to lower fornix + saline) or Fluress drops (NaFl 0.25% + proparacaine 0.5%)</td></tr>
+  </table>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Rose bengal &amp; lissamine green</div><div class="cs">Devitalized cell staining — dry eye and surface disease</div></div>
+  <div class="cm"><span class="tag tag-gray">Diagnostic</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td>Rose bengal</td><td>Stains devitalized and dead epithelial cells + mucus; also stains cells not protected by mucin. Intense pink/red. Causes stinging — warn patient. 1% solution or strips. Classic for Sjögren's (interpalpebral staining).</td></tr>
+    <tr><td>Lissamine green</td><td>Similar staining pattern to rose bengal but better tolerated; less stinging. Stains devitalized cells + mucus. Preferred in clinical practice over rose bengal.</td></tr>
+    <tr><td>Van Bijsterveld score</td><td>Divides conjunctiva + cornea into 3 zones (nasal conj, cornea, temporal conj); grade 0–3 per zone; max 9. Score ≥3.5 = abnormal (diagnostic of dry eye).</td></tr>
+    <tr><td>Oxford grading</td><td>Corneal fluorescein staining: 0–5 scale; grade ≥2 = significant epithelial disease.</td></tr>
+  </table>
+  <div class="binfo box">Use lissamine green with a red-free filter for best visualization. Wait 1–2 minutes after instillation for peak staining.</div>
+</div></div>
+</div>
+
+<!-- ══ GRADING SCALES ══ -->
+<div id="tab-gradings" class="section">
+<p style="font-size:18px;font-weight:600;margin-bottom:.2rem">Grading Scales</p>
+<p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">Standardized grading for common ocular diseases</p>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Lens grading — LOCS III</div><div class="cs">Nuclear, cortical, posterior subcapsular cataract</div></div>
+  <div class="cm"><span class="tag tag-gray">Grading</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td>Nuclear opalescence (NO)</td><td>1–6 scale; NO3 = moderate cataract; NO5–6 = dense/brunescent</td></tr>
+    <tr><td>Nuclear color (NC)</td><td>1–6; NC4+ = significant yellowing affecting color vision</td></tr>
+    <tr><td>Cortical (C)</td><td>1–5; C3+ = significant visual impact</td></tr>
+    <tr><td>PSC</td><td>1–5; PSC2+ = clinically significant especially at near/glare</td></tr>
+  </table>
+  <p style="font-size:13px;margin-top:8px">Surgical referral threshold: VA ≤20/40 with functional complaint, or significant glare/contrast loss affecting daily life regardless of Snellen VA.</p>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Diabetic retinopathy — ETDRS &amp; DRSS grading</div><div class="cs">Grading scale for clinical documentation</div></div>
+  <div class="cm"><span class="tag tag-amber">Grading</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td>10 — No DR</td><td>No abnormalities</td></tr>
+    <tr><td>20 — Very mild NPDR</td><td>Microaneurysms only</td></tr>
+    <tr><td>35 — Mild NPDR</td><td>MAs + hard exudates/cotton wool spots/mild IRMA</td></tr>
+    <tr><td>43/47 — Moderate NPDR</td><td>Approaching 4-2-1 rule</td></tr>
+    <tr><td>53 — Severe NPDR</td><td>4-2-1 rule met</td></tr>
+    <tr><td>61/65 — Mild/Moderate PDR</td><td>NVE without high-risk characteristics</td></tr>
+    <tr><td>71/75 — High-risk PDR</td><td>NVD ≥¼ disc area or vitreous hemorrhage</td></tr>
+    <tr><td>81/85 — Advanced PDR</td><td>Traction RD / advanced fibrovascular proliferation</td></tr>
+  </table>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Angle grading — Shaffer &amp; Van Herick</div><div class="cs">Gonioscopy and slit lamp angle assessment</div></div>
+  <div class="cm"><span class="tag tag-gray">Glaucoma</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <h4>Shaffer gonioscopy grading:</h4>
+  <table>
+    <tr><td>Grade 4</td><td>35–45° — wide open; ciliary body visible</td></tr>
+    <tr><td>Grade 3</td><td>25–35° — open; scleral spur visible</td></tr>
+    <tr><td>Grade 2</td><td>20° — narrow; trabecular meshwork visible</td></tr>
+    <tr><td>Grade 1</td><td>10° — very narrow; only Schwalbe's line visible; closure possible</td></tr>
+    <tr><td>Grade 0</td><td>Closed — no angle structures visible; contact between iris and cornea</td></tr>
+  </table>
+  <h4>Van Herick (slit lamp estimation):</h4>
+  <table>
+    <tr><td>Grade 4</td><td>Corneal thickness = peripheral AC depth; safe to dilate</td></tr>
+    <tr><td>Grade 2</td><td>AC = ¼ corneal thickness; caution</td></tr>
+    <tr><td>Grade 1</td><td>AC ≤ ¼ CT; do not dilate without gonioscopy</td></tr>
+  </table>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Papilledema — Frisen scale</div><div class="cs">Grading disc edema severity</div></div>
+  <div class="cm"><span class="tag tag-amber">Grading</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td>Grade 0</td><td>Normal disc</td></tr>
+    <tr><td>Grade 1</td><td>Nasal border blurred; temporal margin normal; no elevation</td></tr>
+    <tr><td>Grade 2</td><td>All margins blurred; elevation begins; vessels not obscured</td></tr>
+    <tr><td>Grade 3</td><td>Marked elevation; vessels obscured at disc margin</td></tr>
+    <tr><td>Grade 4</td><td>Severe elevation; vessels obscured &gt;1 DD from margin</td></tr>
+    <tr><td>Grade 5</td><td>Dome-shaped protrusion; vessels totally obscured on disc</td></tr>
+  </table>
+</div></div>
+</div>
+
+<!-- ══ ARTIFICIAL TEARS ══ -->
+<div id="tab-tearguide" class="section">
+<p style="font-size:18px;font-weight:600;margin-bottom:.2rem">Artificial Tears — Selection Guide</p>
+<p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">Choosing the right lubricant for the right patient</p>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Artificial tear comparison by active ingredient</div><div class="cs">Viscosity, preservatives, best use cases</div></div>
+  <div class="cm"><span class="tag tag-teal">Reference</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td><strong>Carboxymethylcellulose (CMC)</strong></td><td>Refresh Tears, Optive — low–mid viscosity; preservative-free options available; good all-purpose lubricant</td></tr>
+    <tr><td><strong>Hyaluronic acid (HA)</strong></td><td>Blink, iVizia, Ocufresh — excellent retention; bioadhesive; preferred for moderate–severe dry eye; PF preferred</td></tr>
+    <tr><td><strong>HP-Guar (Systane)</strong></td><td>Systane Ultra, Balance — gels on contact with tear film; good for evaporative dry eye; may blur briefly</td></tr>
+    <tr><td><strong>Polyethylene glycol / propylene glycol</strong></td><td>Systane Complete, Soothe — lipid layer replacement; best for MGD/evaporative</td></tr>
+    <tr><td><strong>Carbomer (gel)</strong></td><td>GenTeal Gel, Refresh Celluvisc — high viscosity; best for nighttime use or severe aqueous deficiency; blurs vision</td></tr>
+    <tr><td><strong>Mineral oil / lipid emulsion</strong></td><td>Soothe XP, Refresh Optive Advanced — lipid supplement; best for MGD</td></tr>
+  </table>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Preservatives — when to go preservative-free</div><div class="cs">BAK toxicity, alternatives, clinical thresholds</div></div>
+  <div class="cm"><span class="tag tag-amber">Prescribing</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <ul>
+    <li><strong>BAK (benzalkonium chloride):</strong> most common preservative; detergent effect — toxic with use &gt;4×/day or in compromised epithelium</li>
+    <li><strong>PF threshold:</strong> go preservative-free if patient uses drops &gt;4×/day, has moderate-severe dry eye, glaucoma (multiple preserved drops), or contact lens wear</li>
+    <li><strong>Alternatives to BAK:</strong> Purite (oxidative; less toxic), SofZia (ionic buffer; converts to non-toxic), NaDCC (Oxyd-1), PQ-1 (polyquaternium)</li>
+    <li><strong>PF unit-dose vials:</strong> Refresh Plus, Systane Ultra PF, Blink Tears PF — keep sterile 12 hrs after opening</li>
+    <li><strong>Multi-dose PF systems:</strong> Optive Fusion, iVizia — bottle with special filter; no BAK needed</li>
+  </ul>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Artificial tear selection by dry eye type</div><div class="cs">Aqueous deficient vs evaporative</div></div>
+  <div class="cm"><span class="tag tag-teal">Treatment</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td><strong>Aqueous deficient (Sjögren's)</strong></td><td>PF HA drops QID–Q2H; PF gel at bedtime; consider autologous serum if severe; punctal plugs</td></tr>
+    <tr><td><strong>Evaporative (MGD)</strong></td><td>Lipid-based drops (Soothe XP, Systane Balance); warm compresses BID; oral omega-3; LipiFlow</td></tr>
+    <tr><td><strong>Mixed mechanism</strong></td><td>Combined approach: HA drops for aqueous + lipid drops for evaporation; treat MGD component aggressively</td></tr>
+    <tr><td><strong>Contact lens wearers</strong></td><td>Rewetting drops compatible with CL: Blink Contacts, Clerz Plus; PF preferred; rewet before inserting lenses</td></tr>
+  </table>
+</div></div>
+</div>
+
+<!-- ══ DRY EYE RX ══ -->
+<div id="tab-dryeyrx" class="section">
+<p style="font-size:18px;font-weight:600;margin-bottom:.2rem">Targeted Dry Eye Pharmacotherapy</p>
+<p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">Prescription treatments for dry eye disease</p>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Anti-inflammatory prescription dry eye drugs</div><div class="cs">Cyclosporine, lifitegrast, corticosteroids</div></div>
+  <div class="cm"><span class="tag tag-teal">Pharmacology</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td><strong>Cyclosporine 0.05% (Restasis)</strong></td><td>T-cell immunomodulator; BID; onset 3–6 months; burning on instillation common (use cold or refrigerate); generic available ~$100–150/mo</td></tr>
+    <tr><td><strong>Cyclosporine 0.09% (Cequa)</strong></td><td>Higher concentration; nanomicellar formulation; BID; better penetration; ~$350–500/mo; PF unit-dose</td></tr>
+    <tr><td><strong>Lifitegrast 5% (Xiidra)</strong></td><td>LFA-1/ICAM-1 antagonist; BID; faster onset than cyclosporine (onset ~2 weeks for symptoms); dysgeusia (metallic taste) common; ~$400–600/mo with coupon</td></tr>
+    <tr><td><strong>Loteprednol 0.25% (Eysuvis)</strong></td><td>Short-course steroid for acute flares; QID × 2 weeks; lower IOP risk than prednisolone; good bridge to immunomodulator</td></tr>
+    <tr><td><strong>Perfluorohexyloctane (Miebo)</strong></td><td>PFHO semi-fluorinated alkane; first non-aqueous DED treatment; QID; FDA approved 2023; reduces evaporation directly; ~$500/mo</td></tr>
+  </table>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Secretagogues &amp; advanced therapies</div><div class="cs">Varenicline, autologous serum, scleral lenses, procedures</div></div>
+  <div class="cm"><span class="tag tag-teal">Pharmacology</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td><strong>Varenicline nasal spray (Tyrvaya)</strong></td><td>Nicotinic acetylcholine receptor agonist; nasal spray BID stimulates tear production via trigeminal-lacrimal reflex; onset 4 weeks; sneezing common; ~$400/mo</td></tr>
+    <tr><td><strong>Autologous serum tears (AST)</strong></td><td>Patient's own blood-derived; contains EGF, fibronectin, Vit A; 20–100% concentration; compounded; refrigerate; use within 3 months. For severe/refractory DED, neurotrophic keratitis, Stevens-Johnson.</td></tr>
+    <tr><td><strong>Scleral lenses</strong></td><td>Large-diameter GP lens vaults cornea; saline reservoir maintains constant hydration; excellent for severe DED, GvHD, Stevens-Johnson, post-LASIK DED</td></tr>
+    <tr><td><strong>Intense Pulsed Light (IPL)</strong></td><td>Reduces Demodex, meibomian gland inflammation; 4 sessions q3–4 weeks; good evidence for MGD-related DED</td></tr>
+    <tr><td><strong>LipiFlow</strong></td><td>Thermal pulsation of meibomian glands; single 12-min treatment; results last ~12 months; ~$800–1,200 per treatment</td></tr>
+  </table>
+</div></div>
+</div>
+
+<!-- ══ NUTRACEUTICALS ══ -->
+<div id="tab-nutra" class="section">
+<p style="font-size:18px;font-weight:600;margin-bottom:.2rem">Nutraceuticals for Ocular Health</p>
+<p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">Evidence-based supplements for dry eye, AMD, and general ocular health</p>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">AREDS2 formula — AMD prevention</div><div class="cs">Evidence-based supplementation for intermediate AMD</div></div>
+  <div class="cm"><span class="tag tag-teal">Evidence-based</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td>Lutein</td><td>10 mg/day — replaces beta-carotene (safer in smokers)</td></tr>
+    <tr><td>Zeaxanthin</td><td>2 mg/day — macular pigment component</td></tr>
+    <tr><td>Vitamin C</td><td>500 mg/day</td></tr>
+    <tr><td>Vitamin E</td><td>400 IU/day</td></tr>
+    <tr><td>Zinc</td><td>80 mg/day (zinc oxide) — lower dose (25 mg) option if GI side effects</td></tr>
+    <tr><td>Copper</td><td>2 mg/day — taken with zinc to prevent deficiency</td></tr>
+  </table>
+  <div class="binfo box">Recommend AREDS2 for intermediate AMD or late AMD in one eye. Reduces 5-year progression risk by ~25%. Brands: PreserVision AREDS2, MacularProtect Complete, Ocuvite Eye Performance.</div>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Omega-3 fatty acids — dry eye</div><div class="cs">EPA/DHA dosing, evidence, product selection</div></div>
+  <div class="cm"><span class="tag tag-teal">Dry Eye</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td>Recommended dose</td><td>EPA + DHA ≥1,000 mg/day combined for dry eye; higher doses (2,000–3,000 mg) for moderate-severe</td></tr>
+    <tr><td>Re-esterified triglyceride form</td><td>Better absorbed than ethyl ester form; look for "rTG" on label</td></tr>
+    <tr><td>Products</td><td>PRN Dry Eye Omega Benefits (2,240 mg EPA+DHA rTG); HydroEye; Nordic Naturals Ultimate Omega</td></tr>
+    <tr><td>Evidence</td><td>DREAM study showed no difference vs placebo for omega-3 in DED — but used ethyl ester form. rTG form studies more positive. Reasonable to recommend as adjunct.</td></tr>
+    <tr><td>Flaxseed oil</td><td>ALA (alpha-linolenic acid) — plant-based but less efficiently converted to EPA/DHA; inferior to fish oil for ocular surface</td></tr>
+  </table>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Other ocular health nutraceuticals</div><div class="cs">Astaxanthin, bilberry, saffron, B vitamins</div></div>
+  <div class="cm"><span class="tag tag-gray">Reference</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td>Astaxanthin</td><td>6–12 mg/day; carotenoid; reduces eye fatigue, oxidative stress; some evidence for accommodative function; strong antioxidant</td></tr>
+    <tr><td>Bilberry (anthocyanins)</td><td>160 mg BID; may improve night vision and retinal microcirculation; limited RCT evidence but widely used</td></tr>
+    <tr><td>Saffron (crocin/crocetin)</td><td>20 mg/day; emerging evidence for early AMD protection; improves ERG responses in AMD patients</td></tr>
+    <tr><td>Vitamin D</td><td>Deficiency linked to dry eye, DR, and uveitis. Check 25-OH Vit D; supplement if &lt;30 ng/mL. 2,000–4,000 IU/day typical.</td></tr>
+    <tr><td>B vitamins (B6, B9, B12)</td><td>Reduce homocysteine — elevated homocysteine associated with CRVO, CRAO, glaucoma, and AMD. B-complex supplements or targeted B6+B9+B12 combo.</td></tr>
+    <tr><td>Magnesium</td><td>Vasodilatory; may reduce vasospasm in NTG; some evidence for visual field stabilization. 300–400 mg/day magnesium glycinate.</td></tr>
+  </table>
+</div></div>
+</div>
+
+<!-- ══ CL MODALITY GUIDE ══ -->
+<div id="tab-clmodality" class="section">
+<p style="font-size:18px;font-weight:600;margin-bottom:.2rem">Contact Lens Modality Selection</p>
+<p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">Matching the right lens type to the right patient</p>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Modality decision framework</div><div class="cs">Daily vs monthly vs RGP vs specialty</div></div>
+  <div class="cm"><span class="tag tag-blue">Framework</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td><strong>Daily disposable</strong></td><td>Best compliance; no solutions; lowest infection risk; best for occasional wear, allergies, dry eye, children. Cost: ~$40–80/90pk.</td></tr>
+    <tr><td><strong>Monthly/Biweekly SCL</strong></td><td>Higher Dk silicone hydrogel options; lower cost for daily wear. Requires good compliance with case hygiene. Best for full-time wearers.</td></tr>
+    <tr><td><strong>RGP (corneal)</strong></td><td>Best optics; excellent for irregular corneas, high astigmatism, high myopia. Adaptation period 2–3 weeks. Durable (~1 yr). Poor for occasional wear.</td></tr>
+    <tr><td><strong>Scleral lens</strong></td><td>Large GP lens; vaults cornea; for keratoconus, irregular cornea, post-surgical, severe dry eye, GvHD. ~16–22 mm diameter.</td></tr>
+    <tr><td><strong>Orthokeratology</strong></td><td>Overnight wear; temporary corneal reshaping; best for low-moderate myopia; myopia control benefit ~40–60%.</td></tr>
+    <tr><td><strong>Hybrid lens</strong></td><td>GP center + soft skirt; combines RGP optics with SCL comfort. SynergEyes, UltraHealth.</td></tr>
+  </table>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Special patient considerations</div><div class="cs">Presbyopia, astigmatism, keratoconus, dry eye</div></div>
+  <div class="cm"><span class="tag tag-blue">Prescribing</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td>Presbyopia</td><td>Multifocal SCL (Biofinity MF, Acuvue MF, Dailies Total1 MF); monovision (dominant eye distance, non-dom near); or reading glasses over CLs. Trial both — multifocal preferred for active patients.</td></tr>
+    <tr><td>High astigmatism (&gt;2.50D)</td><td>Soft toric has limits — consider RGP or scleral. Custom soft toric (Bausch + Lomb, CooperVision) available for higher cylinders.</td></tr>
+    <tr><td>Keratoconus</td><td>Mild: soft toric or RGP. Moderate–severe: RGP (Rose K2), scleral (ICD, Onefit), or hybrid. Corneal cross-linking if progressing.</td></tr>
+    <tr><td>Dry eye in CL wearers</td><td>Switch to daily disposable; increase Dk; try silicone hydrogel; use PF rewetting drops; reduce wearing time; consider scleral if severe.</td></tr>
+    <tr><td>Post-refractive surgery</td><td>Irregular ablation: scleral or RGP. Residual refractive error: standard SCL or RGP depending on irregularity. Dry eye often co-existing — manage aggressively.</td></tr>
+  </table>
+</div></div>
+</div>
+
+<!-- ══ CRANIAL NERVES ══ -->
+<div id="tab-cranialnerves" class="section">
+<p style="font-size:18px;font-weight:600;margin-bottom:.2rem">Cranial Nerves — Optometry Review</p>
+<p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">CN II through VIII with optometric relevance</p>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Cranial nerves quick reference</div><div class="cs">Function, optometric significance, clinical pearls</div></div>
+  <div class="cm"><span class="tag tag-amber">Neuro</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td><strong>CN II — Optic</strong></td><td>Afferent visual pathway. Tests: VA, CVF, color vision, pupil (RAPD), OCT RNFL. Lesions: optic neuritis, NAION, compression, glaucoma.</td></tr>
+    <tr><td><strong>CN III — Oculomotor</strong></td><td>SR, IR, MR, IO + levator + pupil constriction (EWN). Palsy: "down and out" + ptosis ± mydriasis. Pupil-involving = aneurysm until proven otherwise.</td></tr>
+    <tr><td><strong>CN IV — Trochlear</strong></td><td>Superior oblique only. Palsy: hypertropia worsened by contralateral gaze + ipsilateral head tilt. Most commonly injured in head trauma. Parks 3-step to identify.</td></tr>
+    <tr><td><strong>CN V — Trigeminal</strong></td><td>V1 (ophthalmic): corneal reflex afferent, forehead sensation; V2 (maxillary): cheek, lower lid. Herpes zoster ophthalmicus: V1 distribution. Neurotrophic keratitis: decreased corneal sensation.</td></tr>
+    <tr><td><strong>CN VI — Abducens</strong></td><td>Lateral rectus only. Palsy: esotropia at distance; limited abduction. Most common cause in adults: microvascular (DM/HTN). In children: rule out raised ICP.</td></tr>
+    <tr><td><strong>CN VII — Facial</strong></td><td>Orbicularis oculi (efferent blink reflex); Bell's palsy: lagophthalmos → exposure keratopathy. Treat: lubrication, taping at night, moisture chamber. Refer if corneal involvement.</td></tr>
+    <tr><td><strong>CN VIII — Vestibulocochlear</strong></td><td>Vestibular branch: affects nystagmus, gaze stability. VOR testing: head impulse test. Acoustic neuroma: may present with unilateral hearing loss + nystagmus.</td></tr>
+  </table>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Corneal reflex pathway</div><div class="cs">Afferent CN V1, efferent CN VII</div></div>
+  <div class="cm"><span class="tag tag-amber">Neuro</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <ul>
+    <li><strong>Afferent:</strong> Corneal touch → CN V1 (nasociliary branch) → trigeminal sensory nucleus</li>
+    <li><strong>Efferent:</strong> Bilateral CN VII → orbicularis oculi contraction (direct + consensual blink)</li>
+    <li><strong>If afferent defect (CN V):</strong> Neither eye blinks when affected cornea touched; both blink when normal cornea touched</li>
+    <li><strong>If efferent defect (CN VII):</strong> Affected eye doesn't blink regardless of which cornea is stimulated; consensual blink normal in other eye</li>
+    <li><strong>Neurotrophic keratitis:</strong> decreased/absent corneal sensation; risk of sterile ulceration; use PF lubricants aggressively; refer if epithelial breakdown</li>
+  </ul>
+</div></div>
+</div>
+
+<!-- ══ BV KEYS ══ -->
+<div id="tab-bvkey" class="section">
+<p style="font-size:18px;font-weight:600;margin-bottom:.2rem">Key Considerations for Binocular Vision</p>
+<p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">Optimizing BV — clinical decision framework</div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">The BV triad — AC/A, phoria, vergence</div><div class="cs">Foundation of binocular vision analysis</div></div>
+  <div class="cm"><span class="tag tag-purple">BV</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td><strong>AC/A ratio</strong></td><td>Accommodative convergence per diopter of accommodation. Normal 4:1 ± 2. High AC/A → eso at near (CE); Low AC/A → exo at near (CI). Gradient method: phoria change per 1D lens.</td></tr>
+    <tr><td><strong>Phoria</strong></td><td>Latent deviation. Ortho ± 2Δ distance; ± 6Δ exo at near is typical. Compensating fusional vergence (CFV) = (1/3) × phoria. If CFV &lt; phoria → symptomatic.</td></tr>
+    <tr><td><strong>Vergence ranges</strong></td><td>BI/BO blur-break-recovery. Sheard's criterion: blur point ≥ 2× phoria for comfortable BV. Percival's criterion: less commonly used; working point in middle 1/3 of total vergence range.</td></tr>
+  </table>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Treatment hierarchy for BV anomalies</div><div class="cs">Lenses → prism → vision therapy decision tree</div></div>
+  <div class="cm"><span class="tag tag-purple">Treatment</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <ol style="padding-left:1.3rem;font-size:14px">
+    <li style="padding:3px 0"><strong>Correct refractive error first</strong> — uncorrected hyperopia drives accommodative esotropia; myopic correction affects exophoria. Always recheck BV after new Rx.</li>
+    <li style="padding:3px 0"><strong>Lens modification</strong> — added plus at near for CI/AI/CE; minus for divergence excess. Most effective when AC/A is the driver.</li>
+    <li style="padding:3px 0"><strong>Prism</strong> — BI for exophoria; BO for esophoria. Use Sheard or Percival to determine amount. Beware: prism doesn't improve fusional vergence; may cause adaptation.</li>
+    <li style="padding:3px 0"><strong>Vision therapy</strong> — most effective for CI, CE, AI, AF. Office-based &gt; home-based (CITT study). 12–24 sessions typically. Best outcomes in motivated patients.</li>
+    <li style="padding:3px 0"><strong>Surgery</strong> — for large angle strabismus; refer to pediatric ophthalmology or strabismus specialist.</li>
+  </ol>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Amblyopia — detection and management</div><div class="cs">Types, treatment options, critical period</div></div>
+  <div class="cm"><span class="tag tag-purple">Amblyopia</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td>Refractive</td><td>Bilateral (isometropic) or unilateral (anisometropic). Rx first — allow 4–6 months before initiating patching. Anisometropia threshold: &gt;1.50D sphere, &gt;1.00D cyl, &gt;3.00D myopia.</td></tr>
+    <tr><td>Strabismic</td><td>Constant unilateral tropia; depth of suppression determines amblyopia depth. Rx + patching/atropine penalization.</td></tr>
+    <tr><td>Deprivation</td><td>Ptosis, cataract, corneal opacity — most severe form; treat underlying cause ASAP regardless of age.</td></tr>
+    <tr><td>Patching</td><td>2 hrs/day (moderate amblyopia) to 6 hrs/day (severe) per PEDIG studies. Near activities during patching improve outcomes.</td></tr>
+    <tr><td>Atropine penalization</td><td>1% atropine QSat in fellow eye; equivalent to patching for moderate amblyopia; good for compliance issues.</td></tr>
+    <tr><td>Critical period</td><td>Best outcomes before age 7; treatment still possible up to age 17 (PEDIG); amblyopia in adults can improve with sustained treatment.</td></tr>
+  </table>
+</div></div>
+</div>
+
+<!-- ══ VERTEX CONVERSION ══ -->
+<div id="tab-vertexconv" class="section">
+<p style="font-size:18px;font-weight:600;margin-bottom:.2rem">Vertex Distance Conversion</p>
+<p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">Convert spectacle Rx to contact lens power</p>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Vertex distance formula</div><div class="cs">When compensation is required and how to calculate</div></div>
+  <div class="cm"><span class="tag tag-gray">Formula</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <p><strong>Formula:</strong> F_CL = F_spec ÷ (1 − d × F_spec) &nbsp;&nbsp; where d = vertex distance in meters (typically 0.012–0.014 m)</p>
+  <div class="binfo box">Compensation required when spectacle power ≥ ±4.00 D. Below ±4.00 D, the difference is clinically insignificant (&lt;0.25 D).</div>
+  <h4>Quick reference table (12 mm vertex, rounded to nearest 0.25 D):</h4>
+  <table>
+    <tr><td style="font-size:12px;color:var(--text2)"><strong>Spectacle Rx</strong></td><td style="font-size:12px;color:var(--text2)"><strong>CL Power</strong></td><td style="font-size:12px;color:var(--text2)"><strong>Spectacle Rx</strong></td><td style="font-size:12px;color:var(--text2)"><strong>CL Power</strong></td></tr>
+    <tr><td>+4.00</td><td>+3.75</td><td>−4.00</td><td>−4.25</td></tr>
+    <tr><td>+5.00</td><td>+4.75</td><td>−5.00</td><td>−5.25</td></tr>
+    <tr><td>+6.00</td><td>+5.50</td><td>−6.00</td><td>−6.50</td></tr>
+    <tr><td>+7.00</td><td>+6.50</td><td>−7.00</td><td>−7.50</td></tr>
+    <tr><td>+8.00</td><td>+7.25</td><td>−8.00</td><td>−8.75</td></tr>
+    <tr><td>+9.00</td><td>+8.25</td><td>−9.00</td><td>−9.75</td></tr>
+    <tr><td>+10.00</td><td>+9.00</td><td>−10.00</td><td>−10.75</td></tr>
+    <tr><td>+12.00</td><td>+10.50</td><td>−12.00</td><td>−13.25</td></tr>
+  </table>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">SAM-FAP rule for RGP power adjustment</div><div class="cs">Steeper Add Minus / Flatter Add Plus</div></div>
+  <div class="cm"><span class="tag tag-gray">RGP</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <ul>
+    <li><strong>SAM:</strong> Steeper than K → Add Minus to the lens power (over-minused by lacrimal lens)</li>
+    <li><strong>FAP:</strong> Flatter than K → Add Plus to the lens power (over-plussed by lacrimal lens)</li>
+    <li><strong>Rule of thumb:</strong> Every 0.05 mm change in BC = approximately 0.25 D change in lacrimal lens power</li>
+    <li><strong>Example:</strong> Spectacle Rx –3.00; K = 44.00 D; BC fitted at 7.60 mm (44.50 D) → steeper by 0.50 D → add –0.50 D → CL power = –3.50 D (then apply vertex if needed)</li>
+  </ul>
+</div></div>
+</div>
+
+<!-- ══ BILLING & CODING ══ -->
+<div id="tab-billing" class="section">
+<p style="font-size:18px;font-weight:600;margin-bottom:.2rem">Billing &amp; Coding for ODs</p>
+<p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">E&amp;M codes, eye codes, medical vs routine, key modifiers</p>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Eye codes vs E&amp;M codes — when to use each</div><div class="cs">92000 series vs 99000 series</div></div>
+  <div class="cm"><span class="tag tag-gray">Coding</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td><strong>Eye exam codes (92XXX)</strong></td><td>For routine/preventive eye exams (refractive, contact lens). Used with vision insurance. Cannot be billed same day as E&amp;M for same diagnosis.</td></tr>
+    <tr><td><strong>92002</strong></td><td>New patient — intermediate eye exam (no dilation required)</td></tr>
+    <tr><td><strong>92004</strong></td><td>New patient — comprehensive eye exam (includes dilation)</td></tr>
+    <tr><td><strong>92012</strong></td><td>Established patient — intermediate</td></tr>
+    <tr><td><strong>92014</strong></td><td>Established patient — comprehensive (includes dilation)</td></tr>
+    <tr><td><strong>E&amp;M codes (99XXX)</strong></td><td>For medical eye conditions. Used with medical insurance (Medicare, medical plans). Based on medical decision making (MDM) or time.</td></tr>
+    <tr><td><strong>99213/99203</strong></td><td>Low MDM — e.g., simple chronic condition like mild glaucoma suspect, stable dry eye</td></tr>
+    <tr><td><strong>99214/99204</strong></td><td>Moderate MDM — e.g., new diagnosis requiring Rx management, uncontrolled DM with DR</td></tr>
+    <tr><td><strong>99215/99205</strong></td><td>High MDM — e.g., complex new problem, acute vision loss, multiple chronic conditions</td></tr>
+  </table>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Key diagnostic test codes</div><div class="cs">OCT, VF, fundus photography, corneal topography</div></div>
+  <div class="cm"><span class="tag tag-gray">Coding</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td>92133</td><td>OCT — optic nerve / RNFL (glaucoma)</td></tr>
+    <tr><td>92134</td><td>OCT — posterior segment / macula (retina)</td></tr>
+    <tr><td>92132</td><td>Scanning computerized ophthalmic diagnostic imaging, anterior segment (cornea, anterior chamber)</td></tr>
+    <tr><td>92083</td><td>Visual field exam — threshold (Humphrey, Octopus)</td></tr>
+    <tr><td>92082</td><td>Visual field — suprathreshold (confrontation fields do not bill)</td></tr>
+    <tr><td>92250</td><td>Fundus photography with interpretation and report</td></tr>
+    <tr><td>92025</td><td>Corneal topography</td></tr>
+    <tr><td>92285</td><td>External ocular photography (anterior segment)</td></tr>
+    <tr><td>76514</td><td>Pachymetry (corneal thickness)</td></tr>
+    <tr><td>92020</td><td>Gonioscopy</td></tr>
+    <tr><td>92081</td><td>VF — limited (Amsler grid does not bill separately)</td></tr>
+  </table>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Medical decision making (MDM) — key elements</div><div class="cs">How to document to support your E&M level</div></div>
+  <div class="cm"><span class="tag tag-gray">Coding</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <p>MDM has 3 components — need 2 of 3 to meet level:</p>
+  <table>
+    <tr><td><strong>Number &amp; complexity of problems</strong></td><td>Minimal (1 self-limited) → Low (2 self-limited or 1 stable chronic) → Moderate (1 uncontrolled chronic / new problem) → High (severe threat to life/function)</td></tr>
+    <tr><td><strong>Amount of data reviewed</strong></td><td>Minimal → Limited (review 1 source) → Moderate (review external records OR order tests OR discuss with another provider) → Extensive (2+ of above)</td></tr>
+    <tr><td><strong>Risk of complications</strong></td><td>Minimal → Low (OTC drugs) → Moderate (Rx drugs, minor procedure) → High (drug therapy requiring intensive monitoring, major surgery)</td></tr>
+  </table>
+  <div class="binfo box">Document your MDM clearly in your exam note. The note must support the code billed. "If it's not documented, it didn't happen." Use a structured template for consistency.</div>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Modifiers &amp; common billing pitfalls</div><div class="cs">-25, -59, ABN, split billing</div></div>
+  <div class="cm"><span class="tag tag-amber">Billing</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td><strong>Modifier -25</strong></td><td>Significant, separately identifiable E&M service on the same day as a procedure. Required when billing both 92014 and a diagnostic code (e.g., 92133) on the same day.</td></tr>
+    <tr><td><strong>Modifier -59</strong></td><td>Distinct procedural service — indicates a procedure is separate/distinct from another on the same day. Use when two procedures might otherwise be bundled.</td></tr>
+    <tr><td><strong>ABN (Advance Beneficiary Notice)</strong></td><td>Required for Medicare patients when billing a service that may be denied. Patient acknowledges they may be responsible for payment. Must be signed BEFORE the service.</td></tr>
+    <tr><td><strong>Routine vs medical billing</strong></td><td>Never bill the same service to both vision and medical insurance. Document clearly whether visit is medical or routine. Split billing (routine refraction + medical E&M) is acceptable when genuinely separate services.</td></tr>
+    <tr><td><strong>Refraction (92015)</strong></td><td>Not covered by Medicare; always patient responsibility or vision insurance. Can charge privately. Document as routine service.</td></tr>
+  </table>
+  <div class="bwarn box">⚠ Upcoding (billing a higher level than documented) and unbundling are the most common OD audit triggers. Regular coding audits and documentation review recommended.</div>
+</div></div>
+</div>
+
+<!-- ══ REVENUE GUIDE ══ -->
+<div id="tab-revenue" class="section">
+<p style="font-size:18px;font-weight:600;margin-bottom:.2rem">Practice Revenue Guide</p>
+<p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">Budgeting, benchmarks, and revenue optimization for OD practices</p>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Practice benchmarks — know your numbers</div><div class="cs">Revenue per exam, capture rate, key metrics</div></div>
+  <div class="cm"><span class="tag tag-gray">Benchmarks</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td>Revenue per exam</td><td>Industry average: $250–$350/comprehensive exam. High-performing practices: $400–$500+. Includes professional + optical.</td></tr>
+    <tr><td>Optical capture rate</td><td>% of Rx patients who purchase glasses in your office. Average: 55–65%. Target: &gt;70%.</td></tr>
+    <tr><td>CL conversion rate</td><td>% of patients fit in CLs. Average: 20–25% of patient base. CL revenue per patient: $200–$400/yr (fit fee + supplies).</td></tr>
+    <tr><td>Exams per day</td><td>Solo OD: 14–18 exams/day typical. With support staff: 20–24 achievable. High volume: 30+ with efficient protocols.</td></tr>
+    <tr><td>Chair cost</td><td>Cost to open doors for one exam slot: typically $75–$120. Know your break-even number.</td></tr>
+    <tr><td>Net collection rate</td><td>Amount actually collected vs amount billed. Target: &gt;95%. Below 90% = billing process problem.</td></tr>
+    <tr><td>Annual revenue benchmarks</td><td>Solo OD private practice: $600K–$1.2M typical range. Corporate: $400K–$700K gross. Medical model/specialty: $1.5M+.</td></tr>
+  </table>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Revenue per category — where the money comes from</div><div class="cs">Professional fees, optical, CLs, medical, ancillary</div></div>
+  <div class="cm"><span class="tag tag-gray">Revenue</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td><strong>Professional fees</strong></td><td>E&M + eye codes + diagnostic testing. Anchor revenue — roughly 40–50% of total in mixed practice.</td></tr>
+    <tr><td><strong>Optical/spectacles</strong></td><td>Highest margin product in practice. Gross margin on frames: 50–70%. Lens gross margin: 60–80%. Target: optical revenue = 40–50% of total.</td></tr>
+    <tr><td><strong>Contact lenses</strong></td><td>Lower margin (~20–30% on materials) but high volume and annual recall driver. Fit fees and annual supply sales.</td></tr>
+    <tr><td><strong>Medical/specialty services</strong></td><td>Dry eye procedures (LipiFlow $800–1,200), myopia management, low vision, vision therapy — highest revenue per hour. Often under-developed opportunity.</td></tr>
+    <tr><td><strong>Ancillary revenue</strong></td><td>Nutraceuticals, supplements (AREDS2, omega-3), sunglasses, accessories. Low effort, high margin. Add to checkout workflow.</td></tr>
+  </table>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Increasing revenue — actionable levers</div><div class="cs">Quick wins and longer-term strategies</div></div>
+  <div class="cm"><span class="tag tag-green">Strategy</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <h4>Quick wins (implement this month):</h4>
+  <ul>
+    <li>Audit recall system — every patient should have a recall reminder. 1% improvement in show rate = significant revenue.</li>
+    <li>Ensure every Rx patient is escorted to optical — capture rate drops sharply without warm handoff.</li>
+    <li>Bill diagnostics appropriately — OCT, VF, fundus photos often under-billed or forgotten.</li>
+    <li>Offer annual CL supply with discount — improves capture, patient loyalty, and cash flow.</li>
+    <li>Add ancillary sales to checkout (nutraceuticals, plano sun, blue light lenses).</li>
+  </ul>
+  <h4>Longer-term strategies:</h4>
+  <ul>
+    <li>Build a medical optometry model — glaucoma co-management, DED procedures, myopia management = higher revenue per hour than routine exams.</li>
+    <li>Add vision therapy — high per-hour revenue; differentiates practice; strong referral network builder.</li>
+    <li>Optimize fee schedule annually — compare to local UCR (usual, customary, reasonable) fees.</li>
+    <li>Track and reduce no-shows — automated reminders, deposit for new patient slots.</li>
+    <li>Evaluate insurance mix — lowest-paying plans may be worth dropping if they fill slots that block higher-paying patients.</li>
+  </ul>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Simple practice budget framework</div><div class="cs">Expense ratios and overhead targets</div></div>
+  <div class="cm"><span class="tag tag-gray">Budgeting</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <p style="font-size:13px;margin-bottom:8px">Target expense ratios as % of gross revenue (private practice):</p>
+  <table>
+    <tr><td>Staff/payroll</td><td>25–30% (including OD salary in solo)</td></tr>
+    <tr><td>Optical COGS</td><td>18–22% (frames + lenses cost)</td></tr>
+    <tr><td>CL COGS</td><td>8–12%</td></tr>
+    <tr><td>Rent/occupancy</td><td>7–10%</td></tr>
+    <tr><td>Marketing</td><td>3–5%</td></tr>
+    <tr><td>Equipment/technology</td><td>3–5%</td></tr>
+    <tr><td>Professional fees (billing, legal, accounting)</td><td>2–4%</td></tr>
+    <tr><td>Miscellaneous/supplies</td><td>2–3%</td></tr>
+    <tr><td><strong>Target overhead</strong></td><td><strong>60–70% of gross revenue</strong></td></tr>
+    <tr><td><strong>Net OD income</strong></td><td><strong>30–40% of gross revenue</strong></td></tr>
+  </table>
+  <div class="binfo box">If overhead exceeds 70%, prioritize: reduce COGS (optical pricing strategy), review staffing ratios, and increase revenue per exam before cutting marketing.</div>
+</div></div>
+</div>
+
+
+<div id="tab-icd" class="section">
     <input class="search-bar" placeholder="Search codes or conditions..." oninput="filterICD(this.value)" />
     <div class="icd-container" id="icd-list"></div>
   </div>
@@ -1791,14 +2775,12 @@
 </div>
 
 
-</div><!-- end main-wrap -->
-</div><!-- end app-wrap -->
-
-  <p class="disclaimer" style="max-width:960px;margin:0 auto;padding:0 1.5rem 2rem">⚕ This guide is a clinical reference tool only. Always verify drug dosages with current prescribing information, confirm ICD-10 codes with your billing department, and apply clinical judgment to individual patient cases. Drug prices are approximate retail/GoodRx figures as of April 2026 and subject to change. For clinical reference use only.</p>
-
+<p class="disclaimer">⚕ Clinical reference only. Always verify drug dosages with current prescribing information, confirm ICD-10 codes with your billing department, and apply clinical judgment. Drug prices are approximate retail/GoodRx figures as of April 2026.</p>
 </div>
 
+</div>
 <script>
+
 function switchTab(tab, btn) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
@@ -2045,6 +3027,7 @@ function searchKeyNav(e) {
 document.addEventListener('click', e => {
   if (!e.target.closest('.search-wrap')) document.getElementById('search-results').classList.remove('open');
 });
+
 
 </script>
 </body>
