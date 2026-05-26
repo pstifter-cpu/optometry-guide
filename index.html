@@ -2755,6 +2755,7 @@ function switchTab(tab, btn) {
   document.getElementById('tab-' + tab).classList.add('active');
   btn.classList.add('active');
 }
+function tog(header) { toggle(header); }
 function toggle(header) {
   const body = header.nextElementSibling;
   const chev = header.querySelector('.chevron');
