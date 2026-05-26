@@ -135,6 +135,7 @@
     <button class="nav-btn" onclick="switchTab('myopia',this)">Myopia control</button>
     <button class="nav-btn" onclick="switchTab('lenses',this)">Contact lens pricing</button>
     <button class="nav-btn" onclick="switchTab('icd',this)">ICD-10 codes</button>
+    <button class="nav-btn" onclick="switchTab('tools',this)">Tools</button>
   </div>
 
   <!-- DRUGS -->
@@ -746,6 +747,115 @@
     <p class="updated">Last manually updated: April 2026 — verify pricing before quoting to patients.</p>
   </div>
 
+
+  <!-- TOOLS -->
+  <div id="tab-tools" class="section">
+
+    <!-- PLAQUENIL RISK CALCULATOR -->
+    <div class="card" style="margin-bottom:1rem;">
+      <div class="card-header" onclick="toggle(this)">
+        <div>
+          <div class="card-title">Plaquenil (Hydroxychloroquine) Toxicity Risk Calculator</div>
+          <div class="card-subtitle">AAO 2016 guidelines — daily dose &amp; Macular risk assessment</div>
+        </div>
+        <div class="card-meta"><span class="tag tag-amber">Calc</span><span class="chevron">▾</span></div>
+      </div>
+      <div class="card-body open" style="display:block;">
+        <div id="plaq-calc">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+            <div>
+              <label style="font-size:12px;color:var(--text2);display:block;margin-bottom:4px;">Patient weight (kg)</label>
+              <input type="number" id="plaq-weight" placeholder="e.g. 68" style="width:100%;padding:8px 10px;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);color:var(--text);font-size:14px;font-family:inherit;" oninput="calcPlaquenil()" />
+            </div>
+            <div>
+              <label style="font-size:12px;color:var(--text2);display:block;margin-bottom:4px;">Daily dose (mg/day)</label>
+              <input type="number" id="plaq-dose" placeholder="e.g. 400" style="width:100%;padding:8px 10px;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);color:var(--text);font-size:14px;font-family:inherit;" oninput="calcPlaquenil()" />
+            </div>
+            <div>
+              <label style="font-size:12px;color:var(--text2);display:block;margin-bottom:4px;">Duration of use (years)</label>
+              <input type="number" id="plaq-years" placeholder="e.g. 5" style="width:100%;padding:8px 10px;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);color:var(--text);font-size:14px;font-family:inherit;" oninput="calcPlaquenil()" />
+            </div>
+            <div>
+              <label style="font-size:12px;color:var(--text2);display:block;margin-bottom:4px;">Renal disease?</label>
+              <select id="plaq-renal" style="width:100%;padding:8px 10px;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);color:var(--text);font-size:14px;font-family:inherit;" onchange="calcPlaquenil()">
+                <option value="no">No</option>
+                <option value="yes">Yes (CKD / dialysis)</option>
+              </select>
+            </div>
+          </div>
+          <div style="margin-bottom:0.75rem;">
+            <label style="font-size:12px;color:var(--text2);display:block;margin-bottom:6px;">Additional risk factors</label>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;">
+              <label style="font-size:13px;display:flex;align-items:center;gap:6px;"><input type="checkbox" id="plaq-tamox" onchange="calcPlaquenil()"> Tamoxifen use</label>
+              <label style="font-size:13px;display:flex;align-items:center;gap:6px;"><input type="checkbox" id="plaq-macular" onchange="calcPlaquenil()"> Pre-existing macular disease</label>
+            </div>
+          </div>
+          <div id="plaq-result" style="display:none;"></div>
+          <div class="box box-info" style="margin-top:10px;">
+            <strong>AAO screening recommendations:</strong> Baseline exam within 1 year of starting. Annual screening after 5 years (or sooner with risk factors). Preferred: 10-2 VF + SD-OCT. mfERG optional adjunct.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PARKS 3-STEP -->
+    <div class="card">
+      <div class="card-header" onclick="toggle(this)">
+        <div>
+          <div class="card-title">Parks-Bielschowsky 3-Step Test</div>
+          <div class="card-subtitle">Isolate a paretic cyclovertical muscle</div>
+        </div>
+        <div class="card-meta"><span class="tag tag-blue">Calc</span><span class="chevron">▾</span></div>
+      </div>
+      <div class="card-body open" style="display:block;">
+        <p style="font-size:13px;margin-bottom:1rem;color:var(--text2);">Answer each step based on your cover test findings. The calculator will identify the paretic muscle.</p>
+
+        <div style="margin-bottom:1rem;">
+          <div style="font-size:13px;font-weight:500;margin-bottom:8px;">Step 1 — Which eye is hypertropic in primary gaze?</div>
+          <div style="display:flex;gap:10px;">
+            <label style="font-size:13px;display:flex;align-items:center;gap:6px;padding:8px 14px;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);cursor:pointer;">
+              <input type="radio" name="p-step1" value="RE" onchange="calcParks()"> Right eye higher (RHT)
+            </label>
+            <label style="font-size:13px;display:flex;align-items:center;gap:6px;padding:8px 14px;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);cursor:pointer;">
+              <input type="radio" name="p-step1" value="LE" onchange="calcParks()"> Left eye higher (LHT)
+            </label>
+          </div>
+        </div>
+
+        <div style="margin-bottom:1rem;">
+          <div style="font-size:13px;font-weight:500;margin-bottom:8px;">Step 2 — Does the hypertropia increase in right or left gaze?</div>
+          <div style="display:flex;gap:10px;">
+            <label style="font-size:13px;display:flex;align-items:center;gap:6px;padding:8px 14px;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);cursor:pointer;">
+              <input type="radio" name="p-step2" value="R" onchange="calcParks()"> Right gaze
+            </label>
+            <label style="font-size:13px;display:flex;align-items:center;gap:6px;padding:8px 14px;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);cursor:pointer;">
+              <input type="radio" name="p-step2" value="L" onchange="calcParks()"> Left gaze
+            </label>
+          </div>
+        </div>
+
+        <div style="margin-bottom:1rem;">
+          <div style="font-size:13px;font-weight:500;margin-bottom:8px;">Step 3 — Does the hypertropia increase on right or left head tilt? (Bielschowsky)</div>
+          <div style="display:flex;gap:10px;">
+            <label style="font-size:13px;display:flex;align-items:center;gap:6px;padding:8px 14px;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);cursor:pointer;">
+              <input type="radio" name="p-step3" value="R" onchange="calcParks()"> Right tilt
+            </label>
+            <label style="font-size:13px;display:flex;align-items:center;gap:6px;padding:8px 14px;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--radius);cursor:pointer;">
+              <input type="radio" name="p-step3" value="L" onchange="calcParks()"> Left tilt
+            </label>
+          </div>
+        </div>
+
+        <div id="parks-result" style="display:none;"></div>
+
+        <div class="box box-info" style="margin-top:10px;">
+          <strong>Cyclovertical muscles:</strong> Each eye has 2 elevators (SR, IO) and 2 depressors (IR, SO). The 3-step narrows 8 possible muscles to 1. CN IV (SO) palsy is most common cause — presents with hypertropia, excyclotorsion, and worsening on contralateral gaze + ipsilateral head tilt.
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end tab-tools -->
+
   <!-- ICD-10 -->
   <div id="tab-icd" class="section">
     <input class="search-bar" placeholder="Search codes or conditions..." oninput="filterICD(this.value)" />
@@ -820,6 +930,91 @@ const codes = [
     list.appendChild(row);
   });
 })();
+
+
+// ── PLAQUENIL CALCULATOR ──────────────────────────────
+function calcPlaquenil() {
+  const weight = parseFloat(document.getElementById('plaq-weight').value);
+  const dose   = parseFloat(document.getElementById('plaq-dose').value);
+  const years  = parseFloat(document.getElementById('plaq-years').value);
+  const renal  = document.getElementById('plaq-renal').value;
+  const tamox  = document.getElementById('plaq-tamox').checked;
+  const mac    = document.getElementById('plaq-macular').checked;
+  const result = document.getElementById('plaq-result');
+
+  if (!weight || !dose) { result.style.display='none'; return; }
+
+  const mgPerKg = dose / weight;
+  const safe    = mgPerKg <= 5.0;
+  const riskFactors = [];
+  if (!safe) riskFactors.push('Dose exceeds 5 mg/kg/day threshold');
+  if (years >= 5) riskFactors.push('Duration ≥5 years');
+  if (renal === 'yes') riskFactors.push('Renal disease');
+  if (tamox) riskFactors.push('Concurrent tamoxifen use');
+  if (mac) riskFactors.push('Pre-existing macular disease');
+
+  // Cumulative dose
+  const cumulative = dose * 365 * (years || 0) / 1000; // grams
+
+  let riskLevel, riskColor, riskBg, riskBorder, screenRec;
+  if (!safe || riskFactors.length >= 2) {
+    riskLevel = 'HIGH RISK'; riskColor = 'var(--red-text)'; riskBg = 'var(--red-bg)'; riskBorder = '#a03030';
+    screenRec = 'Annual screening recommended now. Consider rheumatology consultation regarding dose reduction.';
+  } else if (years >= 5 || riskFactors.length === 1) {
+    riskLevel = 'MODERATE RISK'; riskColor = 'var(--amber-text)'; riskBg = 'var(--amber-bg)'; riskBorder = 'var(--amber-border)';
+    screenRec = 'Annual screening with 10-2 VF and SD-OCT. mfERG if equivocal findings.';
+  } else {
+    riskLevel = 'LOW RISK'; riskColor = 'var(--green-text)'; riskBg = 'var(--green-bg)'; riskBorder = 'var(--green-border)';
+    screenRec = years ? 'Annual screening after 5 years of use.' : 'Baseline exam within 1 year of starting therapy.';
+  }
+
+  result.style.display = 'block';
+  result.innerHTML = `
+    <div style="background:${riskBg};border:1px solid ${riskBorder};border-radius:var(--radius-lg);padding:1rem;margin-bottom:0.75rem;">
+      <div style="font-size:13px;font-weight:700;color:${riskColor};margin-bottom:8px;">${riskLevel}</div>
+      <table style="width:100%;font-size:13px;border-collapse:collapse;">
+        <tr><td style="color:var(--text2);width:160px;padding:3px 0;">Dose per kg/day</td><td style="font-weight:500;color:${safe ? 'var(--green-text)' : 'var(--red-text)'};">${mgPerKg.toFixed(2)} mg/kg/day ${safe ? '✓ Within limit' : '✗ Exceeds 5.0 mg/kg limit'}</td></tr>
+        <tr><td style="color:var(--text2);padding:3px 0;">Daily dose</td><td>${dose} mg/day</td></tr>
+        ${years ? `<tr><td style="color:var(--text2);padding:3px 0;">Cumulative dose</td><td>${cumulative.toFixed(0)} g over ${years} yr${years!==1?'s':''}</td></tr>` : ''}
+        ${riskFactors.length ? `<tr><td style="color:var(--text2);padding:3px 0;vertical-align:top;">Risk factors</td><td>${riskFactors.map(r=>`<div>• ${r}</div>`).join('')}</td></tr>` : ''}
+        <tr><td style="color:var(--text2);padding:3px 0;vertical-align:top;">Screening rec.</td><td>${screenRec}</td></tr>
+      </table>
+    </div>`;
+}
+
+// ── PARKS 3-STEP CALCULATOR ───────────────────────────
+function calcParks() {
+  const s1 = document.querySelector('input[name="p-step1"]:checked');
+  const s2 = document.querySelector('input[name="p-step2"]:checked');
+  const s3 = document.querySelector('input[name="p-step3"]:checked');
+  const result = document.getElementById('parks-result');
+  if (!s1 || !s2 || !s3) { result.style.display='none'; return; }
+
+  // Parks lookup table — [hypertropic eye, worse gaze, worse tilt] → paretic muscle
+  const table = {
+    'RE-R-R': 'Right Superior Oblique (RSO) — CN IV OD',
+    'RE-R-L': 'Right Superior Rectus (RSR)',
+    'RE-L-R': 'Left Inferior Rectus (LIR)',
+    'RE-L-L': 'Left Inferior Oblique (LIO)',
+    'LE-R-R': 'Right Inferior Oblique (RIO)',
+    'LE-R-L': 'Right Inferior Rectus (RIR)',
+    'LE-L-R': 'Left Superior Rectus (LSR)',
+    'LE-L-L': 'Left Superior Oblique (LSO) — CN IV OS',
+  };
+
+  const key = `${s1.value}-${s2.value}-${s3.value}`;
+  const muscle = table[key] || 'Unable to determine — check findings';
+  const isSO = muscle.includes('Superior Oblique');
+
+  result.style.display = 'block';
+  result.innerHTML = `
+    <div style="background:var(--blue-bg);border:1px solid rgba(91,163,232,0.3);border-radius:var(--radius-lg);padding:1rem;">
+      <div style="font-size:11px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--text2);margin-bottom:6px;">Paretic muscle</div>
+      <div style="font-size:17px;font-weight:600;color:var(--blue-text);margin-bottom:${isSO?'10px':'0'}">${muscle}</div>
+      ${isSO ? `<div style="font-size:12.5px;color:var(--text2);margin-top:6px;">CN IV palsy: expect excyclotorsion, difficulty on stairs/reading. If acquired and pupil-sparing, consider microvascular etiology. If traumatic, may be bilateral.</div>` : ''}
+    </div>`;
+}
+
 </script>
 </body>
 </html>
