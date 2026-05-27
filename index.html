@@ -399,52 +399,46 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
   </div>
   <div class="search-results" id="search-results"></div>
 </div>
-<div class="grp-lbl">Neuro / Anterior</div>
+    <div class="grp-lbl">Neuro</div>
   <button class="nav-btn" onclick="switchTab('pupils',this)">Pupils</button>
   <button class="nav-btn" onclick="switchTab('headache',this)">Headache</button>
   <button class="nav-btn" onclick="switchTab('diplopia',this)">Diplopia</button>
   <button class="nav-btn" onclick="switchTab('nystagmus',this)">Nystagmus</button>
   <button class="nav-btn" onclick="switchTab('vf',this)">Visual Fields</button>
   <button class="nav-btn" onclick="switchTab('glaucoma2',this)">Glaucoma</button>
+  <button class="nav-btn" onclick="switchTab('cranialnerves',this)">Cranial Nerves</button>
+  <div class="grp-lbl">Retina</div>
+  <button class="nav-btn" onclick="switchTab('retina',this)">Retinal Disease</button>
+  <button class="nav-btn" onclick="switchTab('amd',this)">AMD</button>
+  <button class="nav-btn" onclick="switchTab('oct',this)">OCT Findings</button>
+  <button class="nav-btn" onclick="switchTab('gradings',this)">Grading Scales</button>
+  <div class="grp-lbl">Anterior Segment</div>
+  <button class="nav-btn" onclick="switchTab('anterior',this)">Anterior Segment</button>
+  <button class="nav-btn" onclick="switchTab('dryeye2',this)">Dry Eye</button>
+  <button class="nav-btn" onclick="switchTab('dryeyrx',this)">Dry Eye Rx</button>
+  <button class="nav-btn" onclick="switchTab('tearguide',this)">Artificial Tears</button>
   <div class="grp-lbl">Binocular Vision</div>
   <button class="nav-btn" onclick="switchTab('binoc',this)">Binocular Workup</button>
   <button class="nav-btn" onclick="switchTab('vergence',this)">Vergence</button>
   <button class="nav-btn" onclick="switchTab('accomm',this)">Accommodation</button>
-  <div class="grp-lbl">Clinical</div>
-  <button class="nav-btn active" onclick="switchTab('drugs',this)">Drugs &amp; Dosing</button>
-  <button class="nav-btn" onclick="switchTab('dryeye2',this)">Dry Eye</button>
-  <button class="nav-btn" onclick="switchTab('myopia',this)">Myopia Control</button>
-  <div class="grp-lbl">CL / Optics</div>
+  <button class="nav-btn" onclick="switchTab('bvkey',this)">BV Keys</button>
+  <div class="grp-lbl">Contact Lens / Optics</div>
   <button class="nav-btn" onclick="switchTab('cl',this)">CL Fitting</button>
-  <button class="nav-btn" onclick="switchTab('optics',this)">Optics</button>
+  <button class="nav-btn" onclick="switchTab('clmodality',this)">CL Modality Guide</button>
   <button class="nav-btn" onclick="switchTab('lenses',this)">CL Pricing</button>
+  <button class="nav-btn" onclick="switchTab('optics',this)">Optics</button>
+  <button class="nav-btn" onclick="switchTab('vertexconv',this)">Vertex Conversion</button>
+  <div class="grp-lbl">Pharmacology</div>
+  <button class="nav-btn" onclick="switchTab('drugs',this)">Drugs &amp; Dosing</button>
+  <button class="nav-btn" onclick="switchTab('myopia',this)">Myopia Control</button>
+  <button class="nav-btn" onclick="switchTab('nutra',this)">Nutraceuticals</button>
   <div class="grp-lbl">Tools</div>
   <button class="nav-btn" onclick="switchTab('parks',this)">Parks 3-Step</button>
   <button class="nav-btn" onclick="switchTab('plaquenil',this)">Plaquenil Risk</button>
-<div class="grp-lbl">Retina / Anterior</div>
-  <button class="nav-btn" onclick="switchTab('retina',this)">Retinal Disease</button>
-  <button class="nav-btn" onclick="switchTab('amd',this)">AMD</button>
-  <button class="nav-btn" onclick="switchTab('oct',this)">OCT Findings</button>
-  <button class="nav-btn" onclick="switchTab('redeyediff',this)">Red Eye DDx</button>
-  <button class="nav-btn" onclick="switchTab('eyelid',this)">Eyelid Disorders</button>
-  <button class="nav-btn" onclick="switchTab('vitaldyes',this)">Vital Dyes</button>
-  <button class="nav-btn" onclick="switchTab('gradings',this)">Grading Scales</button>
-  <div class="grp-lbl">Pharmacology</div>
-  <button class="nav-btn" onclick="switchTab('tearguide',this)">Artificial Tears</button>
-  <button class="nav-btn" onclick="switchTab('dryeyrx',this)">Dry Eye Rx</button>
-  <button class="nav-btn" onclick="switchTab('nutra',this)">Nutraceuticals</button>
-  <div class="grp-lbl">Contact Lens</div>
-  <button class="nav-btn" onclick="switchTab('clmodality',this)">CL Modality Guide</button>
-  <div class="grp-lbl">Neuro / BV</div>
-  <button class="nav-btn" onclick="switchTab('cranialnerves',this)">Cranial Nerves</button>
-  <button class="nav-btn" onclick="switchTab('bvkey',this)">Binocular Vision Keys</button>
-  <div class="grp-lbl">Optics</div>
-  <button class="nav-btn" onclick="switchTab('vertexconv',this)">Vertex Conversion</button>
   <div class="grp-lbl">Practice</div>
   <button class="nav-btn" onclick="switchTab('billing',this)">Billing &amp; Coding</button>
   <button class="nav-btn" onclick="switchTab('revenue',this)">Revenue Guide</button>
   <button class="nav-btn" onclick="switchTab('icd',this)">ICD-10 Codes</button>
-
 </nav>
 
 <div class="main-content">
@@ -1062,67 +1056,53 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
 
   <!-- TOOLS -->
   <div id="tab-parks" class="section">
-<p style="font-size:18px;font-weight:600;letter-spacing:-0.3px;margin-bottom:0.2rem">Parks 3-Step Test</p>
+<p style="font-size:18px;font-weight:600;margin-bottom:.2rem">Parks 3-Step Test</p>
 <p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">Parks-Bielschowsky — isolate a paretic cyclovertical muscle</p>
-<!-- PARKS 3-STEP -->
-    <div class="card">
-      <div class="card-header" onclick="toggle(this)">
-        <div>
-          <div class="card-title">Parks-Bielschowsky 3-Step Test</div>
-          <div class="card-subtitle">Isolate a paretic cyclovertical muscle</div>
-        </div>
-        <div class="card-meta"><span class="tag tag-teal">Calculator</span><span class="chevron">▾</span></div>
-      </div>
-      <div class="card-body open">
-        <p style="font-size:13px;margin-bottom:1rem;color:var(--text2);">Answer each step based on your cover test findings. The calculator will identify the paretic muscle.</p>
 
-        <div style="margin-bottom:1rem;">
-          <div style="font-size:13px;font-weight:500;margin-bottom:8px;">Step 1 — Which eye is hypertropic in primary gaze?</div>
-          <div style="display:flex;gap:10px;">
-            <label style="font-size:13px;display:flex;align-items:center;gap:6px;padding:8px 14px;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--r);cursor:pointer;">
-              <input type="radio" name="p-step1" value="RE" onchange="calcParks()"> Right eye higher (RHT)
-            </label>
-            <label style="font-size:13px;display:flex;align-items:center;gap:6px;padding:8px 14px;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--r);cursor:pointer;">
-              <input type="radio" name="p-step1" value="LE" onchange="calcParks()"> Left eye higher (LHT)
-            </label>
-          </div>
-        </div>
+<div class="card" style="padding:1.25rem">
+  <p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">Select all three steps. The paretic muscle will appear automatically.</p>
 
-        <div style="margin-bottom:1rem;">
-          <div style="font-size:13px;font-weight:500;margin-bottom:8px;">Step 2 — Does the hypertropia increase in right or left gaze?</div>
-          <div style="display:flex;gap:10px;">
-            <label style="font-size:13px;display:flex;align-items:center;gap:6px;padding:8px 14px;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--r);cursor:pointer;">
-              <input type="radio" name="p-step2" value="R" onchange="calcParks()"> Right gaze
-            </label>
-            <label style="font-size:13px;display:flex;align-items:center;gap:6px;padding:8px 14px;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--r);cursor:pointer;">
-              <input type="radio" name="p-step2" value="L" onchange="calcParks()"> Left gaze
-            </label>
-          </div>
-        </div>
-
-        <div style="margin-bottom:1rem;">
-          <div style="font-size:13px;font-weight:500;margin-bottom:8px;">Step 3 — Does the hypertropia increase on right or left head tilt? (Bielschowsky)</div>
-          <div style="display:flex;gap:10px;">
-            <label style="font-size:13px;display:flex;align-items:center;gap:6px;padding:8px 14px;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--r);cursor:pointer;">
-              <input type="radio" name="p-step3" value="R" onchange="calcParks()"> Right tilt
-            </label>
-            <label style="font-size:13px;display:flex;align-items:center;gap:6px;padding:8px 14px;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--r);cursor:pointer;">
-              <input type="radio" name="p-step3" value="L" onchange="calcParks()"> Left tilt
-            </label>
-          </div>
-        </div>
-
-        <div id="parks-result" style="display:none;"></div>
-
-        <div class="binfo box" style="margin-top:10px;">
-          <strong>Cyclovertical muscles:</strong> Each eye has 2 elevators (SR, IO) and 2 depressors (IR, SO). The 3-step narrows 8 possible muscles to 1. CN IV (SO) palsy is most common cause — presents with hypertropia, excyclotorsion, and worsening on contralateral gaze + ipsilateral head tilt.
-        </div>
-      </div>
+  <div style="margin-bottom:1.25rem">
+    <div style="font-size:14px;font-weight:600;margin-bottom:10px">Step 1 — Which eye is hypertropic in primary gaze?</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <label style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);cursor:pointer;font-size:14px">
+        <input type="radio" name="p-step1" value="RE" onchange="calcParks()"> Right eye higher (RHT)
+      </label>
+      <label style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);cursor:pointer;font-size:14px">
+        <input type="radio" name="p-step1" value="LE" onchange="calcParks()"> Left eye higher (LHT)
+      </label>
     </div>
+  </div>
+
+  <div style="margin-bottom:1.25rem">
+    <div style="font-size:14px;font-weight:600;margin-bottom:10px">Step 2 — Does the hypertropia increase in right or left gaze?</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <label style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);cursor:pointer;font-size:14px">
+        <input type="radio" name="p-step2" value="R" onchange="calcParks()"> Right gaze
+      </label>
+      <label style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);cursor:pointer;font-size:14px">
+        <input type="radio" name="p-step2" value="L" onchange="calcParks()"> Left gaze
+      </label>
+    </div>
+  </div>
+
+  <div style="margin-bottom:1.25rem">
+    <div style="font-size:14px;font-weight:600;margin-bottom:10px">Step 3 — Does the hypertropia increase on right or left head tilt? (Bielschowsky)</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <label style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);cursor:pointer;font-size:14px">
+        <input type="radio" name="p-step3" value="R" onchange="calcParks()"> Right tilt
+      </label>
+      <label style="display:flex;align-items:center;gap:8px;padding:10px 16px;background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r);cursor:pointer;font-size:14px">
+        <input type="radio" name="p-step3" value="L" onchange="calcParks()"> Left tilt
+      </label>
+    </div>
+  </div>
+
+  <div id="parks-result" style="display:none;margin-top:0.5rem"></div>
 </div>
- <!-- ICD-10 -->
-  
-<!-- ══ RETINAL DISEASE ══ -->
+
+
+</div>
 
 <div id="tab-plaquenil" class="section">
 <p style="font-size:18px;font-weight:600;letter-spacing:-0.3px;margin-bottom:0.2rem">Plaquenil Risk Calculator</p>
@@ -1354,10 +1334,11 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
 </div></div>
 </div>
 <!-- ══ RED EYE DDx ══ -->
-<div id="tab-redeyediff" class="section">
-<p style="font-size:18px;font-weight:600;margin-bottom:.2rem">Red Eye Differential Diagnosis</p>
-<p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">Conjunctivitis, episcleritis, scleritis — differentiating key anterior conditions</p>
+<div id="tab-anterior" class="section">
+<p style="font-size:18px;font-weight:600;margin-bottom:.2rem">Anterior Segment</p>
+<p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">Red eye DDx, eyelid disorders, vital dyes</p>
 
+<p style="font-size:14px;font-weight:600;color:var(--text2);margin:0.75rem 0 0.5rem;text-transform:uppercase;font-size:11px;letter-spacing:0.06em">Red Eye DDx</p>
 <div class="card"><div class="ch" onclick="tog(this)">
   <div><div class="ct">Conjunctivitis — bacterial vs viral vs allergic</div><div class="cs">Key distinguishing features</div></div>
   <div class="cm"><span class="tag tag-blue">DDx</span><span class="chevron">▾</span></div>
@@ -1403,12 +1384,9 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
     <tr><td>Anterior uveitis</td><td>Ciliary flush (perilimbal injection); pain; photophobia; cells + flare in AC; KPs on corneal endothelium. Treat: prednisolone acetate + cycloplegic.</td></tr>
   </table>
 </div></div>
-</div>
 <!-- ══ EYELID DISORDERS ══ -->
-<div id="tab-eyelid" class="section">
-<p style="font-size:18px;font-weight:600;margin-bottom:.2rem">Eyelid Disorders</p>
-<p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">Differentiating and managing common eyelid conditions</p>
 
+<p style="font-size:14px;font-weight:600;color:var(--text2);margin:1rem 0 0.5rem;text-transform:uppercase;font-size:11px;letter-spacing:0.06em">Eyelid Disorders</p>
 <div class="card"><div class="ch" onclick="tog(this)">
   <div><div class="ct">Hordeolum vs chalazion vs other lid lesions</div><div class="cs">Differential diagnosis and treatment</div></div>
   <div class="cm"><span class="tag tag-blue">DDx</span><span class="chevron">▾</span></div>
@@ -1445,12 +1423,9 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
     <tr><td>Demodex blepharitis</td><td>Cylindrical dandruff (sleeves) around lash bases; worse in older patients. Tea tree oil lid scrubs; lotilaner (Xdemvy) 0.25% BID × 6 weeks — first FDA-approved Demodex treatment.</td></tr>
   </table>
 </div></div>
-</div>
 <!-- ══ VITAL DYES ══ -->
-<div id="tab-vitaldyes" class="section">
-<p style="font-size:18px;font-weight:600;margin-bottom:.2rem">Vital Dyes in Optometry</p>
-<p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">Fluorescein, rose bengal, lissamine green — uses and interpretation</p>
 
+<p style="font-size:14px;font-weight:600;color:var(--text2);margin:1rem 0 0.5rem;text-transform:uppercase;font-size:11px;letter-spacing:0.06em">Vital Dyes</p>
 <div class="card"><div class="ch" onclick="tog(this)">
   <div><div class="ct">Fluorescein sodium</div><div class="cs">Corneal staining, tonometry, contact lens fitting</div></div>
   <div class="cm"><span class="tag tag-blue">Diagnostic</span><span class="chevron">▾</span></div>
@@ -1477,22 +1452,36 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
   <div class="binfo box">Use lissamine green with a red-free filter for best visualization. Wait 1–2 minutes after instillation for peak staining.</div>
 </div></div>
 </div>
-<!-- ══ GRADING SCALES ══ -->
 <div id="tab-gradings" class="section">
 <p style="font-size:18px;font-weight:600;margin-bottom:.2rem">Grading Scales</p>
 <p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">Standardized grading for common ocular diseases</p>
 
 <div class="card"><div class="ch" onclick="tog(this)">
-  <div><div class="ct">Lens grading — LOCS III</div><div class="cs">Nuclear, cortical, posterior subcapsular cataract</div></div>
+  <div><div class="ct">Lens/cataract grading — 1+ to 4+</div><div class="cs">Nuclear, cortical, PSC grading scale</div></div>
   <div class="cm"><span class="tag tag-gray">Grading</span><span class="chevron">▾</span></div>
 </div><div class="cb">
+  <h4>Nuclear sclerosis (NS):</h4>
   <table>
-    <tr><td>Nuclear opalescence (NO)</td><td>1–6 scale; NO3 = moderate cataract; NO5–6 = dense/brunescent</td></tr>
-    <tr><td>Nuclear color (NC)</td><td>1–6; NC4+ = significant yellowing affecting color vision</td></tr>
-    <tr><td>Cortical (C)</td><td>1–5; C3+ = significant visual impact</td></tr>
-    <tr><td>PSC</td><td>1–5; PSC2+ = clinically significant especially at near/glare</td></tr>
+    <tr><td><strong>1+</strong></td><td>Faint yellow tint; clear lens; no visual impact; normal VA</td></tr>
+    <tr><td><strong>2+</strong></td><td>Definite yellow; mild glare; VA typically 20/20–20/40; patients may notice halos</td></tr>
+    <tr><td><strong>3+</strong></td><td>Deep amber/brown; moderate impact; VA 20/40–20/100; significant glare and contrast loss</td></tr>
+    <tr><td><strong>4+</strong></td><td>Dense brunescent/black; VA 20/100 or worse; often mature cataract; challenging surgery</td></tr>
   </table>
-  <p style="font-size:13px;margin-top:8px">Surgical referral threshold: VA ≤20/40 with functional complaint, or significant glare/contrast loss affecting daily life regardless of Snellen VA.</p>
+  <h4>Cortical cataract (CC):</h4>
+  <table>
+    <tr><td><strong>1+</strong></td><td>Peripheral spoke opacities &lt;25% of lens; minimal visual impact</td></tr>
+    <tr><td><strong>2+</strong></td><td>Spokes 25–50%; may cause glare at night or in bright light</td></tr>
+    <tr><td><strong>3+</strong></td><td>Spokes 50–75%; significant glare; VA impact especially in bright conditions</td></tr>
+    <tr><td><strong>4+</strong></td><td>Spokes &gt;75% or mature white cortex; severe VA impact</td></tr>
+  </table>
+  <h4>Posterior subcapsular cataract (PSC):</h4>
+  <table>
+    <tr><td><strong>1+</strong></td><td>Small granular opacity at posterior pole; symptomatic near vision loss disproportionate to VA</td></tr>
+    <tr><td><strong>2+</strong></td><td>Opacity &lt;2 mm; near vision significantly affected; glare in bright light</td></tr>
+    <tr><td><strong>3+</strong></td><td>Opacity 2–3 mm; near and distance VA affected; debilitating glare</td></tr>
+    <tr><td><strong>4+</strong></td><td>Opacity &gt;3 mm; severely reduced VA; marked glare; prompt surgical referral</td></tr>
+  </table>
+  <div class="binfo box">Referral threshold: VA ≤20/40 with functional complaint, OR significant glare/near vision loss affecting daily activities regardless of Snellen VA. PSC causes disproportionate near vision loss — don't rely on distance VA alone.</div>
 </div></div>
 
 <div class="card"><div class="ch" onclick="tog(this)">
@@ -2876,7 +2865,7 @@ function calcPlaquenil() {
 
   result.style.display = 'block';
   result.innerHTML = `
-    <div style="background:${riskBg};border:1px solid ${riskBorder};border-radius:var(--radius-lg);padding:1rem;margin-bottom:0.75rem;">
+    <div style="background:${riskBg};border:1px solid ${riskBorder};border-radius:var(--rl);padding:1rem;margin-bottom:0.75rem;">
       <div style="font-size:13px;font-weight:700;color:${riskColor};margin-bottom:8px;">${riskLevel}</div>
       <table style="width:100%;font-size:13px;border-collapse:collapse;">
         <tr><td style="color:var(--text2);width:160px;padding:3px 0;">Dose per kg/day</td><td style="font-weight:500;color:${safe ? 'var(--green-text)' : 'var(--red-text)'};">${mgPerKg.toFixed(2)} mg/kg/day ${safe ? '✓ Within limit' : '✗ Exceeds 5.0 mg/kg limit'}</td></tr>
@@ -2898,14 +2887,14 @@ function calcParks() {
 
   // Parks lookup table — [hypertropic eye, worse gaze, worse tilt] → paretic muscle
   const table = {
-    'RE-R-R': 'Right Superior Oblique (RSO) — CN IV OD',
-    'RE-R-L': 'Right Superior Rectus (RSR)',
-    'RE-L-R': 'Left Inferior Rectus (LIR)',
-    'RE-L-L': 'Left Inferior Oblique (LIO)',
-    'LE-R-R': 'Right Inferior Oblique (RIO)',
-    'LE-R-L': 'Right Inferior Rectus (RIR)',
-    'LE-L-R': 'Left Superior Rectus (LSR)',
-    'LE-L-L': 'Left Superior Oblique (LSO) — CN IV OS',
+    'RE-R-R': 'Left Inferior Oblique (LIO)',
+    'RE-R-L': 'Right Inferior Rectus (RIR)',
+    'RE-L-R': 'Right Superior Oblique (RSO) — CN IV OD',
+    'RE-L-L': 'Left Superior Rectus (LSR)',
+    'LE-R-R': 'Right Superior Rectus (RSR)',
+    'LE-R-L': 'Left Superior Oblique (LSO) — CN IV OS',
+    'LE-L-R': 'Left Inferior Rectus (LIR)',
+    'LE-L-L': 'Right Inferior Oblique (RIO)',
   };
 
   const key = `${s1.value}-${s2.value}-${s3.value}`;
@@ -2914,7 +2903,7 @@ function calcParks() {
 
   result.style.display = 'block';
   result.innerHTML = `
-    <div style="background:var(--blue-bg);border:1px solid rgba(91,163,232,0.3);border-radius:var(--radius-lg);padding:1rem;">
+    <div style="background:var(--blue-bg);border:1px solid rgba(91,163,232,0.3);border-radius:var(--rl);padding:1rem;">
       <div style="font-size:11px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--text2);margin-bottom:6px;">Paretic muscle</div>
       <div style="font-size:17px;font-weight:600;color:var(--blue-text);margin-bottom:${isSO?'10px':'0'}">${muscle}</div>
       ${isSO ? `<div style="font-size:12.5px;color:var(--text2);margin-top:6px;">CN IV palsy: expect excyclotorsion, difficulty on stairs/reading. If acquired and pupil-sparing, consider microvascular etiology. If traumatic, may be bilateral.</div>` : ''}
