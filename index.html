@@ -124,6 +124,7 @@ body {
   background: var(--bg3);
   color: var(--text);
   font-family: inherit;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
 }
 .global-search:focus { outline: none; border-color: var(--blue); }
 .global-search::placeholder { color: var(--text3); font-size: 12px; }
@@ -385,11 +386,17 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
 <nav class="sidebar">
   <div class="sidebar-hdr"><h1>OD Mini Guide</h1><p>Clinical reference</p></div>
 <div class="search-wrap">
-  <input class="global-search" type="text" placeholder="🔍 Search all topics..."
-    oninput="globalSearch(this.value)"
-    onkeydown="searchKeyNav(event)"
-    onfocus="if(this.value) globalSearch(this.value)"
-    autocomplete="off" spellcheck="false"/>
+  <div style="position:relative;">
+    <svg style="position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;opacity:0.45;pointer-events:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+    </svg>
+    <input class="global-search" type="text" placeholder="Search all topics..."
+      style="padding-left:32px;"
+      oninput="globalSearch(this.value)"
+      onkeydown="searchKeyNav(event)"
+      onfocus="if(this.value) globalSearch(this.value)"
+      autocomplete="off" spellcheck="false"/>
+  </div>
   <div class="search-results" id="search-results"></div>
 </div>
 <div class="grp-lbl">Neuro / Anterior</div>
