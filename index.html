@@ -399,7 +399,10 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
   </div>
   <div class="search-results" id="search-results"></div>
 </div>
-    <div class="grp-lbl">Neuro</div>
+    <div class="grp-lbl">Myopia Control</div>
+  <button class="nav-btn" onclick="switchTab('myopia',this)">Myopia Control</button>
+  <button class="nav-btn" onclick="switchTab('myopia-risk',this)">Risk Factors</button>
+  <div class="grp-lbl">Neuro</div>
   <button class="nav-btn" onclick="switchTab('pupils',this)">Pupils</button>
   <button class="nav-btn" onclick="switchTab('headache',this)">Headache</button>
   <button class="nav-btn" onclick="switchTab('diplopia',this)">Diplopia</button>
@@ -417,8 +420,6 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
   <button class="nav-btn" onclick="switchTab('dryeye2',this)">Dry Eye</button>
   <button class="nav-btn" onclick="switchTab('dryeyrx',this)">Dry Eye Rx</button>
   <button class="nav-btn" onclick="switchTab('tearguide',this)">Artificial Tears</button>
-  <div class="grp-lbl">Myopia Control</div>
-  <button class="nav-btn" onclick="switchTab('myopia',this)">Myopia Control</button>
   <div class="grp-lbl">Binocular Vision</div>
   <button class="nav-btn" onclick="switchTab('binoc',this)">Binocular Workup</button>
   <button class="nav-btn" onclick="switchTab('vergence',this)">Vergence</button>
@@ -886,7 +887,97 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
   </div>
 
   <!-- MYOPIA CONTROL -->
-  <div id="tab-myopia" class="section">
+  <div id="tab-myopia-risk" class="section">
+<p style="font-size:18px;font-weight:600;margin-bottom:.2rem">Myopia Risk Factors</p>
+<p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">When to initiate myopia control — early intervention saves axial length</p>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">The case for early intervention</div><div class="cs">Don't wait for myopia — act on risk</div></div>
+  <div class="cm"><span class="tag tag-teal">Key Concept</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <p>Each diopter of myopia increases lifetime risk of myopic maculopathy, retinal detachment, glaucoma, and cataract. The earlier myopia onset, the higher the final prescription. <strong>Intervention before myopia onset can delay or prevent it entirely.</strong></p>
+  <table style="margin-top:8px">
+    <tr><td>Onset at age 7</td><td>Expected final Rx: –6.00 to –8.00 D or worse</td></tr>
+    <tr><td>Onset at age 10</td><td>Expected final Rx: –3.00 to –5.00 D</td></tr>
+    <tr><td>Onset at age 12</td><td>Expected final Rx: –1.50 to –3.00 D</td></tr>
+    <tr><td>Stabilisation</td><td>Typically by late teens; later in East Asian populations</td></tr>
+  </table>
+  <div class="btip box">Target: keep final Rx above –3.00 D to stay in the lower-risk range. Every –1.00 D prevented = meaningfully lower lifetime pathology risk. Don't wait for progression — intervene at first sign of risk.</div>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">High-risk profile — initiate treatment now</div><div class="cs">Any one of these warrants immediate discussion</div></div>
+  <div class="cm"><span class="tag tag-red">High Risk</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <ul>
+    <li><strong>Both parents myopic</strong> — 6–8× higher risk vs no myopic parents; highest single risk factor</li>
+    <li><strong>One myopic parent + Asian ethnicity</strong> — compounding risk; initiate at first visit</li>
+    <li><strong>Already myopic (any amount)</strong> — start control immediately, especially if age &lt;10</li>
+    <li><strong>Rapid progression ≥0.75 D/year</strong> — accelerated axial elongation underway</li>
+    <li><strong>Axial length &gt;24.0 mm in a child</strong> — already elongated; treat aggressively</li>
+    <li><strong>Low hyperopic reserve for age</strong> — &lt;+0.75 D at age 6–7 = high myopia conversion risk</li>
+    <li><strong>Esophoric child with high AC/A</strong> — nearwork-driven mechanism; plus lenses + myopia control</li>
+  </ul>
+  <div class="bred box">⚠ Do not wait for 0.50 D progression before starting. By then, axial elongation has already occurred. Risk-factor counselling and treatment initiation at the first sign of risk is best practice.</div>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Moderate-risk profile — counsel and monitor closely</div><div class="cs">Strong case for early treatment; discuss options</div></div>
+  <div class="cm"><span class="tag tag-amber">Moderate Risk</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <ul>
+    <li><strong>One myopic parent</strong> — 3× higher risk; discuss myopia control proactively</li>
+    <li><strong>Significant nearwork (&gt;3 hrs/day screen/reading)</strong> without outdoor balance</li>
+    <li><strong>&lt;60–90 min outdoor time per day</strong> — reduced retinal dopamine; modifiable risk</li>
+    <li><strong>Progressive hyperopia reduction without myopia yet</strong> — watch axial length closely</li>
+    <li><strong>Axial length growing &gt;0.2 mm/year</strong> — subclinical but concerning elongation rate</li>
+    <li><strong>East Asian ethnicity</strong> — population prevalence up to 80–90% in urban areas; lower threshold to treat</li>
+  </ul>
+  <div class="bwarn box">⚠ Start the myopia control conversation with parents at this stage. Lifestyle modification (outdoor time, near work breaks) is low-cost and should begin immediately. Consider starting optical myopia control if &gt;2 moderate risk factors present.</div>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Pre-myopic intervention — treating before –0.50 D</div><div class="cs">Emerging evidence supports acting earlier than the prescription suggests</div></div>
+  <div class="cm"><span class="tag tag-teal">Pre-Myopic</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <p>Traditional practice was to wait until a child was "officially" myopic (–0.50 D or more) before initiating control. <strong>Emerging evidence supports intervention earlier</strong>, particularly in high-risk children.</p>
+  <h4>Indicators for pre-myopic treatment:</h4>
+  <ul>
+    <li>Cycloplegic refraction &lt;+0.75 D at age 6–7 (used up their hyperopic buffer)</li>
+    <li>Axial length &gt;23.5 mm before myopia onset</li>
+    <li>Axial elongation rate &gt;0.2 mm/year even while still hyperopic</li>
+    <li>Both parents myopic + significant nearwork + limited outdoor time</li>
+    <li>Myopia in one eye only (anisomyopia developing) — treat both eyes</li>
+  </ul>
+  <h4>Options for pre-myopic or low myopia (&lt;–0.50 D):</h4>
+  <ul>
+    <li><strong>Stellest lenses</strong> — approved from –0.75 D; can prescribe at mild myopia threshold</li>
+    <li><strong>Low-dose atropine 0.01%</strong> — evidence for slowing axial elongation even pre-myopia; safest side effect profile</li>
+    <li><strong>Increased outdoor time</strong> — ≥90 min/day is low-cost and backed by strong evidence</li>
+    <li><strong>Near work modification</strong> — 20-20-20 rule; Harmon distance; posture correction</li>
+  </ul>
+  <div class="binfo box">The LAMP study and other trials support low-dose atropine starting before –0.50 D in high-risk children. The risk of delaying treatment outweighs the risk of starting early.</div>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Myopia control decision checklist</div><div class="cs">Quick chairside reference</div></div>
+  <div class="cm"><span class="tag tag-blue">Checklist</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td style="font-weight:500">Age</td><td>Under 10? Treat aggressively. 10–14? Still high priority. 14–18? Still worthwhile.</td></tr>
+    <tr><td style="font-weight:500">Family Hx</td><td>Both parents myopic → highest risk. One parent → moderate risk. No parents → baseline risk.</td></tr>
+    <tr><td style="font-weight:500">Current Rx</td><td>Already myopic → start now. Plano/low hyperope with risk factors → start pre-emptively.</td></tr>
+    <tr><td style="font-weight:500">Axial length</td><td>If measurable: &gt;24.0 mm = treat; growing &gt;0.2 mm/yr = treat; monitor q6 months.</td></tr>
+    <tr><td style="font-weight:500">Lifestyle</td><td>Screen &gt;3 hrs/day + &lt;90 min outdoor → modifiable risk; counsel every visit.</td></tr>
+    <tr><td style="font-weight:500">Ethnicity</td><td>East Asian → lower threshold to initiate. High ambient prevalence = environmental pressure.</td></tr>
+    <tr><td style="font-weight:500">Progression rate</td><td>≥0.50 D/yr → escalate treatment. ≥0.75 D/yr → maximum intervention.</td></tr>
+  </table>
+  <div class="btip box">First-line for most children: Stellest lenses (spectacle wearers) or MiSight (CL candidates). Add 0.01% atropine QHS for high-risk or rapid progressors. Document discussion with parents at every visit.</div>
+</div></div>
+
+</div>
+
+<div id="tab-myopia" class="section">
     <div id="myopia-list">
 
       <div class="card-feat">
