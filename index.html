@@ -2921,8 +2921,28 @@ const codes = [
 
 
 // ── PLAQUENIL CALCULATOR ──────────────────────────────
+function setWeightUnit(unit) {
+  window._plaqUnit = unit;
+  const kgBtn  = document.getElementById('unit-kg');
+  const lbsBtn = document.getElementById('unit-lbs');
+  if (kgBtn && lbsBtn) {
+    kgBtn.style.background  = unit === 'kg'  ? 'var(--blue-bg)' : 'transparent';
+    kgBtn.style.color       = unit === 'kg'  ? 'var(--blue)'    : 'var(--text2)';
+    kgBtn.style.fontWeight  = unit === 'kg'  ? '600' : 'normal';
+    lbsBtn.style.background = unit === 'lbs' ? 'var(--blue-bg)' : 'transparent';
+    lbsBtn.style.color      = unit === 'lbs' ? 'var(--blue)'    : 'var(--text2)';
+    lbsBtn.style.fontWeight = unit === 'lbs' ? '600' : 'normal';
+  }
+  // Update placeholder
+  const input = document.getElementById('plaq-weight');
+  if (input) input.placeholder = unit === 'lbs' ? 'e.g. 150' : 'e.g. 68';
+  calcPlaquenil();
+}
+
 function calcPlaquenil() {
-  const weight = parseFloat(document.getElementById('plaq-weight').value);
+  const rawWeight = parseFloat(document.getElementById('plaq-weight').value);
+  const weightUnit = window._plaqUnit || 'kg';
+  const weight = weightUnit === 'lbs' ? rawWeight * 0.453592 : rawWeight;
   const dose   = parseFloat(document.getElementById('plaq-dose').value);
   const years  = parseFloat(document.getElementById('plaq-years').value);
   const renal  = document.getElementById('plaq-renal').value;
@@ -2933,6 +2953,8 @@ function calcPlaquenil() {
   if (!weight || !dose) { result.style.display='none'; return; }
 
   const mgPerKg = dose / weight;
+  const displayWeight = parseFloat(document.getElementById('plaq-weight').value);
+  const displayUnit = window._plaqUnit || 'kg';
   const safe    = mgPerKg <= 5.0;
   const riskFactors = [];
   if (!safe) riskFactors.push('Dose exceeds 5 mg/kg/day threshold');
