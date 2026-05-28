@@ -951,7 +951,7 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
   </ul>
   <h4>Options for pre-myopic or low myopia (&lt;–0.50 D):</h4>
   <ul>
-    <li><strong>Essilor® Stellest® lenses</strong> — approved from –0.75 D; can prescribe at mild myopia threshold</li>
+    <li><strong>Essilor® Stellest® Lenses</strong> — approved from –0.75 D; can prescribe at mild myopia threshold</li>
     <li><strong>Low-dose atropine 0.01%</strong> — evidence for slowing axial elongation even pre-myopia; safest side effect profile</li>
     <li><strong>Increased outdoor time</strong> — ≥90 min/day is low-cost and backed by strong evidence</li>
     <li><strong>Near work modification</strong> — 20-20-20 rule; Harmon distance; posture correction</li>
@@ -972,7 +972,7 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
     <tr><td style="font-weight:500">Ethnicity</td><td>East Asian → lower threshold to initiate. High ambient prevalence = environmental pressure.</td></tr>
     <tr><td style="font-weight:500">Progression rate</td><td>≥0.50 D/yr → escalate treatment. ≥0.75 D/yr → maximum intervention.</td></tr>
   </table>
-  <div class="btip box">First-line for most children: Essilor® Stellest® lenses (spectacle wearers) or MiSight (CL candidates). Add 0.01% atropine QHS for high-risk or rapid progressors. Document discussion with parents at every visit.</div>
+  <div class="btip box">First-line for most children: Essilor® Stellest® Lenses (spectacle wearers) or MiSight (CL candidates). Add 0.01% atropine QHS for high-risk or rapid progressors. Document discussion with parents at every visit.</div>
 </div></div>
 
 </div>
@@ -984,8 +984,8 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
         <div class="feat-badge">Highest published spectacle efficacy</div>
         <div class="ch" onclick="tog(this)" style="padding-top:10px;">
           <div>
-            <div class="ct" style="font-size:16px;">Essilor® Stellest®</div>
-            <div class="cs">H.A.L.T. technology — highest-efficacy spectacle myopia control</div>
+            <div class="ct" style="font-size:16px;">Essilor® Stellest® Lenses</div>
+            <div class="cs">H.A.L.T. technology — highest-efficacy spectacle lens for myopia control</div>
           </div>
           <div class="cm"><span class="tag tag-teal">H.A.L.T.</span><span class="chevron">▾</span></div>
         </div>
@@ -998,7 +998,7 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
             <tr><td>Rx range</td><td>Sphere –0.75 to –10.00 D; cylinder up to –4.00 D</td></tr>
             <tr><td>Availability</td><td>Lab-processed lens; available through major optical wholesale distributors</td></tr>
           </table>
-          <div class="btip box">Essilor® Stellest® demonstrated <strong>71% slowing</strong> of myopia progression in children wearing lenses ≥10 hrs/day, 6+ days/week — the highest published efficacy of any spectacle lens option. Ideal first choice for children where atropine or contact lens use is not preferred.</div>
+          <div class="btip box">Essilor® Stellest® Lenses demonstrated <strong>71% slowing</strong> of myopia progression in children wearing lenses ≥10 hrs/day, 6+ days/week — the highest published efficacy of any spectacle lens option. Ideal first choice for children where atropine or contact lens use is not preferred.</div>
         </div>
       </div>
 
@@ -1213,8 +1213,14 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
         <div id="plaq-calc">
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
             <div>
-              <label style="font-size:12px;color:var(--text2);display:block;margin-bottom:4px;">Patient weight (kg)</label>
-              <input type="number" id="plaq-weight" placeholder="e.g. 68" style="width:100%;padding:8px 10px;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--r);color:var(--text);font-size:14px;font-family:inherit;" oninput="calcPlaquenil()" />
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                <label style="font-size:12px;color:var(--text2);">Patient weight</label>
+                <div style="display:flex;border:1px solid var(--border2);border-radius:99px;overflow:hidden;">
+                  <button id="unit-kg" onclick="setWeightUnit('kg')" style="padding:2px 10px;border:none;background:var(--blue-bg);color:var(--blue);cursor:pointer;font-family:inherit;font-size:11px;font-weight:600;">kg</button>
+                  <button id="unit-lbs" onclick="setWeightUnit('lbs')" style="padding:2px 10px;border:none;background:transparent;color:var(--text2);cursor:pointer;font-family:inherit;font-size:11px;">lbs</button>
+                </div>
+              </div>
+              <input type="number" id="plaq-weight" placeholder="e.g. 68" min="0" style="width:100%;padding:8px 10px;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--r);color:var(--text);font-size:14px;font-family:inherit;" oninput="calcPlaquenil()" />
             </div>
             <div>
               <label style="font-size:12px;color:var(--text2);display:block;margin-bottom:4px;">Daily dose (mg/day)</label>
