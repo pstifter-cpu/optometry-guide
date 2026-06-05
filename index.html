@@ -389,6 +389,18 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
   }
   .quiz-opt:hover { border-color: var(--blue); color: var(--text); }
   .quiz-opt.selected { background: var(--blue-bg); border-color: var(--blue); color: var(--blue); font-weight: 600; }
+
+  /* === CL FILTERS === */
+  .cl-filter-row { display: flex; gap: 6px; flex-wrap: wrap; }
+  .cl-filter {
+    padding: 6px 12px; font-size: 12.5px; border: 1px solid var(--border2);
+    border-radius: 99px; background: var(--bg2); color: var(--text2);
+    cursor: pointer; font-family: inherit; transition: all 0.12s; white-space: nowrap;
+  }
+  .cl-filter:hover { border-color: var(--blue); color: var(--text); }
+  .cl-filter.active { background: var(--blue-bg); border-color: var(--blue); color: var(--blue); font-weight: 600; }
+  #cl-table .cl-notes { font-size: 11px; color: var(--text3); }
+  .cl-row-body.open { display: block !important; }
 </style>
 </head>
 <body>
@@ -438,12 +450,14 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
   <button class="nav-btn" onclick="switchTab('vergence',this)">Vergence</button>
   <button class="nav-btn" onclick="switchTab('accomm',this)">Accommodation</button>
   <button class="nav-btn" onclick="switchTab('bvkey',this)">BV Keys</button>
-  <div class="grp-lbl">Contact Lens / Optics</div>
+  <div class="grp-lbl">Contact Lens</div>
   <button class="nav-btn" onclick="switchTab('cl',this)">CL Fitting</button>
   <button class="nav-btn" onclick="switchTab('clmodality',this)">CL Modality Guide</button>
-  <button class="nav-btn" onclick="switchTab('lenses',this)">CL Pricing</button>
-  <button class="nav-btn" onclick="switchTab('optics',this)">Optics</button>
+  <button class="nav-btn" onclick="switchTab('lenses',this)">CL Parameters</button>
   <button class="nav-btn" onclick="switchTab('vertexconv',this)">Vertex Conversion</button>
+  <div class="grp-lbl">Optics</div>
+  <button class="nav-btn" onclick="switchTab('lensmaterial',this)">Lens Material</button>
+  <button class="nav-btn" onclick="switchTab('optics',this)">Prism Formulas</button>
   <div class="grp-lbl">Pharmacology</div>
   <button class="nav-btn" onclick="switchTab('drugs',this)">Drugs &amp; Dosing</button>
   <button class="nav-btn" onclick="switchTab('nutra',this)">Nutraceuticals</button>
@@ -1085,67 +1099,37 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
 
   <!-- CONTACT LENS PRICING -->
   <div id="tab-lenses" class="section">
-    <p style="font-size:13px;color:var(--text2);margin-bottom:1rem;">Approximate retail pricing as of April 2026. Verify with your distributor or practice account for current wholesale pricing.</p>
+<p style="font-size:18px;font-weight:600;margin-bottom:.2rem">CL Parameters</p>
+<p style="font-size:13px;color:var(--text2);margin-bottom:1rem">Parameters &amp; pricing. Tap a lens for full power/cylinder/axis/add ranges. Filters combine — select Toric + Multifocal to find multifocal torics.</p>
 
-    <div class="section-title">Daily disposables</div>
-    <div class="price-card">
-      <table class="price-table">
-        <thead><tr><th>Brand</th><th>Manufacturer</th><th>Material</th><th>90-pack</th><th>Annual est.</th></tr></thead>
-        <tbody>
-          <tr><td>Acuvue Oasys 1-Day</td><td style="color:var(--text2)">J&amp;J Vision</td><td style="color:var(--text2)">Senofilcon A</td><td class="price-val">$72</td><td class="price-val">~$580</td></tr>
-          <tr><td>Dailies Total1</td><td style="color:var(--text2)">Alcon</td><td style="color:var(--text2)">Delefilcon A</td><td class="price-val">$80</td><td class="price-val">~$640</td></tr>
-          <tr><td>TOTAL30 Daily</td><td style="color:var(--text2)">Alcon</td><td style="color:var(--text2)">Lehfilcon A</td><td class="price-val">$72</td><td class="price-val">~$575</td></tr>
-          <tr><td>Precision1</td><td style="color:var(--text2)">Alcon</td><td style="color:var(--text2)">Verofilcon A</td><td class="price-val">$52</td><td class="price-val">~$415</td></tr>
-          <tr><td>MyDay</td><td style="color:var(--text2)">CooperVision</td><td style="color:var(--text2)">Stenfilcon A</td><td class="price-val">$58</td><td class="price-val">~$465</td></tr>
-          <tr><td>Biotrue ONEday</td><td style="color:var(--text2)">Bausch + Lomb</td><td style="color:var(--text2)">Nesofilcon A</td><td class="price-val">$48</td><td class="price-val">~$385</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="section-title">Monthly / biweekly</div>
-    <div class="price-card">
-      <table class="price-table">
-        <thead><tr><th>Brand</th><th>Manufacturer</th><th>Material</th><th>6-pack</th><th>Annual est.</th></tr></thead>
-        <tbody>
-          <tr><td>Acuvue Oasys 2-Week</td><td style="color:var(--text2)">J&amp;J Vision</td><td style="color:var(--text2)">Senofilcon A</td><td class="price-val">$42</td><td class="price-val">~$170</td></tr>
-          <tr><td>Air Optix + HydraGlyde</td><td style="color:var(--text2)">Alcon</td><td style="color:var(--text2)">Lotrafilcon B</td><td class="price-val">$38</td><td class="price-val">~$152</td></tr>
-          <tr><td>Biofinity</td><td style="color:var(--text2)">CooperVision</td><td style="color:var(--text2)">Comfilcon A</td><td class="price-val">$40</td><td class="price-val">~$160</td></tr>
-          <tr><td>PureVision2</td><td style="color:var(--text2)">Bausch + Lomb</td><td style="color:var(--text2)">Balafilcon A</td><td class="price-val">$34</td><td class="price-val">~$136</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="section-title">Toric &amp; multifocal</div>
-    <div class="price-card">
-      <table class="price-table">
-        <thead><tr><th>Brand</th><th>Type</th><th>Material</th><th>Box price</th><th>Notes</th></tr></thead>
-        <tbody>
-          <tr><td>Acuvue Oasys for Astigmatism</td><td><span class="tag tag-gray">Toric biweekly</span></td><td style="color:var(--text2)">Senofilcon A</td><td class="price-val">$50 / 6pk</td><td class="price-note">Accelerated Stabilization Design</td></tr>
-          <tr><td>Dailies Total1 Toric</td><td><span class="tag tag-gray">Toric daily</span></td><td style="color:var(--text2)">Delefilcon A</td><td class="price-val">$90 / 90pk</td><td class="price-note">Water gradient; limited axes available</td></tr>
-          <tr><td>MyDay Toric</td><td><span class="tag tag-gray">Toric daily</span></td><td style="color:var(--text2)">Stenfilcon A</td><td class="price-val">$68 / 90pk</td><td class="price-note">Optimised Toric Lens Geometry</td></tr>
-          <tr><td>Biofinity Multifocal</td><td><span class="tag tag-blue">Multifocal monthly</span></td><td style="color:var(--text2)">Comfilcon A</td><td class="price-val">$48 / 6pk</td><td class="price-note">D &amp; N designs available</td></tr>
-          <tr><td>Acuvue Oasys Multifocal</td><td><span class="tag tag-blue">Multifocal biweekly</span></td><td style="color:var(--text2)">Senofilcon A</td><td class="price-val">$52 / 6pk</td><td class="price-note">Pupil Intelligent Design</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="section-title">Myopia control lenses</div>
-    <div class="price-card">
-      <table class="price-table">
-        <thead><tr><th>Brand</th><th>Type</th><th>Material</th><th>Box price</th><th>Notes</th></tr></thead>
-        <tbody>
-          <tr><td>MiSight 1 Day</td><td><span class="tag tag-teal">Myopia daily</span></td><td style="color:var(--text2)">Omafilcon A</td><td class="price-val">$75 / 90pk</td><td class="price-note">FDA-approved ages 8–12; DISC design</td></tr>
-          <tr><td>Acuvue Abiliti 1-Day</td><td><span class="tag tag-teal">Myopia daily</span></td><td style="color:var(--text2)">Senofilcon A</td><td class="price-val">$80 / 90pk</td><td class="price-note">EDOF + peripheral ADD</td></tr>
-          <tr><td>NaturalVue Multifocal 1-Day</td><td><span class="tag tag-teal">Myopia daily</span></td><td style="color:var(--text2)">Etafilcon A</td><td class="price-val">$68 / 90pk</td><td class="price-note">Extended depth of focus</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="updated">Last manually updated: April 2026 — verify pricing before quoting to patients.</p>
+<div style="margin-bottom:0.6rem">
+  <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:6px">Lens type (combinable)</div>
+  <div class="cl-filter-row" id="cl-cat-filters">
+    <button class="cl-filter" data-type="cat" data-v="spherical">Sphere</button>
+    <button class="cl-filter" data-type="cat" data-v="toric">Toric</button>
+    <button class="cl-filter" data-type="cat" data-v="multifocal">Multifocal</button>
+    <button class="cl-filter" data-type="cat" data-v="cosmetic">Cosmetic</button>
+    <button class="cl-filter" data-type="cat" data-v="myopia">Myopia control</button>
   </div>
+</div>
 
+<div style="margin-bottom:1rem">
+  <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:6px">Replacement schedule</div>
+  <div class="cl-filter-row" id="cl-mod-filters">
+    <button class="cl-filter" data-type="mod" data-v="daily">Daily</button>
+    <button class="cl-filter" data-type="mod" data-v="biweekly">Bi-weekly</button>
+    <button class="cl-filter" data-type="mod" data-v="monthly">Monthly</button>
+  </div>
+</div>
 
-  <!-- TOOLS -->
-  <div id="tab-parks" class="section">
+<input class="search-bar" id="cl-search" placeholder="Search brand or manufacturer..." oninput="renderCLList()" />
+
+<div id="cl-list"></div>
+<div id="cl-count" style="font-size:11px;color:var(--text3);margin-top:0.5rem"></div>
+<p style="font-size:10.5px;color:var(--text3);margin-top:12px;padding-top:8px;border-top:0.5px solid var(--border);line-height:1.45">Ref: Parameters compiled from manufacturer package inserts &amp; fitting guides (J&amp;J Vision, Alcon, CooperVision, Bausch + Lomb), 2024–25. <strong>Always verify exact power/cylinder/axis availability and current pricing with the manufacturer or your distributor before ordering</strong> — parameters change with product updates. Pricing is approximate US retail.</p>
+</div>
+
+<div id="tab-parks" class="section">
 <p style="font-size:18px;font-weight:600;margin-bottom:.2rem">Parks 3-Step Test</p>
 <p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">Parks-Bielschowsky — isolate a paretic cyclovertical muscle</p>
 
@@ -2797,24 +2781,9 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
 </div>
 
 <!-- OPTICS -->
-<div id="tab-optics" class="section">
-<p style="font-size:18px;font-weight:600;letter-spacing:-0.3px;margin-bottom:0.2rem">Optics</p>
-<p style="font-size:12.5px;color:var(--text2);margin-bottom:1.25rem">Lens materials, design strategies, Abbe values, prism formulas</p>
-
-<div class="card"><div class="card-header" onclick="toggle(this)">
-  <div><div class="card-title">Design strategies for thinner, lighter lenses</div><div class="card-subtitle">6 approaches to optimize lens design</div></div>
-  <div class="card-meta"><span class="tag tag-gray">Design</span><span class="chevron">▾</span></div>
-</div><div class="card-body">
-  <ol style="padding-left:1.3rem;font-size:13px">
-    <li style="padding:3px 0">Higher index material</li>
-    <li style="padding:3px 0">Minimal decentration</li>
-    <li style="padding:3px 0">Rounder frame shape</li>
-    <li style="padding:3px 0">Aspheric lens design</li>
-    <li style="padding:3px 0">Thinner center</li>
-    <li style="padding:3px 0">Smaller frame (smaller ED)</li>
-  </ol>
-</div></div>
-
+<div id="tab-lensmaterial" class="section">
+<p style="font-size:18px;font-weight:600;margin-bottom:.2rem">Lens Material</p>
+<p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">Material comparison &amp; design strategies for thinner, lighter lenses</p>
 <div class="card"><div class="card-header" onclick="toggle(this)">
   <div><div class="card-title">Lens material comparison</div><div class="card-subtitle">Index, Abbe value, properties</div></div>
   <div class="card-meta"><span class="tag tag-gray">Materials</span><span class="chevron">▾</span></div>
@@ -2831,7 +2800,24 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
   </table>
   <div class="info-box">Higher Abbe value = less chromatic aberration. CR-39 and glass have the best optical clarity. Polycarbonate has the lowest Abbe value but best impact resistance — ideal for children and safety eyewear.</div>
 </div></div>
+<div class="card"><div class="card-header" onclick="toggle(this)">
+  <div><div class="card-title">Design strategies for thinner, lighter lenses</div><div class="card-subtitle">6 approaches to optimize lens design</div></div>
+  <div class="card-meta"><span class="tag tag-gray">Design</span><span class="chevron">▾</span></div>
+</div><div class="card-body">
+  <ol style="padding-left:1.3rem;font-size:13px">
+    <li style="padding:3px 0">Higher index material</li>
+    <li style="padding:3px 0">Minimal decentration</li>
+    <li style="padding:3px 0">Rounder frame shape</li>
+    <li style="padding:3px 0">Aspheric lens design</li>
+    <li style="padding:3px 0">Thinner center</li>
+    <li style="padding:3px 0">Smaller frame (smaller ED)</li>
+  </ol>
+</div></div>
+</div>
 
+<div id="tab-optics" class="section">
+<p style="font-size:18px;font-weight:600;margin-bottom:.2rem">Prism Formulas</p>
+<p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">Prism formulas, Prentice rule, decentration &amp; blank size</p>
 <div class="card"><div class="card-header" onclick="toggle(this)">
   <div><div class="card-title">Prism formulas &amp; blank size</div><div class="card-subtitle">Prentice rule, decentration, minimum blank</div></div>
   <div class="card-meta"><span class="tag tag-gray">Formulas</span><span class="chevron">▾</span></div>
@@ -2850,169 +2836,46 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
     <tr><td>60° / 120°</td><td>75</td><td>100% (full cyl)</td></tr>
   </table>
 </div></div>
-
-
-</div>
-<p class="disclaimer">⚕ Clinical reference only. Always verify drug dosages with current prescribing information, confirm ICD-10 codes with your billing department, and apply clinical judgment. Drug prices are approximate retail/GoodRx figures as of April 2026.</p>
 </div>
 
+<p class="disclaimer">⚕ Clinical reference only. Always verify drug dosages with current prescribing information, confirm ICD-10 codes with your billing department, and apply clinical judgment. Drug and lens prices are approximate retail figures as of April 2026.</p>
 </div>
+</div>
+
 <script>
-
 function switchTab(tab, btn) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   const el = document.getElementById('tab-' + tab);
   if (el) {
     el.classList.add('active');
-    // Scroll main content to top on mobile
     if (window.innerWidth <= 680) window.scrollTo({ top: document.querySelector('.sidebar').offsetHeight, behavior: 'smooth' });
-    else document.querySelector('.main-content').scrollTop = 0;
+    else { const mc = document.querySelector('.main-content'); if (mc) mc.scrollTop = 0; }
   }
-  btn.classList.add('active');
+  if (btn) btn.classList.add('active');
   setTimeout(scrollNavToActive, 50);
 }
+
 function tog(header) { toggle(header); }
 function toggle(header) {
   const body = header.nextElementSibling;
-  const chev = header.querySelector('.chevron');
+  const chev = header.querySelector('.chevron, .toggle-icon');
   const open = body.classList.toggle('open');
-  chev.classList.toggle('open', open);
-}
-function filterCards(listId, q) {
-  q = q.toLowerCase();
-  document.querySelectorAll('#' + listId + ' .card, #' + listId + ' .card-featured').forEach(card => {
-    const hay = (card.dataset.s || '') + ' ' + card.textContent.toLowerCase();
-    card.style.display = hay.includes(q) ? '' : 'none';
-  });
-}
-function filterICD(q) {
-  q = q.toLowerCase();
-  document.querySelectorAll('#icd-list .icd-row').forEach(row => {
-    row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
-  });
-}
-const codes = [
-  ['H52.1','Myopia'],['H52.11','Myopia, right eye'],['H52.12','Myopia, left eye'],['H52.13','Myopia, bilateral'],
-  ['H52.0','Hypermetropia'],['H52.01','Hypermetropia, right eye'],['H52.02','Hypermetropia, left eye'],['H52.03','Hypermetropia, bilateral'],
-  ['H52.2','Astigmatism'],['H52.21','Irregular astigmatism'],['H52.22','Regular astigmatism'],['H52.4','Presbyopia'],
-  ['H40.001','Glaucoma suspect, OAG, right eye'],['H40.002','Glaucoma suspect, OAG, left eye'],
-  ['H40.11','Primary open-angle glaucoma'],['H40.20','Primary angle-closure glaucoma, unspecified'],
-  ['H40.211','Acute angle-closure glaucoma, right eye'],['H40.212','Acute angle-closure glaucoma, left eye'],
-  ['H10.9','Unspecified conjunctivitis'],['H10.10','Acute atopic conjunctivitis, unspecified'],
-  ['H10.30','Unspecified acute conjunctivitis'],['H10.40','Chronic conjunctivitis, unspecified'],
-  ['H16.009','Unspecified corneal ulcer, unspecified eye'],['H16.011','Central corneal ulcer, right eye'],['H16.012','Central corneal ulcer, left eye'],
-  ['H04.123','Dry eye syndrome, bilateral'],['H04.121','Dry eye syndrome, right eye'],['H04.122','Dry eye syndrome, left eye'],
-  ['H20.00','Unspecified iridocyclitis'],['H20.011','Primary iridocyclitis, right eye'],['H20.012','Primary iridocyclitis, left eye'],
-  ['H35.30','Unspecified macular degeneration'],['H35.31','Nonexudative AMD, unspecified'],['H35.32','Exudative AMD, unspecified'],
-  ['H33.001','Retinal detachment with single break, right eye'],['H33.05','Total retinal detachment, unspecified'],
-  ['H54.7','Unspecified visual loss'],['H54.0','Blindness, both eyes'],
-  ['H49.00','CN III palsy, unspecified eye'],['H49.10','CN IV palsy, unspecified eye'],['H49.20','CN VI palsy, unspecified eye'],
-  ['H51.11','Convergence insufficiency'],['H51.12','Convergence excess'],['H51.0','Palsy of conjugate gaze'],
-  ['H53.2','Diplopia'],['H53.10','Unspecified subjective visual disturbances'],['H53.14','Visual discomfort'],
-  ['H57.00','Unspecified anomaly of pupillary function'],['H57.01','Argyll Robertson pupil, atypical'],
-  ['Z01.00','Exam of eyes/vision, no abnormal findings'],['Z01.01','Exam of eyes/vision, abnormal findings'],
-  ['H00.011','Hordeolum externum, right upper eyelid'],['H00.012','Hordeolum externum, right lower eyelid'],
-  ['H00.14','Chalazion, left upper eyelid'],['H00.15','Chalazion, left lower eyelid'],
-  ['H02.401','Unspecified ptosis, right eye'],['H02.402','Unspecified ptosis, left eye'],
-  ['H11.001','Unspecified pterygium, right eye'],['H11.002','Unspecified pterygium, left eye'],
-  ['H26.9','Unspecified cataract'],['H25.011','Cortical age-related cataract, right eye'],
-  ['H26.001','Infantile/juvenile cortical cataract, right eye'],
-  ['H01.001','Unspecified blepharitis, right upper eyelid'],['H01.002','Unspecified blepharitis, right lower eyelid'],
-  ['H30.9','Unspecified chorioretinal inflammation'],['H31.001','Choroidal neovascularization, right eye'],
-];
-(function buildICD(){
-  const list = document.getElementById('icd-list');
-  codes.forEach(([code, desc]) => {
-    const row = document.createElement('div');
-    row.className = 'icd-row';
-    row.innerHTML = `<span class="icd-code">${code}</span><span class="icd-desc">${desc}</span>`;
-    list.appendChild(row);
-  });
-})();
-
-
-// ── PLAQUENIL CALCULATOR ──────────────────────────────
-function setWeightUnit(unit) {
-  window._plaqUnit = unit;
-  const kgBtn  = document.getElementById('unit-kg');
-  const lbsBtn = document.getElementById('unit-lbs');
-  if (kgBtn && lbsBtn) {
-    kgBtn.style.background  = unit === 'kg'  ? 'var(--blue-bg)' : 'transparent';
-    kgBtn.style.color       = unit === 'kg'  ? 'var(--blue)'    : 'var(--text2)';
-    kgBtn.style.fontWeight  = unit === 'kg'  ? '600' : 'normal';
-    lbsBtn.style.background = unit === 'lbs' ? 'var(--blue-bg)' : 'transparent';
-    lbsBtn.style.color      = unit === 'lbs' ? 'var(--blue)'    : 'var(--text2)';
-    lbsBtn.style.fontWeight = unit === 'lbs' ? '600' : 'normal';
-  }
-  // Update placeholder
-  const input = document.getElementById('plaq-weight');
-  if (input) input.placeholder = unit === 'lbs' ? 'e.g. 150' : 'e.g. 68';
-  calcPlaquenil();
+  if (chev) chev.classList.toggle('open', open);
 }
 
-function calcPlaquenil() {
-  const rawWeight = parseFloat(document.getElementById('plaq-weight').value);
-  const weightUnit = window._plaqUnit || 'kg';
-  const weight = weightUnit === 'lbs' ? rawWeight * 0.453592 : rawWeight;
-  const dose   = parseFloat(document.getElementById('plaq-dose').value);
-  const years  = parseFloat(document.getElementById('plaq-years').value);
-  const renal  = document.getElementById('plaq-renal').value;
-  const tamox  = document.getElementById('plaq-tamox').checked;
-  const mac    = document.getElementById('plaq-macular').checked;
-  const result = document.getElementById('plaq-result');
-
-  if (!weight || !dose) { result.style.display='none'; return; }
-
-  const mgPerKg = dose / weight;
-  const displayWeight = parseFloat(document.getElementById('plaq-weight').value);
-  const displayUnit = window._plaqUnit || 'kg';
-  const safe    = mgPerKg <= 5.0;
-  const riskFactors = [];
-  if (!safe) riskFactors.push('Dose exceeds 5 mg/kg/day threshold');
-  if (years >= 5) riskFactors.push('Duration ≥5 years');
-  if (renal === 'yes') riskFactors.push('Renal disease');
-  if (tamox) riskFactors.push('Concurrent tamoxifen use');
-  if (mac) riskFactors.push('Pre-existing macular disease');
-
-  // Cumulative dose
-  const cumulative = dose * 365 * (years || 0) / 1000; // grams
-
-  let riskLevel, riskColor, riskBg, riskBorder, screenRec;
-  if (!safe || riskFactors.length >= 2) {
-    riskLevel = 'HIGH RISK'; riskColor = 'var(--red-text)'; riskBg = 'var(--red-bg)'; riskBorder = '#a03030';
-    screenRec = 'Annual screening recommended now. Consider rheumatology consultation regarding dose reduction.';
-  } else if (years >= 5 || riskFactors.length === 1) {
-    riskLevel = 'MODERATE RISK'; riskColor = 'var(--amber-text)'; riskBg = 'var(--amber-bg)'; riskBorder = 'var(--amber-border)';
-    screenRec = 'Annual screening with 10-2 VF and SD-OCT. mfERG if equivocal findings.';
-  } else {
-    riskLevel = 'LOW RISK'; riskColor = 'var(--green-text)'; riskBg = 'var(--green-bg)'; riskBorder = 'var(--green-border)';
-    screenRec = years ? 'Annual screening after 5 years of use.' : 'Baseline exam within 1 year of starting therapy.';
-  }
-
-  result.style.display = 'block';
-  result.innerHTML = `
-    <div style="background:${riskBg};border:1px solid ${riskBorder};border-radius:var(--rl);padding:1rem;margin-bottom:0.75rem;">
-      <div style="font-size:13px;font-weight:700;color:${riskColor};margin-bottom:8px;">${riskLevel}</div>
-      <table style="width:100%;font-size:13px;border-collapse:collapse;">
-        <tr><td style="color:var(--text2);width:160px;padding:3px 0;">Dose per kg/day</td><td style="font-weight:500;color:${safe ? 'var(--green-text)' : 'var(--red-text)'};">${mgPerKg.toFixed(2)} mg/kg/day ${safe ? '✓ Within limit' : '✗ Exceeds 5.0 mg/kg limit'}</td></tr>
-        <tr><td style="color:var(--text2);padding:3px 0;">Daily dose</td><td>${dose} mg/day</td></tr>
-        ${years ? `<tr><td style="color:var(--text2);padding:3px 0;">Cumulative dose</td><td>${cumulative.toFixed(0)} g over ${years} yr${years!==1?'s':''}</td></tr>` : ''}
-        ${riskFactors.length ? `<tr><td style="color:var(--text2);padding:3px 0;vertical-align:top;">Risk factors</td><td>${riskFactors.map(r=>`<div>• ${r}</div>`).join('')}</td></tr>` : ''}
-        <tr><td style="color:var(--text2);padding:3px 0;vertical-align:top;">Screening rec.</td><td>${screenRec}</td></tr>
-      </table>
-    </div>`;
+function scrollNavToActive() {
+  const active = document.querySelector('.nav-btn.active');
+  if (active) active.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
 }
 
-// ── PARKS 3-STEP CALCULATOR ───────────────────────────
+// ── PARKS 3-STEP ──
 function calcParks() {
   const s1 = document.querySelector('input[name="p-step1"]:checked');
   const s2 = document.querySelector('input[name="p-step2"]:checked');
   const s3 = document.querySelector('input[name="p-step3"]:checked');
-  const result = document.getElementById('parks-result');
-  if (!s1 || !s2 || !s3) { result.style.display='none'; return; }
-
-  // Parks lookup table — [hypertropic eye, worse gaze, worse tilt] → paretic muscle
+  if (!s1 || !s2 || !s3) return;
+  const key = s1.value + '-' + s2.value + '-' + s3.value;
   const table = {
     'RE-R-R': 'Left Inferior Oblique (LIO)',
     'RE-R-L': 'Right Inferior Rectus (RIR)',
@@ -3023,120 +2886,368 @@ function calcParks() {
     'LE-L-R': 'Left Inferior Rectus (LIR)',
     'LE-L-L': 'Right Inferior Oblique (RIO)',
   };
-
-  const key = `${s1.value}-${s2.value}-${s3.value}`;
-  const muscle = table[key] || 'Unable to determine — check findings';
-  const isSO = muscle.includes('Superior Oblique');
-
-  result.style.display = 'block';
-  result.innerHTML = `
-    <div style="background:var(--blue-bg);border:1px solid rgba(91,163,232,0.3);border-radius:var(--rl);padding:1rem;">
-      <div style="font-size:11px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--text2);margin-bottom:6px;">Paretic muscle</div>
-      <div style="font-size:17px;font-weight:600;color:var(--blue-text);margin-bottom:${isSO?'10px':'0'}">${muscle}</div>
-      ${isSO ? `<div style="font-size:12.5px;color:var(--text2);margin-top:6px;">CN IV palsy: expect excyclotorsion, difficulty on stairs/reading. If acquired and pupil-sparing, consider microvascular etiology. If traumatic, may be bilateral.</div>` : ''}
-    </div>`;
+  const muscle = table[key];
+  const el = document.getElementById('parks-result');
+  el.style.display = 'block';
+  el.innerHTML = '<div style="background:var(--blue-bg);border:1px solid var(--blue);border-radius:var(--rl);padding:1rem">'
+    + '<div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--blue-text);margin-bottom:4px">Paretic muscle</div>'
+    + '<div style="font-size:20px;font-weight:600;color:var(--blue-text)">' + muscle + '</div></div>';
 }
 
+// ── PLAQUENIL ──
+function setWeightUnit(unit) {
+  window._plaqUnit = unit;
+  const kg = document.getElementById('unit-kg'), lbs = document.getElementById('unit-lbs');
+  if (kg && lbs) {
+    kg.style.background = unit==='kg'?'var(--blue-bg)':'transparent';
+    kg.style.color = unit==='kg'?'var(--blue)':'var(--text2)';
+    kg.style.fontWeight = unit==='kg'?'600':'normal';
+    lbs.style.background = unit==='lbs'?'var(--blue-bg)':'transparent';
+    lbs.style.color = unit==='lbs'?'var(--blue)':'var(--text2)';
+    lbs.style.fontWeight = unit==='lbs'?'600':'normal';
+  }
+  const inp = document.getElementById('plaq-weight');
+  if (inp) inp.placeholder = unit==='lbs'?'e.g. 150':'e.g. 68';
+  calcPlaquenil();
+}
 
-// ── GLOBAL SEARCH ─────────────────────────────────────────
-const SEARCH_INDEX = [{"tab": "pupils", "tabName": "Pupils", "title": "The 4 anisocoria questions", "subtitle": "First steps in any pupil asymmetry"}, {"tab": "pupils", "tabName": "Pupils", "title": "Horner's syndrome", "subtitle": "1st, 2nd & 3rd order localization"}, {"tab": "pupils", "tabName": "Pupils", "title": "Adie's tonic pupil & others", "subtitle": "Postganglionic denervation, pharmacologic, CN III"}, {"tab": "headache", "tabName": "Headache", "title": "Primary headache types", "subtitle": "Tension, migraine, cluster"}, {"tab": "headache", "tabName": "Headache", "title": "Emergency secondary headaches", "subtitle": "Must-not-miss diagnoses"}, {"tab": "headache", "tabName": "Headache", "title": "Ocular causes of headache", "subtitle": "Rule out at every headache presentation"}, {"tab": "diplopia", "tabName": "Diplopia", "title": "Initial workup", "subtitle": "4 key questions + history"}, {"tab": "diplopia", "tabName": "Diplopia", "title": "Horizontal diplopia DDx", "subtitle": "Etiology and distinguishing features"}, {"tab": "diplopia", "tabName": "Diplopia", "title": "CN III — six localizing syndromes", "subtitle": "Brainstem through orbit"}, {"tab": "diplopia", "tabName": "Diplopia", "title": "CN IV & EOM actions reference", "subtitle": "Trochlear nerve, bilateral palsy, H-pattern"}, {"tab": "nystagmus", "tabName": "Nystagmus", "title": "Classifying nystagmus", "subtitle": "Jerk vs pendular, congenital vs acquired"}, {"tab": "nystagmus", "tabName": "Nystagmus", "title": "Peripheral vs central nystagmus", "subtitle": "Key distinguishing features"}, {"tab": "nystagmus", "tabName": "Nystagmus", "title": "Specific acquired types", "subtitle": "Upbeat, downbeat, see-saw, periodic alternating"}, {"tab": "vf", "tabName": "Visual Fields", "title": "Visual field defect diagrams", "subtitle": "Classic patterns with localization and DDx"}, {"tab": "vf", "tabName": "Visual Fields", "title": "Pre-chiasmal defects", "subtitle": "Monocular — retina or optic nerve"}, {"tab": "vf", "tabName": "Visual Fields", "title": "Chiasmal & post-chiasmal defects", "subtitle": "Bitemporal, homonymous, quadrantanopia"}, {"tab": "vf", "tabName": "Visual Fields", "title": "VF interpretation pearls", "subtitle": "Congruence rules, macular sparing, testing tips"}, {"tab": "glaucoma2", "tabName": "Glaucoma", "title": "Glaucoma evaluation framework", "subtitle": "Disc, IOP, CCT, angle, RNFL"}, {"tab": "glaucoma2", "tabName": "Glaucoma", "title": "IOP-lowering medications", "subtitle": "Mechanism, expected reduction, cost"}, {"tab": "glaucoma2", "tabName": "Glaucoma", "title": "Acute angle closure — emergency management", "subtitle": "Recognition & immediate steps"}, {"tab": "binoc", "tabName": "Binocular Workup", "title": "Distance lateral phoria — von Graefe", "subtitle": "Step-by-step technique"}, {"tab": "binoc", "tabName": "Binocular Workup", "title": "Distance horizontal vergences (BI & BO)", "subtitle": "Break and recovery measurement"}, {"tab": "binoc", "tabName": "Binocular Workup", "title": "FCC & MEM", "subtitle": "Functional accommodative tests at near"}, {"tab": "vergence", "tabName": "Vergence", "title": "Convergence insufficiency (CI)", "subtitle": "Most common binocular vision disorder"}, {"tab": "vergence", "tabName": "Vergence", "title": "Convergence excess (CE)", "subtitle": "High AC/A esophoria at near"}, {"tab": "vergence", "tabName": "Vergence", "title": "Basic exo & eso, divergence anomalies", "subtitle": "Equal deviation & distance-predominant conditions"}, {"tab": "vergence", "tabName": "Vergence", "title": "Quick reference — vergence anomaly summary", "subtitle": "AC/A, phorias, and primary treatment"}, {"tab": "accomm", "tabName": "Accommodation", "title": "Accommodative insufficiency (AI)", "subtitle": "Low amplitude, poor sustaining"}, {"tab": "accomm", "tabName": "Accommodation", "title": "Accommodative infacility (AF)", "subtitle": "Slow or inconsistent focusing"}, {"tab": "accomm", "tabName": "Accommodation", "title": "Accommodative excess & spasm", "subtitle": "Over-accommodation, pseudomyopia"}, {"tab": "drugs", "tabName": "Drugs & Dosing", "title": "Erythromycin 0.5% ophthalmic ointment", "subtitle": "Macrolide antibiotic ointment (E-Mycin)"}, {"tab": "drugs", "tabName": "Drugs & Dosing", "title": "Azithromycin 1% (AzaSite)", "subtitle": "Macrolide drops — erythromycin alternative"}, {"tab": "drugs", "tabName": "Drugs & Dosing", "title": "Tobramycin 0.3% (Tobrex)", "subtitle": "Aminoglycoside antibiotic"}, {"tab": "drugs", "tabName": "Drugs & Dosing", "title": "Tobramycin / Dexamethasone (Tobradex)", "subtitle": "Antibiotic + steroid combination"}, {"tab": "drugs", "tabName": "Drugs & Dosing", "title": "Moxifloxacin 0.5% (Vigamox)", "subtitle": "4th-generation fluoroquinolone"}, {"tab": "drugs", "tabName": "Drugs & Dosing", "title": "Ciprofloxacin 0.3% (Ciloxan)", "subtitle": "Fluoroquinolone — drops & ointment"}, {"tab": "drugs", "tabName": "Drugs & Dosing", "title": "Ofloxacin 0.3% (Ocuflox)", "subtitle": "3rd-generation fluoroquinolone"}, {"tab": "drugs", "tabName": "Drugs & Dosing", "title": "Besifloxacin 0.6% (Besivance)", "subtitle": "Ophthalmic-only fluoroquinolone — lower resistance"}, {"tab": "drugs", "tabName": "Drugs & Dosing", "title": "Prednisolone acetate 1% (Pred Forte)", "subtitle": "Topical corticosteroid"}, {"tab": "drugs", "tabName": "Drugs & Dosing", "title": "Loteprednol etabonate 0.5% (Lotemax)", "subtitle": "Retrometabolic steroid — lower IOP risk"}, {"tab": "drugs", "tabName": "Drugs & Dosing", "title": "Ketorolac 0.5% (Acular)", "subtitle": "Topical NSAID"}, {"tab": "drugs", "tabName": "Drugs & Dosing", "title": "Olopatadine (Pataday)", "subtitle": "Antihistamine / mast cell stabilizer"}, {"tab": "drugs", "tabName": "Drugs & Dosing", "title": "Cyclopentolate 1% (Cyclogyl)", "subtitle": "Cycloplegic / mydriatic"}, {"tab": "drugs", "tabName": "Drugs & Dosing", "title": "Tropicamide 1% (Mydriacyl)", "subtitle": "Short-acting mydriatic"}, {"tab": "drugs", "tabName": "Drugs & Dosing", "title": "Phenylephrine 2.5% / 10%", "subtitle": "Sympathomimetic mydriatic"}, {"tab": "drugs", "tabName": "Drugs & Dosing", "title": "Atropine sulfate", "subtitle": "Cycloplegic / myopia control"}, {"tab": "drugs", "tabName": "Drugs & Dosing", "title": "Proparacaine 0.5%", "subtitle": "Topical anesthetic"}, {"tab": "drugs", "tabName": "Drugs & Dosing", "title": "Sodium fluorescein", "subtitle": "Diagnostic dye — staining & tonometry"}, {"tab": "drugs", "tabName": "Drugs & Dosing", "title": "Dorzolamide 2% / Timolol 0.5% (Cosopt)", "subtitle": "CAI + beta-blocker combo — IOP lowering"}, {"tab": "drugs", "tabName": "Drugs & Dosing", "title": "Latanoprost 0.005% (Xalatan)", "subtitle": "Prostaglandin analogue — IOP lowering"}, {"tab": "eval", "tabName": "Clinical Eval", "title": "Diplopia evaluation", "subtitle": "Binocular diplopia workup"}, {"tab": "eval", "tabName": "Clinical Eval", "title": "Headache evaluation", "subtitle": "Visual & ocular causes"}, {"tab": "eval", "tabName": "Clinical Eval", "title": "Pupil evaluation", "subtitle": "RAPD, anisocoria, Horner's, CN III"}, {"tab": "eval", "tabName": "Clinical Eval", "title": "Visual field defect localization", "subtitle": "Anatomy-based interpretation"}, {"tab": "eval", "tabName": "Clinical Eval", "title": "Dry eye evaluation", "subtitle": "DEWS II-based approach"}, {"tab": "eval", "tabName": "Clinical Eval", "title": "Glaucoma evaluation", "subtitle": "Structural & functional assessment"}, {"tab": "dryeye2", "tabName": "Dry Eye", "title": "Dry eye evaluation — DEWS II", "subtitle": "Symptom screen, TBUT, staining, Schirmer, MGD"}, {"tab": "dryeye2", "tabName": "Dry Eye", "title": "Treatment ladder", "subtitle": "Step-up approach by severity"}, {"tab": "myopia", "tabName": "Myopia Control", "title": "Essilor® Stellest®", "subtitle": "Highest-efficacy spectacle lens for myopia control"}, {"tab": "myopia", "tabName": "Myopia Control", "title": "Low-dose atropine", "subtitle": "Evidence-based pharmacological intervention"}, {"tab": "myopia", "tabName": "Myopia Control", "title": "Orthokeratology (Ortho-K)", "subtitle": "Overnight corneal reshaping lenses"}, {"tab": "myopia", "tabName": "Myopia Control", "title": "Myopia control soft contact lenses", "subtitle": "MiSight, Acuvue Abiliti, NaturalVue"}, {"tab": "myopia", "tabName": "Myopia Control", "title": "Other spectacle options", "subtitle": "DIMS (MiyoSmart), PALs, bifocals"}, {"tab": "myopia", "tabName": "Myopia Control", "title": "Lifestyle & environmental factors", "subtitle": "Adjunct recommendations for all patients"}, {"tab": "cl", "tabName": "CL Fitting", "title": "RGP — spherical BC selection", "subtitle": "Fitting philosophy & power compensation"}, {"tab": "cl", "tabName": "CL Fitting", "title": "Lacrimal lens & residual astigmatism", "subtitle": "What the tear layer corrects"}, {"tab": "cl", "tabName": "CL Fitting", "title": "RGP toric designs — design selection guide", "subtitle": "Thin-flex, BST, SPE bitoric, CPE bitoric, FT toric"}, {"tab": "optics", "tabName": "Optics", "title": "Design strategies for thinner, lighter lenses", "subtitle": "6 approaches to optimize lens design"}, {"tab": "optics", "tabName": "Optics", "title": "Lens material comparison", "subtitle": "Index, Abbe value, properties"}, {"tab": "optics", "tabName": "Optics", "title": "Prism formulas & blank size", "subtitle": "Prentice rule, decentration, minimum blank"}, {"tab": "parks", "tabName": "Parks 3-Step", "title": "Parks-Bielschowsky 3-Step Test", "subtitle": "Isolate a paretic cyclovertical muscle"}, {"tab": "plaquenil", "tabName": "Plaquenil Risk", "title": "Plaquenil (Hydroxychloroquine) Toxicity Risk Calculator", "subtitle": "AAO 2016 guidelines — daily dose & Macular risk assessment"}, {"tab": "plaquenil", "tabName": "Plaquenil Risk", "title": "Parks-Bielschowsky 3-Step Test", "subtitle": "Isolate a paretic cyclovertical muscle"}];
-let searchActive = -1;
+function calcPlaquenil() {
+  const rawWeight = parseFloat(document.getElementById('plaq-weight').value);
+  const weightUnit = window._plaqUnit || 'kg';
+  const weight = weightUnit === 'lbs' ? rawWeight * 0.453592 : rawWeight;
+  const dose = parseFloat(document.getElementById('plaq-dose').value);
+  const years = parseFloat(document.getElementById('plaq-years').value);
+  const renal = document.getElementById('plaq-renal').value;
+  const tam = document.getElementById('plaq-tamox').checked;
+  const mac = document.getElementById('plaq-macular').checked;
+  const el = document.getElementById('plaq-result');
+  if (!weight || !dose || isNaN(weight) || isNaN(dose)) { el.style.display='none'; return; }
+  const mgkg = dose / weight;
+  const displayWeight = parseFloat(document.getElementById('plaq-weight').value);
+  const displayUnit = weightUnit;
+  let risk = [], level = 'green';
+  if (mgkg > 5.0) { risk.push('Daily dose exceeds 5.0 mg/kg (AAO max)'); level='red'; }
+  else { risk.push('Daily dose within AAO limit (≤5.0 mg/kg)'); }
+  if (years > 5) { risk.push('Duration >5 years — higher risk'); if(level!=='red') level='amber'; }
+  if (renal === 'yes') { risk.push('Renal disease — major risk factor'); level='red'; }
+  if (tam) { risk.push('Concurrent tamoxifen — major risk factor'); level='red'; }
+  if (mac) { risk.push('Pre-existing macular disease'); if(level!=='red') level='amber'; }
+  const pal = {green:['var(--green-bg)','var(--green-text)','var(--green-border)'],amber:['var(--amber-bg)','var(--amber-text)','var(--amber-border)'],red:['var(--red-bg)','var(--red-text)','var(--red-border)']}[level];
+  el.style.display = 'block';
+  el.innerHTML = '<div style="background:'+pal[0]+';border:1px solid '+pal[2]+';border-radius:var(--rl);padding:1rem">'
+    + '<div style="font-size:13px;color:var(--text)"><strong>Weight:</strong> '+displayWeight+' '+displayUnit+(displayUnit==='lbs'?' ('+weight.toFixed(1)+' kg)':'')+'</div>'
+    + '<div style="font-size:13px;color:var(--text);margin-top:4px"><strong>Dose:</strong> '+mgkg.toFixed(2)+' mg/kg/day</div>'
+    + '<ul style="margin-top:8px;padding-left:1.2rem;font-size:13px;color:'+pal[1]+'">'+risk.map(r=>'<li>'+r+'</li>').join('')+'</ul></div>';
+}
 
-function hl(text, q) {
-  if (!q) return text;
-  const re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
-  return text.replace(re, '<mark class="sh">$1</mark>');
+// ── GLOBAL SEARCH ──
+function filterCards(listId, q) {
+  q = (q||'').toLowerCase();
+  const list = document.getElementById(listId);
+  if (!list) return;
+  list.querySelectorAll('.card, .price-card, tr').forEach(card => {
+    const hay = card.textContent.toLowerCase();
+    card.style.display = hay.includes(q) ? '' : 'none';
+  });
 }
 
 function globalSearch(q) {
   const box = document.getElementById('search-results');
-  q = q.trim();
-  if (!q) { box.classList.remove('open'); box.innerHTML = ''; searchActive = -1; return; }
-  const ql = q.toLowerCase();
-  const results = SEARCH_INDEX.filter(e =>
-    e.title.toLowerCase().includes(ql) ||
-    e.subtitle.toLowerCase().includes(ql) ||
-    e.tabName.toLowerCase().includes(ql)
-  ).slice(0, 12);
-  searchActive = -1;
-  if (!results.length) {
-    box.innerHTML = '<div class="search-no-results">No results for "' + q + '"</div>';
-    box.classList.add('open');
-    return;
-  }
-  box.innerHTML = results.map((r, i) => `
-    <div class="search-result-item" data-tab="${r.tab}" data-title="${r.title.replace(/"/g,'&quot;')}" 
-         onmousedown="pickResult('${r.tab}','${r.title.replace(/'/g,"\\'")}')"
-         onmouseover="searchActive=${i};renderResults(results,'${q}')">
-      <div class="sri-title">${hl(r.title, q)}</div>
-      <div class="sri-meta">
-        <span class="sri-tab">${r.tabName}</span>
-        ${r.subtitle ? '<span class="sri-sub">' + hl(r.subtitle, q) + '</span>' : ''}
-      </div>
-    </div>`).join('');
-  box.classList.add('open');
-  // store results for keyboard nav
-  box._results = results;
-  box._q = q;
-}
-
-function renderResults(results, q) {
-  // re-render to update hover state — skip for now, handled by CSS hover
-}
-
-function pickResult(tabId, title) {
-  // Close search
-  const box = document.getElementById('search-results');
-  box.classList.remove('open');
-  document.querySelector('.global-search').value = '';
-
-  // Switch tab
-  const btn = document.querySelector(`.nav-btn[onclick*="'${tabId}'"]`);
-  if (btn) { switchTab(tabId, btn); }
-  
-  // Find and open the card
-  setTimeout(() => {
-    const tab = document.getElementById('tab-' + tabId);
-    if (!tab) return;
-    // Find card with matching title
-    const cards = tab.querySelectorAll('.card, .card-feat');
-    for (const card of cards) {
-      const titleEl = card.querySelector('.ct, .card-title');
-      if (titleEl && titleEl.textContent.trim().includes(title.substring(0, 20))) {
-        // Open if closed
-        const body = card.querySelector('.cb, .card-body');
-        const chev = card.querySelector('.chevron');
-        if (body && !body.classList.contains('open')) {
-          body.classList.add('open');
-          if (chev) chev.classList.add('open');
-        }
-        // Scroll to card
-        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        // Flash highlight
-        card.classList.add('card-highlight');
-        setTimeout(() => card.classList.remove('card-highlight'), 1400);
-        break;
+  q = (q||'').trim().toLowerCase();
+  if (!q) { box.classList.remove('open'); box.innerHTML=''; return; }
+  const results = [];
+  document.querySelectorAll('.section').forEach(sec => {
+    const tabId = sec.id.replace('tab-','');
+    const navBtn = document.querySelector('.nav-btn[onclick*="\''+tabId+'\'"]');
+    const tabName = navBtn ? navBtn.textContent.trim() : tabId;
+    sec.querySelectorAll('.ct, .card-title').forEach(t => {
+      if (t.textContent.toLowerCase().includes(q)) {
+        results.push({tabId, tabName, title: t.textContent.trim()});
       }
-    }
-  }, 80);
+    });
+  });
+  if (results.length === 0) { box.innerHTML = '<div class="search-no-results">No matches</div>'; box.classList.add('open'); return; }
+  box.innerHTML = results.slice(0,12).map(r =>
+    '<div class="search-result-item" onmousedown="switchTab(\''+r.tabId+'\', document.querySelector(\'.nav-btn[onclick*=&quot;'+r.tabId+'&quot;]\')); document.getElementById(\'search-results\').classList.remove(\'open\'); document.querySelector(\'.global-search\').value=\'\';">'
+    + '<div class="sri-title">'+r.title+'</div><div class="sri-meta"><span class="sri-tab">'+r.tabName+'</span></div></div>'
+  ).join('');
+  box.classList.add('open');
 }
 
+let searchActive = -1;
 function searchKeyNav(e) {
   const box = document.getElementById('search-results');
   const items = box.querySelectorAll('.search-result-item');
   if (!items.length) return;
-  if (e.key === 'ArrowDown') { e.preventDefault(); searchActive = Math.min(searchActive + 1, items.length - 1); items.forEach((el, i) => el.style.background = i === searchActive ? 'var(--bg3)' : ''); items[searchActive]?.scrollIntoView({block:'nearest'}); }
-  else if (e.key === 'ArrowUp') { e.preventDefault(); searchActive = Math.max(searchActive - 1, 0); items.forEach((el, i) => el.style.background = i === searchActive ? 'var(--bg3)' : ''); items[searchActive]?.scrollIntoView({block:'nearest'}); }
-  else if (e.key === 'Enter' && searchActive >= 0) { items[searchActive]?.dispatchEvent(new MouseEvent('mousedown')); }
-  else if (e.key === 'Escape') { box.classList.remove('open'); document.querySelector('.global-search').value = ''; }
+  if (e.key === 'ArrowDown') { e.preventDefault(); searchActive = Math.min(searchActive+1, items.length-1); }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); searchActive = Math.max(searchActive-1, 0); }
+  else if (e.key === 'Enter' && searchActive >= 0) { items[searchActive].dispatchEvent(new MouseEvent('mousedown')); return; }
+  else if (e.key === 'Escape') { box.classList.remove('open'); document.querySelector('.global-search').value=''; return; }
+  items.forEach((it,i)=> it.style.background = i===searchActive ? 'var(--bg3)' : '');
 }
 
-// Close search on outside click
-document.addEventListener('click', e => {
-  if (!e.target.closest('.search-wrap')) document.getElementById('search-results').classList.remove('open');
+function filterICD(q) {
+  q = (q||'').toLowerCase();
+  document.querySelectorAll('#icd-list .icd-row').forEach(row => {
+    row.style.display = row.textContent.toLowerCase().includes(q) ? '' : 'none';
+  });
+}
+
+// ── ICD DATA ──
+const codes = [
+  ["H52.10", "Myopia, unspecified"],
+  ["H52.11", "Myopia, right eye"],
+  ["H52.12", "Myopia, left eye"],
+  ["H52.13", "Myopia, bilateral"],
+  ["H52.00", "Hypermetropia, unspecified"],
+  ["H52.03", "Hypermetropia, bilateral"],
+  ["H52.201", "Unspecified astigmatism, right eye"],
+  ["H52.202", "Unspecified astigmatism, left eye"],
+  ["H52.203", "Unspecified astigmatism, bilateral"],
+  ["H52.211", "Irregular astigmatism, right eye"],
+  ["H52.4", "Presbyopia"],
+  ["H52.31", "Anisometropia"],
+  ["H52.32", "Aniseikonia"],
+  ["H52.521", "Paresis of accommodation, right eye"],
+  ["H52.531", "Spasm of accommodation"],
+  ["H53.001", "Unspecified amblyopia, right eye"],
+  ["H53.011", "Deprivation amblyopia, right eye"],
+  ["H53.031", "Refractive amblyopia, right eye"],
+  ["H53.121", "Transient visual loss, right eye"],
+  ["H53.2", "Diplopia"],
+  ["H53.30", "Unspecified disorder of binocular vision"],
+  ["H53.40", "Unspecified visual field defect"],
+  ["H53.411", "Scotoma involving central area, right eye"],
+  ["H53.461", "Homonymous bilateral field defects, right side"],
+  ["H53.8", "Other visual disturbances"],
+  ["H50.00", "Unspecified esotropia"],
+  ["H50.10", "Unspecified exotropia"],
+  ["H50.40", "Unspecified heterotropia"],
+  ["H50.50", "Unspecified heterophoria"],
+  ["H51.11", "Convergence insufficiency"],
+  ["H51.12", "Convergence excess"],
+  ["H49.00", "Third [oculomotor] nerve palsy, unspecified eye"],
+  ["H49.10", "Fourth [trochlear] nerve palsy, unspecified"],
+  ["H49.20", "Sixth [abducens] nerve palsy, unspecified"],
+  ["H55.00", "Unspecified nystagmus"],
+  ["H35.30", "Unspecified macular degeneration"],
+  ["H35.3110", "Nonexudative AMD, right eye, stage unspecified"],
+  ["H35.3210", "Exudative AMD, right eye, stage unspecified"],
+  ["H35.31", "Nonexudative age-related macular degeneration"],
+  ["H35.32", "Exudative age-related macular degeneration"],
+  ["H35.00", "Unspecified background retinopathy"],
+  ["H35.81", "Retinal edema"],
+  ["H35.371", "Puckering of macula, right eye"],
+  ["H35.341", "Macular cyst, hole, right eye"],
+  ["E11.319", "Type 2 diabetes with unspecified diabetic retinopathy without macular edema"],
+  ["E11.3211", "Type 2 diabetes w/ mild nonproliferative DR with macular edema, right eye"],
+  ["E11.3311", "Type 2 diabetes w/ moderate NPDR with macular edema, right eye"],
+  ["E11.3411", "Type 2 diabetes w/ severe NPDR with macular edema, right eye"],
+  ["E11.3511", "Type 2 diabetes w/ proliferative DR with macular edema, right eye"],
+  ["E11.36", "Type 2 diabetes mellitus with diabetic cataract"],
+  ["H34.811", "Central retinal vein occlusion, right eye"],
+  ["H34.8110", "CRVO right eye with macular edema"],
+  ["H34.231", "Retinal artery branch occlusion, right eye"],
+  ["H34.11", "Central retinal artery occlusion, right eye"],
+  ["H33.001", "Unspecified retinal detachment with retinal break, right eye"],
+  ["H33.011", "Retinal detachment with single break, right eye"],
+  ["H33.41", "Traction detachment of retina, right eye"],
+  ["H35.051", "Retinal neovascularization, unspecified, right eye"],
+  ["H35.171", "Retrolental fibroplasia, right eye"],
+  ["H40.001", "Preglaucoma, unspecified, right eye"],
+  ["H40.011", "Open angle with borderline findings, low risk, right eye"],
+  ["H40.10X1", "Unspecified open-angle glaucoma, mild stage"],
+  ["H40.10X2", "Unspecified open-angle glaucoma, moderate stage"],
+  ["H40.10X3", "Unspecified open-angle glaucoma, severe stage"],
+  ["H40.1110", "Primary open-angle glaucoma, right eye, stage unspecified"],
+  ["H40.20", "Unspecified primary angle closure glaucoma"],
+  ["H40.211", "Acute angle-closure glaucoma attack, right eye"],
+  ["H40.811", "Glaucoma with increased episcleral venous pressure, right eye"],
+  ["H40.001", "Preglaucoma"],
+  ["H40.051", "Ocular hypertension, right eye"],
+  ["H25.011", "Cortical age-related cataract, right eye"],
+  ["H25.11", "Age-related nuclear cataract, right eye"],
+  ["H25.041", "Posterior subcapsular polar age-related cataract, right eye"],
+  ["H26.9", "Unspecified cataract"],
+  ["H10.011", "Acute follicular conjunctivitis, right eye"],
+  ["H10.31", "Unspecified acute conjunctivitis, right eye"],
+  ["H10.45", "Other chronic allergic conjunctivitis"],
+  ["H10.10", "Acute atopic conjunctivitis, unspecified"],
+  ["H10.811", "Pingueculitis, right eye"],
+  ["H11.001", "Unspecified pterygium, right eye"],
+  ["H16.001", "Unspecified corneal ulcer, right eye"],
+  ["H16.011", "Central corneal ulcer, right eye"],
+  ["H16.141", "Punctate keratitis, right eye"],
+  ["H16.221", "Keratoconjunctivitis sicca, not specified as Sj\u00f6gren's, right eye"],
+  ["H18.601", "Unspecified keratoconus, right eye"],
+  ["H18.611", "Keratoconus, stable, right eye"],
+  ["H18.621", "Keratoconus, unstable, right eye"],
+  ["H04.121", "Dry eye syndrome, right lacrimal gland"],
+  ["H04.123", "Dry eye syndrome, bilateral lacrimal glands"],
+  ["H02.401", "Unspecified ptosis of right eyelid"],
+  ["H01.001", "Unspecified blepharitis, right upper eyelid"],
+  ["H00.011", "Hordeolum externum, right upper eyelid"],
+  ["H00.11", "Chalazion, right upper eyelid"],
+  ["H01.8", "Other inflammation of eyelid"],
+  ["H20.011", "Primary iridocyclitis, right eye"],
+  ["H20.10", "Chronic iridocyclitis, unspecified eye"],
+  ["H15.011", "Anterior scleritis, right eye"],
+  ["H15.101", "Unspecified episcleritis, right eye"],
+  ["H15.121", "Nodular episcleritis, right eye"],
+  ["H46.01", "Optic papillitis, right eye"],
+  ["H47.011", "Ischemic optic neuropathy, right eye"],
+  ["H47.141", "Foster-Kennedy syndrome, right eye"],
+  ["G93.2", "Benign intracranial hypertension"],
+  ["H53.10", "Subjective visual disturbances, unspecified"],
+  ["H57.10", "Ocular pain, unspecified"],
+  ["Z01.00", "Encounter for exam of eyes and vision without abnormal findings"],
+  ["Z01.01", "Encounter for exam of eyes and vision with abnormal findings"],
+  ["Z96.1", "Presence of intraocular lens"],
+  ["Z98.41", "Cataract extraction status, right eye"]
+];
+(function(){
+  const list = document.getElementById('icd-list');
+  if (!list) return;
+  codes.forEach(([code, desc]) => {
+    const row = document.createElement('div');
+    row.className = 'icd-row';
+    row.innerHTML = `<span class="icd-code">${code}</span><span class="icd-desc">${desc}</span>`;
+    list.appendChild(row);
+  });
+})();
+
+// ── CONTACT LENS DATABASE ──
+const CL_DATA = [
+  {"n": "Acuvue Oasys 1-Day", "m": "J&J Vision", "mat": "Senofilcon A", "cat": "spherical", "mod": "daily", "bc": "8.5 / 9.0", "dia": "14.3", "p": "$72 / 90pk", "sph": "+8.00 to −12.00 (0.25 steps)", "cyl": "—", "axis": "—", "add": "—", "nt": "~$580/yr", "fit": ""},
+  {"n": "Dailies Total1", "m": "Alcon", "mat": "Delefilcon A", "cat": "spherical", "mod": "daily", "bc": "8.5", "dia": "14.1", "p": "$80 / 90pk", "sph": "+6.00 to −12.00 (0.25 steps)", "cyl": "—", "axis": "—", "add": "—", "nt": "Water gradient", "fit": ""},
+  {"n": "TOTAL30", "m": "Alcon", "mat": "Lehfilcon A", "cat": "spherical", "mod": "monthly", "bc": "8.4", "dia": "14.2", "p": "$72 / 6pk", "sph": "+8.00 to −12.00 (0.25 steps)", "cyl": "—", "axis": "—", "add": "—", "nt": "Water gradient", "fit": ""},
+  {"n": "Precision1", "m": "Alcon", "mat": "Verofilcon A", "cat": "spherical", "mod": "daily", "bc": "8.3", "dia": "14.2", "p": "$52 / 90pk", "sph": "+6.00 to −12.00 (0.25 steps)", "cyl": "—", "axis": "—", "add": "—", "nt": "", "fit": ""},
+  {"n": "MyDay", "m": "CooperVision", "mat": "Stenfilcon A", "cat": "spherical", "mod": "daily", "bc": "8.4", "dia": "14.2", "p": "$58 / 90pk", "sph": "+8.00 to −12.00 (0.25 steps)", "cyl": "—", "axis": "—", "add": "—", "nt": "", "fit": ""},
+  {"n": "Biotrue ONEday", "m": "Bausch + Lomb", "mat": "Nesofilcon A", "cat": "spherical", "mod": "daily", "bc": "8.6", "dia": "14.2", "p": "$48 / 90pk", "sph": "+6.00 to −12.00 (0.25 steps)", "cyl": "—", "axis": "—", "add": "—", "nt": "", "fit": ""},
+  {"n": "Clariti 1 day", "m": "CooperVision", "mat": "Somofilcon A", "cat": "spherical", "mod": "daily", "bc": "8.6", "dia": "14.1", "p": "$44 / 90pk", "sph": "+8.00 to −10.00 (0.25 steps)", "cyl": "—", "axis": "—", "add": "—", "nt": "Silicone hydrogel", "fit": ""},
+  {"n": "Acuvue Oasys 2-Week", "m": "J&J Vision", "mat": "Senofilcon A", "cat": "spherical", "mod": "biweekly", "bc": "8.4 / 8.8", "dia": "14.0", "p": "$42 / 6pk", "sph": "+8.00 to −12.00 (0.25 steps)", "cyl": "—", "axis": "—", "add": "—", "nt": "", "fit": ""},
+  {"n": "Acuvue Vita", "m": "J&J Vision", "mat": "Senofilcon C", "cat": "spherical", "mod": "monthly", "bc": "8.4 / 8.8", "dia": "14.0", "p": "$52 / 6pk", "sph": "+8.00 to −12.00 (0.25 steps)", "cyl": "—", "axis": "—", "add": "—", "nt": "", "fit": ""},
+  {"n": "Air Optix plus HydraGlyde", "m": "Alcon", "mat": "Lotrafilcon B", "cat": "spherical", "mod": "monthly", "bc": "8.6", "dia": "14.2", "p": "$38 / 6pk", "sph": "+8.00 to −10.00 (0.25 steps)", "cyl": "—", "axis": "—", "add": "—", "nt": "", "fit": ""},
+  {"n": "Biofinity", "m": "CooperVision", "mat": "Comfilcon A", "cat": "spherical", "mod": "monthly", "bc": "8.6", "dia": "14.0", "p": "$40 / 6pk", "sph": "+8.00 to −12.00 (0.25 steps)", "cyl": "—", "axis": "—", "add": "—", "nt": "Verified: CV", "fit": ""},
+  {"n": "PureVision2", "m": "Bausch + Lomb", "mat": "Balafilcon A", "cat": "spherical", "mod": "monthly", "bc": "8.6", "dia": "14.0", "p": "$34 / 6pk", "sph": "+6.00 to −12.00 (0.25 steps)", "cyl": "—", "axis": "—", "add": "—", "nt": "", "fit": ""},
+  {"n": "Bausch + Lomb Ultra", "m": "Bausch + Lomb", "mat": "Samfilcon A", "cat": "spherical", "mod": "monthly", "bc": "8.5", "dia": "14.2", "p": "$42 / 6pk", "sph": "+6.00 to −12.00 (0.25 steps)", "cyl": "—", "axis": "—", "add": "—", "nt": "", "fit": ""},
+  {"n": "Acuvue Oasys 1-Day for Astigmatism", "m": "J&J Vision", "mat": "Senofilcon A", "cat": "toric", "mod": "daily", "bc": "8.5 / 9.0", "dia": "14.3", "p": "$78 / 90pk", "sph": "+4.00 to −9.00 (0.25 steps)", "cyl": "−0.75, −1.25, −1.75, −2.25", "axis": "10°–180° (10° steps)*", "add": "—", "nt": "Verified: J&J PI. *−2.25 limited axes", "fit": ""},
+  {"n": "Acuvue Oasys for Astigmatism", "m": "J&J Vision", "mat": "Senofilcon A", "cat": "toric", "mod": "biweekly", "bc": "8.6", "dia": "14.5", "p": "$50 / 6pk", "sph": "+6.00 to −9.00 (0.25 steps)", "cyl": "−0.75, −1.25, −1.75, −2.25", "axis": "10°–180° (10° steps)", "add": "—", "nt": "Accelerated Stabilization Design", "fit": ""},
+  {"n": "Dailies Total1 Toric", "m": "Alcon", "mat": "Delefilcon A", "cat": "toric", "mod": "daily", "bc": "8.6", "dia": "14.4", "p": "$90 / 90pk", "sph": "+4.00 to −10.00 (0.25 steps)", "cyl": "−0.75, −1.25, −1.75", "axis": "10°–180° (10° steps)", "add": "—", "nt": "Water gradient; limited axes", "fit": ""},
+  {"n": "MyDay Toric", "m": "CooperVision", "mat": "Stenfilcon A", "cat": "toric", "mod": "daily", "bc": "8.6", "dia": "14.5", "p": "$68 / 90pk", "sph": "+6.00 to −10.00 (0.25 steps)", "cyl": "−0.75, −1.25, −1.75, −2.25", "axis": "10°–180° (10° steps)", "add": "—", "nt": "Optimised Toric Geometry", "fit": ""},
+  {"n": "Precision1 for Astigmatism", "m": "Alcon", "mat": "Verofilcon A", "cat": "toric", "mod": "daily", "bc": "8.5", "dia": "14.5", "p": "$60 / 90pk", "sph": "+4.00 to −8.00 (0.25 steps)", "cyl": "−0.75, −1.25, −1.75", "axis": "10°–180° (10° steps)", "add": "—", "nt": "Precision Balance 8|4", "fit": ""},
+  {"n": "Biofinity Toric", "m": "CooperVision", "mat": "Comfilcon A", "cat": "toric", "mod": "monthly", "bc": "8.7", "dia": "14.5", "p": "$46 / 6pk", "sph": "+8.00 to −10.00 (0.25 steps)", "cyl": "−0.75 to −2.25", "axis": "10°–180° (10° steps)", "add": "—", "nt": "Verified: CV. XR to −5.75 cyl", "fit": ""},
+  {"n": "Air Optix plus HydraGlyde for Astigmatism", "m": "Alcon", "mat": "Lotrafilcon B", "cat": "toric", "mod": "monthly", "bc": "8.7", "dia": "14.5", "p": "$44 / 6pk", "sph": "+6.00 to −10.00 (0.25 steps)", "cyl": "−0.75, −1.25, −1.75, −2.25", "axis": "10°–180° (10° steps)", "add": "—", "nt": "", "fit": ""},
+  {"n": "Dailies Total1 Multifocal", "m": "Alcon", "mat": "Delefilcon A", "cat": "multifocal", "mod": "daily", "bc": "8.5", "dia": "14.1", "p": "$92 / 90pk", "sph": "+5.00 to −10.00 (0.25 steps)", "cyl": "—", "axis": "—", "add": "Low / Med / High", "nt": "Precision Profile design", "fit": "https://www.myalcon.com/professional/contact-lenses/daily/dailies-total1-multifocal/"},
+  {"n": "Biofinity Multifocal", "m": "CooperVision", "mat": "Comfilcon A", "cat": "multifocal", "mod": "monthly", "bc": "8.6", "dia": "14.0", "p": "$48 / 6pk", "sph": "+6.00 to −10.00 (0.25 steps)", "cyl": "—", "axis": "—", "add": "+1.00, +1.50, +2.00, +2.50", "nt": "Verified: CV. D & N designs", "fit": "https://coopervision.com/sites/default/files/BFMF-Fitting-Guide.pdf"},
+  {"n": "Acuvue Oasys Multifocal", "m": "J&J Vision", "mat": "Senofilcon A", "cat": "multifocal", "mod": "biweekly", "bc": "8.4", "dia": "14.3", "p": "$52 / 6pk", "sph": "+6.00 to −9.00 (0.25 steps)", "cyl": "—", "axis": "—", "add": "Low / Mid / High", "nt": "Pupil Optimized Design", "fit": "https://www.jnjvisionpro.com/sites/us/files/public/Products/ACUVUE%20OASYS%20MULTIFOCAL%20PUPIL%20OPTIMIZED%20DESIGN/acuvue_multifocal_4_page_fitting_guide.pdf"},
+  {"n": "Acuvue Oasys 1-Day Multifocal", "m": "J&J Vision", "mat": "Senofilcon A", "cat": "multifocal", "mod": "daily", "bc": "8.4", "dia": "14.3", "p": "$85 / 90pk", "sph": "+6.00 to −9.00 (0.25 steps)", "cyl": "—", "axis": "—", "add": "Low / Mid / High", "nt": "Pupil Optimized Design", "fit": "https://www.jnjvisionpro.com/sites/us/files/public/Products/ACUVUE%20OASYS%20MULTIFOCAL%20PUPIL%20OPTIMIZED%20DESIGN/acuvue_multifocal_4_page_fitting_guide.pdf"},
+  {"n": "Air Optix plus HydraGlyde Multifocal", "m": "Alcon", "mat": "Lotrafilcon B", "cat": "multifocal", "mod": "monthly", "bc": "8.6", "dia": "14.2", "p": "$46 / 6pk", "sph": "+6.00 to −10.00 (0.25 steps)", "cyl": "—", "axis": "—", "add": "Lo / Med / Hi", "nt": "", "fit": "https://www.optometry.org.au/wp-content/uploads/States/WA/ECOWA/Alcon-MF-Fitting-Guide.pdf"},
+  {"n": "Clariti 1 day Multifocal", "m": "CooperVision", "mat": "Somofilcon A", "cat": "multifocal", "mod": "daily", "bc": "8.6", "dia": "14.1", "p": "$56 / 90pk", "sph": "+6.00 to −8.00 (0.25 steps)", "cyl": "—", "axis": "—", "add": "Low / High", "nt": "", "fit": "https://coopervision.com/practitioner/our-products/multifocal/clariti-1day-multifocal"},
+  {"n": "TOTAL30 Multifocal", "m": "Alcon", "mat": "Lehfilcon A", "cat": "multifocal", "mod": "monthly", "bc": "8.4", "dia": "14.2", "p": "$78 / 6pk", "sph": "+6.00 to −10.00 (0.25 steps)", "cyl": "—", "axis": "—", "add": "Low / Med / High", "nt": "Water gradient", "fit": "https://www.myalcon.com/professional/contact-lenses/monthly/total30-multifocal/"},
+  {"n": "Biofinity Toric Multifocal", "m": "CooperVision", "mat": "Comfilcon A", "cat": "multifocal-toric", "mod": "monthly", "bc": "8.7", "dia": "14.5", "p": "$96 / 6pk", "sph": "+4.00 to −6.00 (0.25 steps)", "cyl": "−0.75, −1.25, −1.75", "axis": "5°–180° (5° steps)", "add": "+1.00, +1.50, +2.00, +2.50", "nt": "Verified: CORE study params", "fit": "https://coopervision.com/sites/default/files/BFMF-Fitting-Guide.pdf"},
+  {"n": "Bausch + Lomb Ultra Multifocal for Astigmatism", "m": "Bausch + Lomb", "mat": "Samfilcon A", "cat": "multifocal-toric", "mod": "monthly", "bc": "8.6", "dia": "14.5", "p": "$58 / 6pk", "sph": "+4.00 to −6.00 (0.25 steps)", "cyl": "−0.75, −1.25, −1.75", "axis": "10°–180° (10° steps)", "add": "Low (+0.75 to +1.50), High (+1.75 to +2.50)", "nt": "Verified. 3-Zone Progressive", "fit": "https://www.bausch.com/our-products/contact-lenses/contact-lenses-for-astigmatism/ultra-multifocal-for-astigmatism/"},
+  {"n": "Air Optix Colors", "m": "Alcon", "mat": "Lotrafilcon B", "cat": "cosmetic-sphere", "mod": "monthly", "bc": "8.6", "dia": "14.2", "p": "$40 / 6pk", "sph": "+6.00 to −8.00 / plano (0.25 steps)", "cyl": "—", "axis": "—", "add": "—", "nt": "9 shades; plano & Rx", "fit": ""},
+  {"n": "Acuvue Define", "m": "J&J Vision", "mat": "Etafilcon A", "cat": "cosmetic-sphere", "mod": "daily", "bc": "8.5", "dia": "14.2", "p": "$36 / 30pk", "sph": "plano to −9.00 (0.25 steps)", "cyl": "—", "axis": "—", "add": "—", "nt": "Limbal ring enhancement", "fit": ""},
+  {"n": "Dailies Colors", "m": "Alcon", "mat": "Nelfilcon A", "cat": "cosmetic-sphere", "mod": "daily", "bc": "8.6", "dia": "14.0", "p": "$38 / 30pk", "sph": "plano to −10.00 (0.25 steps)", "cyl": "—", "axis": "—", "add": "—", "nt": "", "fit": ""},
+  {"n": "FreshLook ColorBlends Toric", "m": "Alcon", "mat": "Phemfilcon A", "cat": "cosmetic-toric", "mod": "monthly", "bc": "8.6", "dia": "14.5", "p": "$55 / 6pk", "sph": "plano to −6.00 (0.25 steps)", "cyl": "−0.75 to −1.75", "axis": "limited", "add": "—", "nt": "Limited parameters", "fit": ""},
+  {"n": "MiSight 1 Day", "m": "CooperVision", "mat": "Omafilcon A", "cat": "myopia", "mod": "daily", "bc": "8.7", "dia": "14.2", "p": "$75 / 90pk", "sph": "−0.25 to −6.00 (0.25 steps)", "cyl": "—", "axis": "—", "add": "dual-focus (treatment zones)", "nt": "FDA-approved ages 8–12; DISC", "fit": ""},
+  {"n": "Acuvue Abiliti 1-Day", "m": "J&J Vision", "mat": "Senofilcon A", "cat": "myopia", "mod": "daily", "bc": "8.3", "dia": "14.3", "p": "$80 / 90pk", "sph": "−0.50 to −10.00 (0.25 steps)", "cyl": "—", "axis": "—", "add": "EDOF + peripheral ADD", "nt": "", "fit": ""},
+  {"n": "NaturalVue Multifocal", "m": "Visioneering", "mat": "Etafilcon A", "cat": "myopia", "mod": "daily", "bc": "8.3", "dia": "14.5", "p": "$70 / 90pk", "sph": "+1.00 to −12.25 (0.25 steps)", "cyl": "—", "axis": "—", "add": "EDOF (high add)", "nt": "Off-label myopia control", "fit": ""},
+  {"n": "Biofinity Multifocal (off-label myopia)", "m": "CooperVision", "mat": "Comfilcon A", "cat": "myopia", "mod": "monthly", "bc": "8.6", "dia": "14.0", "p": "$48 / 6pk", "sph": "+6.00 to −10.00 (0.25 steps)", "cyl": "—", "axis": "—", "add": "+2.50 'D' center-distance", "nt": "Off-label: center-distance +2.50 add used for myopia control", "fit": "https://coopervision.com/sites/default/files/BFMF-Fitting-Guide.pdf"}
+];
+
+const clSel = { cat: new Set(), mod: new Set() };
+
+function catMatchesAll(lensCat){
+  if (clSel.cat.size === 0) return true;
+  const has = {
+    sphere:     ['spherical'].includes(lensCat),
+    toric:      ['toric','multifocal-toric','cosmetic-toric'].includes(lensCat),
+    multifocal: ['multifocal','multifocal-toric'].includes(lensCat),
+    cosmetic:   lensCat.startsWith('cosmetic'),
+    myopia:     lensCat === 'myopia'
+  };
+  const sel = clSel.cat;
+  if (sel.has('sphere') && (sel.has('multifocal') || sel.has('cosmetic'))) {
+    has.sphere = ['spherical','multifocal','cosmetic-sphere','myopia'].includes(lensCat);
+  }
+  for (const s of sel) { if (!has[s]) return false; }
+  return true;
+}
+
+function renderCLList(){
+  const list = document.getElementById('cl-list');
+  if (!list) return;
+  const search = (document.getElementById('cl-search')?.value || '').toLowerCase();
+  const modNames = {daily:'Daily', biweekly:'Bi-weekly', monthly:'Monthly'};
+  const rows = CL_DATA.filter(l => {
+    if (!catMatchesAll(l.cat)) return false;
+    if (clSel.mod.size > 0 && !clSel.mod.has(l.mod)) return false;
+    if (search && !(l.n.toLowerCase().includes(search) || l.m.toLowerCase().includes(search))) return false;
+    return true;
+  });
+  list.innerHTML = rows.map(l => {
+    const fitLink = l.fit ? '<a href="'+l.fit+'" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:none;font-size:12px;display:inline-block;margin-top:8px">Manufacturer fitting guide ↗</a>' : '';
+    const pr = (label, val) => (val && val !== '—') ? '<tr><td style="color:var(--text2);width:120px;padding:3px 0">'+label+'</td><td style="padding:3px 0">'+val+'</td></tr>' : '';
+    return '<div class="card" style="padding:0;margin-bottom:6px;overflow:hidden">'
+      + '<div class="cl-row-head" style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;cursor:pointer">'
+        + '<div><div style="font-weight:500;font-size:15px">'+l.n+'</div>'
+          + '<div style="font-size:12px;color:var(--text2);margin-top:2px">'+l.m+' · '+modNames[l.mod]+' · '+l.mat+'</div></div>'
+        + '<div style="display:flex;align-items:center;gap:10px"><span class="price-val" style="white-space:nowrap">'+l.p+'</span><span class="cl-chev chevron">▾</span></div>'
+      + '</div>'
+      + '<div class="cl-row-body" style="display:none;padding:0 16px 14px;font-size:13.5px">'
+        + '<table style="width:100%;border-collapse:collapse">'
+          + pr('Base curve', l.bc + ' mm') + pr('Diameter', l.dia + ' mm') + pr('Sphere power', l.sph)
+          + pr('Cylinder', l.cyl) + pr('Axis', l.axis) + pr('Add power', l.add)
+        + '</table>'
+        + (l.nt ? '<div style="font-size:12px;color:var(--text3);margin-top:8px">'+l.nt+'</div>' : '')
+        + fitLink
+      + '</div></div>';
+  }).join('');
+  const cnt = document.getElementById('cl-count');
+  if (cnt) cnt.textContent = rows.length + ' of ' + CL_DATA.length + ' lenses';
+}
+
+// ── MYOPIA RISK QUIZ ──
+const quizAnswers = {};
+
+document.addEventListener('click', function(e){
+  // quiz options
+  const qb = e.target.closest('.quiz-opt');
+  if (qb) {
+    const q = qb.getAttribute('data-q'), v = qb.getAttribute('data-v');
+    qb.parentElement.querySelectorAll('.quiz-opt').forEach(b=>b.classList.remove('selected'));
+    qb.classList.add('selected');
+    quizAnswers[q] = v;
+    scoreMyopiaQuiz();
+    return;
+  }
+  // CL filters
+  const fb = e.target.closest('.cl-filter');
+  if (fb) {
+    const type = fb.getAttribute('data-type'), v = fb.getAttribute('data-v');
+    if (clSel[type].has(v)) { clSel[type].delete(v); fb.classList.remove('active'); }
+    else { clSel[type].add(v); fb.classList.add('active'); }
+    renderCLList();
+    return;
+  }
+  // CL expand
+  const head = e.target.closest('.cl-row-head');
+  if (head) {
+    const body = head.nextElementSibling;
+    const chev = head.querySelector('.cl-chev');
+    const open = body.classList.toggle('open');
+    if (chev) chev.classList.toggle('open', open);
+    return;
+  }
+  // close search on outside click
+  if (!e.target.closest('.search-wrap')) {
+    const sr = document.getElementById('search-results');
+    if (sr) sr.classList.remove('open');
+  }
 });
 
-// Press "/" to focus search
 document.addEventListener('keydown', e => {
   if (e.key === '/' && e.target.tagName !== 'INPUT') {
     e.preventDefault();
@@ -3145,115 +3256,47 @@ document.addEventListener('keydown', e => {
   }
 });
 
-// Scroll active nav button into view on mobile after tab switch
-function scrollNavToActive() {
-  const active = document.querySelector('.nav-btn.active');
-  if (active) active.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-}
-
-
-
-// ── RECENTLY VIEWED ──────────────────────────────────────
-const recentTabs = [];
-const MAX_RECENT = 4;
-
-function updateRecent(tabId, tabName) {
-  const idx = recentTabs.findIndex(t => t.id === tabId);
-  if (idx > -1) recentTabs.splice(idx, 1);
-  recentTabs.unshift({ id: tabId, name: tabName });
-  if (recentTabs.length > MAX_RECENT) recentTabs.pop();
-  renderRecent();
-}
-
-function renderRecent() {
-  let wrap = document.getElementById('recent-wrap');
-  if (!wrap) {
-    wrap = document.createElement('div');
-    wrap.id = 'recent-wrap';
-    wrap.style.cssText = 'border-bottom:1px solid var(--border);padding:0.4rem 0 0.2rem;background:var(--bg2);';
-    const searchWrap = document.querySelector('.search-wrap');
-    if (searchWrap) searchWrap.after(wrap);
-  }
-  if (recentTabs.length === 0) { wrap.style.display = 'none'; return; }
-  wrap.style.display = 'block';
-  wrap.innerHTML = '<div style="font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text3);padding:0.3rem 1rem 0.2rem">Recent</div>' +
-    recentTabs.map(t => `<button class="nav-btn" onclick="switchTab('${t.id}',this)" style="font-size:12px;color:var(--text2);padding:4px 1rem;background:transparent">↩ ${t.name}</button>`).join('');
-}
-
-// Patch switchTab to track recent
-const _origSwitch = switchTab;
-switchTab = function(tab, btn) {
-  _origSwitch(tab, btn);
-  const name = btn.textContent.trim();
-  updateRecent(tab, name);
-};
-
-
-// ── MYOPIA RISK QUIZ ──────────────────────────────────────
-const quizAnswers = {};
-document.addEventListener('click', function(e){
-  const btn = e.target.closest('.quiz-opt');
-  if (!btn) return;
-  const q = btn.getAttribute('data-q');
-  const v = btn.getAttribute('data-v');
-  // clear siblings in same question row
-  btn.parentElement.querySelectorAll('.quiz-opt').forEach(b => b.classList.remove('selected'));
-  btn.classList.add('selected');
-  quizAnswers[q] = v;
-  scoreMyopiaQuiz();
-});
-
 function scoreMyopiaQuiz(){
   const need = ['age','refraction','parents','near','outdoor','ethnicity'];
-  if (!need.every(k => k in quizAnswers)) return; // wait until all answered
-
+  if (!need.every(k => k in quizAnswers)) return;
   const a = quizAnswers;
   let score = 0;
-  score += parseInt(a.age);                       // 0–3
+  score += parseInt(a.age);
   if (a.parents === '2') score += 3; else if (a.parents === '1') score += 2;
   if (a.refraction === 'premyopic') score += 3;
-  if (a.near === '2') score += 1;                  // >3 hrs/day only; near work down-weighted (debated independent effect)
+  if (a.near === '2') score += 1;
   if (a.outdoor === '0') score += 2; else if (a.outdoor === '1') score += 1;
   if (a.ethnicity === 'east_asian') score += 2;
-
   let cat, color, msg;
   if (a.refraction === 'myopic') {
-    cat = 'Already Myopic'; color = 'red';
-    msg = 'This child is already myopic. Begin myopia management now — the goal is to slow axial elongation and limit final prescription. Younger age and faster progression both raise urgency. Discuss options (spectacle lenses such as Essilor® Stellest® Lenses, soft multifocal/MiSight contact lenses, ortho-K, or low-dose atropine) and set a monitoring schedule.';
+    cat='Already Myopic'; color='red';
+    msg='This child is already myopic. Begin myopia management now — the goal is to slow axial elongation and limit final prescription. Discuss options (Essilor® Stellest® Lenses, soft multifocal/MiSight contact lenses, ortho-K, or low-dose atropine) and set a monitoring schedule.';
   } else if (a.refraction === 'premyopic' && score >= 5) {
-    cat = 'Pre-Myopic — High Risk'; color = 'red';
-    msg = 'Low hyperopic reserve for age plus additional risk factors places this child at high risk of imminent myopia onset. Strong case for pre-emptive intervention. Begin the myopia management conversation now: prioritize outdoor time (≥90–120 min/day), reduce sustained near work, and consider low-dose atropine or a myopia-control spectacle/contact option. Monitor cycloplegic refraction and axial length closely.';
+    cat='Pre-Myopic — High Risk'; color='red';
+    msg='Low hyperopic reserve for age plus additional risk factors places this child at high risk of imminent myopia onset. Strong case for pre-emptive intervention: prioritize outdoor time (≥90–120 min/day), reduce sustained near work, and consider low-dose atropine or a myopia-control spectacle/contact option. Monitor cycloplegic refraction and axial length closely.';
   } else if (score >= 7) {
-    cat = 'High Risk'; color = 'red';
-    msg = 'Multiple strong risk factors present. Begin the myopia management discussion now. Emphasize modifiable factors (outdoor time, near-work breaks) and establish baseline axial length if available. Re-check in 6 months and have a treatment plan ready if myopia develops.';
+    cat='High Risk'; color='red';
+    msg='Multiple strong risk factors present. Begin the myopia management discussion now. Emphasize modifiable factors and establish baseline axial length if available. Re-check in 6 months with a treatment plan ready.';
   } else if (score >= 4) {
-    cat = 'Moderate Risk'; color = 'amber';
-    msg = 'Some risk factors present. Start the conversation with parents and reinforce protective behaviors — outdoor time and near-work hygiene are low-cost, evidence-based. Monitor refraction annually (or sooner if factors worsen) and re-assess.';
+    cat='Moderate Risk'; color='amber';
+    msg='Some risk factors present. Start the conversation with parents and reinforce protective behaviors — outdoor time and near-work hygiene. Monitor refraction annually or sooner if factors worsen.';
   } else {
-    cat = 'Low Risk'; color = 'green';
-    msg = 'Few risk factors at present. Routine monitoring is appropriate. Reinforce healthy visual habits (outdoor time, the 20-20-20 rule) and reassess at the next routine exam. Risk can change, so continue to screen.';
+    cat='Low Risk'; color='green';
+    msg='Few risk factors at present. Routine monitoring is appropriate. Reinforce healthy visual habits (outdoor time, the 20-20-20 rule) and reassess at the next routine exam.';
   }
-
-  const palette = {
-    red:   ['var(--red-bg)','var(--red-text)','var(--red-border)'],
-    amber: ['var(--amber-bg)','var(--amber-text)','var(--amber-border)'],
-    green: ['var(--green-bg)','var(--green-text)','var(--green-border)']
-  }[color];
-
-  const startDiscussion = (cat === 'Low Risk') ? 'Monitor; reassess at next routine exam' : 'Yes — begin the myopia management discussion';
-
+  const pal = {red:['var(--red-bg)','var(--red-text)','var(--red-border)'],amber:['var(--amber-bg)','var(--amber-text)','var(--amber-border)'],green:['var(--green-bg)','var(--green-text)','var(--green-border)']}[color];
+  const start = (cat==='Low Risk') ? 'Monitor; reassess at next routine exam' : 'Yes — begin the myopia management discussion';
   const el = document.getElementById('quiz-result');
-  el.style.display = 'block';
-  el.innerHTML =
-    '<div style="background:'+palette[0]+';border:1px solid '+palette[2]+';border-radius:var(--rl);padding:1rem 1.25rem">'
-    + '<div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:'+palette[1]+';margin-bottom:4px">Classification</div>'
-    + '<div style="font-size:20px;font-weight:600;color:'+palette[1]+';margin-bottom:8px">'+cat+'</div>'
-    + '<div style="font-size:13px;color:var(--text);margin-bottom:10px"><strong>Management:</strong> '+startDiscussion+'</div>'
-    + '<div style="font-size:13.5px;line-height:1.6;color:var(--text2)">'+msg+'</div>'
-    + '</div>';
+  el.style.display='block';
+  el.innerHTML = '<div style="background:'+pal[0]+';border:1px solid '+pal[2]+';border-radius:var(--rl);padding:1rem 1.25rem">'
+    + '<div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:'+pal[1]+';margin-bottom:4px">Classification</div>'
+    + '<div style="font-size:20px;font-weight:600;color:'+pal[1]+';margin-bottom:8px">'+cat+'</div>'
+    + '<div style="font-size:13px;color:var(--text);margin-bottom:10px"><strong>Management:</strong> '+start+'</div>'
+    + '<div style="font-size:13.5px;line-height:1.6;color:var(--text2)">'+msg+'</div></div>';
   el.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 
+setTimeout(renderCLList, 100);
 </script>
 </body>
 </html>
