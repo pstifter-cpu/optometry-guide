@@ -423,10 +423,10 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
   <div class="search-results" id="search-results"></div>
 </div>
     <div class="grp-lbl">Myopia Control</div>
-  <button class="nav-btn active" onclick="switchTab('myopia-quiz',this)">Risk Assessment</button>
+  <button class="nav-btn active" onclick="switchTab('myopia-quiz',this)">Myopia Risk Assessment</button>
   <button class="nav-btn" onclick="switchTab('myopia',this)">Myopia Control</button>
-  <button class="nav-btn" onclick="switchTab('myopia-risk',this)">Risk Factors</button>
-  <button class="nav-btn" onclick="switchTab('myopia-tools',this)">Tools &amp; Links</button>
+  <button class="nav-btn" onclick="switchTab('myopia-risk',this)">Myopia Risk Factors</button>
+  <button class="nav-btn" onclick="switchTab('myopia-tools',this)">Myopia Tools &amp; Links</button>
   <div class="grp-lbl">Contact Lens</div>
   <button class="nav-btn" onclick="switchTab('lenses',this)">CL Parameters</button>
   <button class="nav-btn" onclick="switchTab('cl',this)">CL Fitting</button>
@@ -438,15 +438,16 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
   <button class="nav-btn" onclick="switchTab('diplopia',this)">Diplopia</button>
   <button class="nav-btn" onclick="switchTab('nystagmus',this)">Nystagmus</button>
   <button class="nav-btn" onclick="switchTab('vf',this)">Visual Fields</button>
-  <button class="nav-btn" onclick="switchTab('glaucoma2',this)">Glaucoma</button>
   <button class="nav-btn" onclick="switchTab('cranialnerves',this)">Cranial Nerves</button>
-  <div class="grp-lbl">Retina</div>
+  <div class="grp-lbl">Posterior</div>
   <button class="nav-btn" onclick="switchTab('retina',this)">Retinal Disease</button>
   <button class="nav-btn" onclick="switchTab('amd',this)">AMD</button>
+  <button class="nav-btn" onclick="switchTab('glaucoma2',this)">Glaucoma</button>
   <button class="nav-btn" onclick="switchTab('oct',this)">OCT Findings</button>
   <button class="nav-btn" onclick="switchTab('gradings',this)">Grading Scales</button>
   <div class="grp-lbl">Anterior Segment</div>
-  <button class="nav-btn" onclick="switchTab('anterior',this)">Anterior Segment</button>
+  <button class="nav-btn" onclick="switchTab('anterior',this)">Red Eye &amp; Lids</button>
+  <button class="nav-btn" onclick="switchTab('angle',this)">Angle Assessment</button>
   <button class="nav-btn" onclick="switchTab('dryeye2',this)">Dry Eye</button>
   <button class="nav-btn" onclick="switchTab('dryeyrx',this)">Dry Eye Rx</button>
   <button class="nav-btn" onclick="switchTab('tearguide',this)">Artificial Tears</button>
@@ -1416,8 +1417,8 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
 </div>
 <!-- ══ RED EYE DDx ══ -->
 <div id="tab-anterior" class="section">
-<p style="font-size:18px;font-weight:600;margin-bottom:.2rem">Anterior Segment</p>
-<p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">Red eye DDx, eyelid disorders, vital dyes</p>
+<p style="font-size:18px;font-weight:600;margin-bottom:.2rem">Red Eye &amp; Lids</p>
+<p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">Red eye differential, eyelid disorders, vital dyes</p>
 
 <p style="font-size:14px;font-weight:600;color:var(--text2);margin:0.75rem 0 0.5rem;text-transform:uppercase;font-size:11px;letter-spacing:0.06em">Red Eye DDx</p>
 <div class="card"><div class="ch" onclick="tog(this)">
@@ -1532,7 +1533,33 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
   </table>
   <div class="binfo box">Use lissamine green with a red-free filter for best visualization. Wait 1–2 minutes after instillation for peak staining.</div>
 <div style="font-size:10.5px;color:var(--text3);margin-top:12px;padding-top:8px;border-top:0.5px solid var(--border);line-height:1.45">Ref: Van Bijsterveld, Arch Ophthalmol 1969;82:10. DEWS II Diagnostic Methodology, Ocul Surf 2017.</div></div></div>
+
+
 </div>
+<div id="tab-angle" class="section">
+<p style="font-size:18px;font-weight:600;letter-spacing:-0.3px;margin-bottom:0.2rem">Angle Assessment</p>
+<p style="font-size:12.5px;color:var(--text2);margin-bottom:1.25rem">Gonioscopy and slit-lamp angle grading</p>
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Angle grading — Shaffer &amp; Van Herick</div><div class="cs">Gonioscopy and slit lamp angle assessment</div></div>
+  <div class="cm"><span class="tag tag-gray">Glaucoma</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <h4>Shaffer gonioscopy grading:</h4>
+  <table>
+    <tr><td>Grade 4</td><td>35–45° — wide open; ciliary body visible</td></tr>
+    <tr><td>Grade 3</td><td>25–35° — open; scleral spur visible</td></tr>
+    <tr><td>Grade 2</td><td>20° — narrow; trabecular meshwork visible</td></tr>
+    <tr><td>Grade 1</td><td>10° — very narrow; only Schwalbe's line visible; closure possible</td></tr>
+    <tr><td>Grade 0</td><td>Closed — no angle structures visible; contact between iris and cornea</td></tr>
+  </table>
+  <h4>Van Herick (slit lamp estimation):</h4>
+  <table>
+    <tr><td>Grade 4</td><td>Corneal thickness = peripheral AC depth; safe to dilate</td></tr>
+    <tr><td>Grade 2</td><td>AC = ¼ corneal thickness; caution</td></tr>
+    <tr><td>Grade 1</td><td>AC ≤ ¼ CT; do not dilate without gonioscopy</td></tr>
+  </table>
+<div style="font-size:10.5px;color:var(--text3);margin-top:12px;padding-top:8px;border-top:0.5px solid var(--border);line-height:1.45">Ref: Shaffer, Trans Am Acad Ophthalmol 1960. Van Herick et al., Am J Ophthalmol 1969;68:626.</div></div></div>
+</div>
+
 <div id="tab-gradings" class="section">
 <p style="font-size:18px;font-weight:600;margin-bottom:.2rem">Grading Scales</p>
 <p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">Standardized grading for common ocular diseases</p>
@@ -1581,25 +1608,7 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
   </table>
 <div style="font-size:10.5px;color:var(--text3);margin-top:12px;padding-top:8px;border-top:0.5px solid var(--border);line-height:1.45">Ref: ETDRS Report No. 10, Ophthalmology 1991;98:786. Wilkinson et al., Intl Clinical DR Scale, Ophthalmology 2003.</div></div></div>
 
-<div class="card"><div class="ch" onclick="tog(this)">
-  <div><div class="ct">Angle grading — Shaffer &amp; Van Herick</div><div class="cs">Gonioscopy and slit lamp angle assessment</div></div>
-  <div class="cm"><span class="tag tag-gray">Glaucoma</span><span class="chevron">▾</span></div>
-</div><div class="cb">
-  <h4>Shaffer gonioscopy grading:</h4>
-  <table>
-    <tr><td>Grade 4</td><td>35–45° — wide open; ciliary body visible</td></tr>
-    <tr><td>Grade 3</td><td>25–35° — open; scleral spur visible</td></tr>
-    <tr><td>Grade 2</td><td>20° — narrow; trabecular meshwork visible</td></tr>
-    <tr><td>Grade 1</td><td>10° — very narrow; only Schwalbe's line visible; closure possible</td></tr>
-    <tr><td>Grade 0</td><td>Closed — no angle structures visible; contact between iris and cornea</td></tr>
-  </table>
-  <h4>Van Herick (slit lamp estimation):</h4>
-  <table>
-    <tr><td>Grade 4</td><td>Corneal thickness = peripheral AC depth; safe to dilate</td></tr>
-    <tr><td>Grade 2</td><td>AC = ¼ corneal thickness; caution</td></tr>
-    <tr><td>Grade 1</td><td>AC ≤ ¼ CT; do not dilate without gonioscopy</td></tr>
-  </table>
-<div style="font-size:10.5px;color:var(--text3);margin-top:12px;padding-top:8px;border-top:0.5px solid var(--border);line-height:1.45">Ref: Shaffer, Trans Am Acad Ophthalmol 1960. Van Herick et al., Am J Ophthalmol 1969;68:626.</div></div></div>
+
 
 <div class="card"><div class="ch" onclick="tog(this)">
   <div><div class="ct">Papilledema — Frisen scale</div><div class="cs">Grading disc edema severity</div></div>
