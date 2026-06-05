@@ -3212,7 +3212,7 @@ function scoreMyopiaQuiz(){
   score += parseInt(a.age);                       // 0–3
   if (a.parents === '2') score += 3; else if (a.parents === '1') score += 2;
   if (a.refraction === 'premyopic') score += 3;
-  score += parseInt(a.near);                       // 0–2
+  if (a.near === '2') score += 1;                  // >3 hrs/day only; near work down-weighted (debated independent effect)
   if (a.outdoor === '0') score += 2; else if (a.outdoor === '1') score += 1;
   if (a.ethnicity === 'east_asian') score += 2;
 
