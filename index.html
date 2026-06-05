@@ -3186,7 +3186,7 @@ function renderCLList(){
     if (clSel.mod.size > 0 && !clSel.mod.has(l.mod)) return false;
     if (search && !(l.n.toLowerCase().includes(search) || l.m.toLowerCase().includes(search))) return false;
     return true;
-  });
+  }).sort((a, b) => a.n.localeCompare(b.n));
   list.innerHTML = rows.map(l => {
     const fitLink = l.fit ? '<a href="'+l.fit+'" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:none;font-size:12px;display:inline-block;margin-top:8px">Manufacturer fitting guide ↗</a>' : '';
     const pr = (label, val) => (val && val !== '—') ? '<tr><td style="color:var(--text2);width:120px;padding:3px 0">'+label+'</td><td style="padding:3px 0">'+val+'</td></tr>' : '';
