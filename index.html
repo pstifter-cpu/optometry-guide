@@ -432,6 +432,11 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
   <button class="nav-btn" onclick="switchTab('cl',this)">CL Fitting</button>
   <button class="nav-btn" onclick="switchTab('clmodality',this)">CL Modality Guide</button>
   <button class="nav-btn" onclick="switchTab('vertexconv',this)">Vertex Conversion</button>
+  <div class="grp-lbl">Binocular Vision</div>
+  <button class="nav-btn" onclick="switchTab('binoc',this)">Binocular Workup</button>
+  <button class="nav-btn" onclick="switchTab('vergence',this)">Vergence</button>
+  <button class="nav-btn" onclick="switchTab('accomm',this)">Accommodation</button>
+  <button class="nav-btn" onclick="switchTab('bvkey',this)">BV Keys</button>
   <div class="grp-lbl">Neuro</div>
   <button class="nav-btn" onclick="switchTab('pupils',this)">Pupils</button>
   <button class="nav-btn" onclick="switchTab('headache',this)">Headache</button>
@@ -439,23 +444,18 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
   <button class="nav-btn" onclick="switchTab('nystagmus',this)">Nystagmus</button>
   <button class="nav-btn" onclick="switchTab('vf',this)">Visual Fields</button>
   <button class="nav-btn" onclick="switchTab('cranialnerves',this)">Cranial Nerves</button>
-  <div class="grp-lbl">Posterior</div>
-  <button class="nav-btn" onclick="switchTab('retina',this)">Retinal Disease</button>
-  <button class="nav-btn" onclick="switchTab('amd',this)">AMD</button>
-  <button class="nav-btn" onclick="switchTab('glaucoma2',this)">Glaucoma</button>
-  <button class="nav-btn" onclick="switchTab('oct',this)">OCT Findings</button>
-  <button class="nav-btn" onclick="switchTab('gradings',this)">Grading Scales</button>
   <div class="grp-lbl">Anterior Segment</div>
   <button class="nav-btn" onclick="switchTab('anterior',this)">Red Eye &amp; Lids</button>
   <button class="nav-btn" onclick="switchTab('angle',this)">Angle Assessment</button>
   <button class="nav-btn" onclick="switchTab('dryeye2',this)">Dry Eye</button>
   <button class="nav-btn" onclick="switchTab('dryeyrx',this)">Dry Eye Rx</button>
   <button class="nav-btn" onclick="switchTab('tearguide',this)">Artificial Tears</button>
-  <div class="grp-lbl">Binocular Vision</div>
-  <button class="nav-btn" onclick="switchTab('binoc',this)">Binocular Workup</button>
-  <button class="nav-btn" onclick="switchTab('vergence',this)">Vergence</button>
-  <button class="nav-btn" onclick="switchTab('accomm',this)">Accommodation</button>
-  <button class="nav-btn" onclick="switchTab('bvkey',this)">BV Keys</button>
+  <div class="grp-lbl">Posterior Segment</div>
+  <button class="nav-btn" onclick="switchTab('retina',this)">Retinal Disease</button>
+  <button class="nav-btn" onclick="switchTab('amd',this)">AMD</button>
+  <button class="nav-btn" onclick="switchTab('glaucoma2',this)">Glaucoma</button>
+  <button class="nav-btn" onclick="switchTab('oct',this)">OCT Findings</button>
+  <button class="nav-btn" onclick="switchTab('gradings',this)">Grading Scales</button>
   <div class="grp-lbl">Optics</div>
   <button class="nav-btn" onclick="switchTab('lensmaterial',this)">Lens Material</button>
   <button class="nav-btn" onclick="switchTab('optics',this)">Prism Formulas</button>
@@ -2160,7 +2160,7 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
   <div class="cm"><span class="tag tag-amber">Horizontal</span><span class="chevron">▾</span></div>
 </div><div class="cb">
   <table>
-    <tr><td>CN VI palsy</td><td>Esotropia at distance; limited abduction; microvascular (DM/HTN) vs elevated ICP</td></tr>
+    <tr><td>CN VI palsy</td><td>Esotropia worse at distance and toward the affected side; limited abduction; microvascular (DM/HTN) vs elevated ICP</td></tr>
     <tr><td>Thyroid eye disease</td><td>Lid retraction, proptosis, restrictive; IR most commonly affected; worse upgaze</td></tr>
     <tr><td>Myasthenia gravis</td><td>Variable/fatigable; worse end of day; Cogan lid twitch; ice pack test positive</td></tr>
     <tr><td>INO</td><td>Adduction deficit + contralateral abduction nystagmus; MLF lesion; stroke or MS</td></tr>
@@ -2605,7 +2605,7 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
   <div class="cm"><span class="tag tag-purple">Vergence</span><span class="chevron">▾</span></div>
 </div><div class="cb">
   <p><strong>Symptoms (near):</strong> Headaches; blurred or double vision; eyestrain; movement of print; pulling sensation</p>
-  <p><strong>Signs:</strong> Low AC/A; high exo at near &gt; distance; ortho/suppresses at distance; receded NPC (improves with +); low NRA; high MEM; poor BO near recovery; poor facility with (+) OU</p>
+  <p><strong>Signs:</strong> Low AC/A; high exo at near &gt; distance; ortho/suppresses at distance; receded NPC; reduced PFV (BO ranges) at near; variable MEM (may show lead); poor BO blur &amp; recovery at near; difficulty meeting BO vergence demand</p>
   <table style="margin-top:8px">
     <tr><td>Primary Tx</td><td>Vision therapy (VT) — office-based preferred</td></tr>
     <tr><td>Secondary Tx</td><td>BO prism at near; beware prism adaptation</td></tr>
@@ -2686,7 +2686,7 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
 </div><div class="cb">
   <h4 style="font-size:13px;font-weight:600;margin:0 0 4px">Accommodative Excess (AE):</h4>
   <p><strong>Sx:</strong> Blurry distance vision after near work; headaches; eyestrain</p>
-  <p><strong>Signs:</strong> High MEM &amp; FCC; low PRA; poor facility with (+); eso tendency at near; high amplitude</p>
+  <p><strong>Signs:</strong> Low/lead MEM (over-accommodating); low NRA; poor facility with (+); variable/pseudomyopic refraction; eso tendency at near</p>
   <p><strong>Tx:</strong> VT</p>
   <h4 style="font-size:13px;font-weight:600;margin:10px 0 4px">Accommodative Spasm:</h4>
   <p><strong>Sx:</strong> Pseudomyopia; intermittent blurry distance; diplopia; miotic pupils; rare</p>
