@@ -424,6 +424,7 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
 </div>
     <div class="grp-lbl">Myopia Management</div>
   <button class="nav-btn active" onclick="switchTab('myopia-quiz',this)">Myopia Risk Assessment</button>
+  <button class="nav-btn" onclick="switchTab('myopia-profit',this)">Profitability</button>
   <button class="nav-btn" onclick="switchTab('myopia',this)">Myopia Control Devices</button>
   <button class="nav-btn" onclick="switchTab('myopia-risk',this)">Myopia Risk Factors</button>
   <button class="nav-btn" onclick="switchTab('myopia-tools',this)">Myopia Tools &amp; Links</button>
@@ -987,6 +988,118 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
 
   <p style="font-size:11px;color:var(--text3);margin-top:1rem;line-height:1.5">Risk factors and their relative importance are based on the IMI Risk Factors for Myopia report (Morgan et al., IOVS 2021), the CLEERE Study (Jones-Jordan et al., IOVS 2010), and Zadnik et al. (JAMA Ophthalmol 2015) on hyperopic reserve. The point weighting is a clinical construction informed by these sources, not a validated instrument; near work is weighted lightly given its debated independent effect. Use alongside clinical judgment.</p>
 </div>
+</div>
+
+<div id="tab-myopia-profit" class="section">
+<p style="font-size:18px;font-weight:600;margin-bottom:.2rem">Myopia Management Profitability</p>
+<p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">Building a sustainable myopia management program — revenue structure, margin by payer, and chair-time efficiency</p>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Where the durable revenue actually is</div><div class="cs">Professional services, not materials, drive the margin</div></div>
+  <div class="cm"><span class="tag tag-teal">Key Concept</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <p>A myopia management program has two revenue layers: <strong>materials</strong> (the treatment device — spectacle lens, contact lens, or ortho-K) and <strong>professional services</strong> (the dedicated evaluation, follow-up visits, and optional axial length monitoring). The materials margin is often squeezed by managed vision care plans, but the professional services are largely cash / patient-pay and sit <em>outside</em> the vision plan — which makes them the most durable and predictable part of the program.</p>
+  <div class="btip box">The strategic takeaway: build the program around recurring cash professional services. That revenue holds regardless of how a plan reimburses the device.</div>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Materials margin — cash vs. in-network</div><div class="cs">Managed vision care meaningfully changes the picture</div></div>
+  <div class="cm"><span class="tag tag-amber">Payer Reality</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <p style="font-size:13.5px;margin-bottom:8px">Using a premium myopia-control spectacle lens as the example (≈$179 wholesale to the practice):</p>
+  <table>
+    <tr style="font-size:12px;color:var(--text2)"><td>Scenario</td><td>Practice collects</td><td>Materials margin</td></tr>
+    <tr><td><strong>Cash / private pay</strong></td><td>$450–$550 retail</td><td><strong>~$270–$370 (60–67%)</strong></td></tr>
+    <tr><td><strong>In-network (MVC)</strong></td><td>~$250–$380 (allowance + patient OOP after discount)</td><td><strong>~$70–$200 (projected)</strong></td></tr>
+  </table>
+  <div class="bwarn box">Managed vision care plans apply a member discount, a capped base-lens allowance, and a set dispensing fee — so on a high-wholesale premium lens, in-network materials margin can be thin. Ranges are projected; actual figures depend on each plan's allowance and add-on reimbursement. Verify with your own remittances.</div>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Professional services revenue — the cash layer</div><div class="cs">Largely outside the vision plan</div></div>
+  <div class="cm"><span class="tag tag-blue">Revenue</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr style="font-size:12px;color:var(--text2)"><td>Service</td><td>Typical fee</td><td>Coverage</td></tr>
+    <tr><td>Myopia management evaluation (dedicated visit after comprehensive exam)</td><td>~$100–$150</td><td>Cash / patient-pay</td></tr>
+    <tr><td>Follow-up visits, ~q6 months (99213–99214 tied to a myopia Dx)</td><td>~$100 each</td><td>Usually patient-pay; medical where supported</td></tr>
+    <tr><td>Axial length measurement, optional (×2/yr)</td><td>~$40 each</td><td>Cash add-on</td></tr>
+    <tr><td style="font-weight:600;border-top:1px solid var(--border)">Approx. annual cash professional revenue</td><td style="font-weight:600;border-top:1px solid var(--border)" colspan="2"><strong>~$280–$330 / patient</strong></td></tr>
+  </table>
+  <div class="binfo box">This layer is what makes the program profitable even when a plan compresses the materials margin — and it recurs every year the child is managed. Follow-ups don't have to run through insurance at all; many practices set a simple flat cash fee for each myopia management visit.</div>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Program revenue calculator</div><div class="cs">Model your own numbers, cash and in-network</div></div>
+  <div class="cm"><span class="tag tag-teal">Calculator</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+    <div>
+      <label style="font-size:12px;color:var(--text2);display:block;margin-bottom:4px">Cash materials margin ($/pair)</label>
+      <input type="number" id="mp-cashmargin" value="321" oninput="calcMyopiaProfit()" style="width:100%;padding:8px 10px;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--r);color:var(--text);font-size:14px;font-family:inherit;" />
+    </div>
+    <div>
+      <label style="font-size:12px;color:var(--text2);display:block;margin-bottom:4px">In-network materials margin ($/pair)</label>
+      <input type="number" id="mp-mvcmargin" value="135" oninput="calcMyopiaProfit()" style="width:100%;padding:8px 10px;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--r);color:var(--text);font-size:14px;font-family:inherit;" />
+    </div>
+    <div>
+      <label style="font-size:12px;color:var(--text2);display:block;margin-bottom:4px">Annual cash professional revenue ($/patient)</label>
+      <input type="number" id="mp-prof" value="300" oninput="calcMyopiaProfit()" style="width:100%;padding:8px 10px;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--r);color:var(--text);font-size:14px;font-family:inherit;" />
+    </div>
+    <div>
+      <label style="font-size:12px;color:var(--text2);display:block;margin-bottom:4px">% of patients using a vision plan</label>
+      <input type="number" id="mp-mvcpct" value="70" oninput="calcMyopiaProfit()" style="width:100%;padding:8px 10px;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--r);color:var(--text);font-size:14px;font-family:inherit;" />
+    </div>
+    <div>
+      <label style="font-size:12px;color:var(--text2);display:block;margin-bottom:4px">New patients per month</label>
+      <input type="number" id="mp-patients" value="5" oninput="calcMyopiaProfit()" style="width:100%;padding:8px 10px;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--r);color:var(--text);font-size:14px;font-family:inherit;" />
+    </div>
+  </div>
+  <div id="mp-result"></div>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Modality efficiency — margin per chair-minute</div><div class="cs">Not all programs cost the same to run</div></div>
+  <div class="cm"><span class="tag tag-gray">Comparison</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <p style="font-size:13.5px;margin-bottom:8px">All myopia-control modalities can be profitable, but they differ sharply in the chair time and follow-up labor required to earn that revenue. The metric that matters for a busy practice is <strong>margin per chair-minute</strong>, not gross fee per case.</p>
+  <table>
+    <tr style="font-size:12px;color:var(--text2)"><td>Modality</td><td>Chair time</td><td>Notes</td></tr>
+    <tr><td>Myopia-control spectacle lenses</td><td>Low</td><td>No fitting/training/annual CL evaluation; workflow of a routine premium dispense; high day-one adaptation. <strong>Best margin per chair-minute.</strong></td></tr>
+    <tr><td>Soft multifocal / dual-focus CLs</td><td>Medium–High</td><td>Fitting visit, insertion/removal training, mandatory annual CL evaluation, ongoing supply</td></tr>
+    <tr><td>Ortho-K</td><td>Highest</td><td>Multiple fitting visits, topography, overnight assessment; highest per-case fee but most labor-intensive</td></tr>
+    <tr><td>Low-dose atropine</td><td>Low</td><td>Minimal materials margin; compounding-pharmacy dependent; often an adjunct rather than standalone revenue</td></tr>
+  </table>
+  <div class="btip box">Spectacle-based control and ortho-K sit at opposite ends: ortho-K commands the highest single fee, while spectacle lenses deliver the most revenue per minute of chair time. Many practices offer the full menu and let the clinical picture and family preference drive the choice.</div>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Billing &amp; coding structure</div><div class="cs">Capturing the professional revenue</div></div>
+  <div class="cm"><span class="tag tag-blue">Coding</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <table>
+    <tr><td style="width:180px;color:var(--text2)">Comprehensive exam</td><td>Billed as usual (92004/92014 or E/M). Myopia identified and monitored here.</td></tr>
+    <tr><td style="color:var(--text2)">Myopia management eval</td><td>Dedicated visit after the comprehensive exam to discuss risk, review options, and initiate management. Typically cash/patient-pay (~$100–$150).</td></tr>
+    <tr><td style="color:var(--text2)">Follow-up (q6mo)</td><td>Can be billed as a flat cash-pay myopia management follow-up (~$100), or as 99213–99214 tied to a myopia diagnosis where a medical indication supports it. Vision plans generally don't cover these, so many practices simply set a straightforward cash fee.</td></tr>
+    <tr><td style="color:var(--text2)">Axial length (optional)</td><td>Cash add-on (~$40/measurement). Valuable for tracking progression and parent communication.</td></tr>
+  </table>
+  <div class="bwarn box">Coding and coverage vary by payer and state. Confirm medical-necessity documentation and patient-pay policies with your billing team. Illustrative structures, not billing advice.</div>
+</div></div>
+
+<div class="card"><div class="ch" onclick="tog(this)">
+  <div><div class="ct">Payer ordering notes — myopia-control spectacle lenses</div><div class="cs">How premium myopia lenses bill across plans</div></div>
+  <div class="cm"><span class="tag tag-gray">Ordering</span><span class="chevron">▾</span></div>
+</div><div class="cb">
+  <p style="font-size:13.5px;margin-bottom:8px">Premium myopia-control spectacle lenses are typically billed as stacked components. The <strong>myopia add-on retail</strong> = total package retail − (single-vision base + material + AR coating + backside UV).</p>
+  <table>
+    <tr><td style="width:130px;color:var(--text2)">EyeMed</td><td>System auto-adds the required AR (Crizal Easy Pro) with backside UV. Enter usual &amp; customary charge for each component including the Myopia line item.</td></tr>
+    <tr><td style="color:var(--text2)">UHC / Spectera</td><td>Select Single Vision; OC height + reference mandatory; enter retail per component. ~14-day turnaround.</td></tr>
+    <tr><td style="color:var(--text2)">VSP</td><td>Handled as a proprietary lens: select "Proprietary: Genuine Brand Lens," lab = "Non-IDC Lab Invoice," enter invoice cost + product name in lab special instructions. Patient pay = retail − 20% discount − dispensing fee − base lens allowance.</td></tr>
+  </table>
+  <div class="binfo box">Always verify current ordering steps and allowances with the payer's latest guide.</div>
+</div></div>
+
+<p style="font-size:10.5px;color:var(--text3);margin-top:12px;padding-top:8px;border-top:0.5px solid var(--border);line-height:1.45">Ref: Payer ordering details from manufacturer payer guides (EyeMed, UHC/Spectera, VSP), 2025. All retail, reimbursement, visit-fee, and margin figures are illustrative projections and will vary by region, fee schedule, plan allowance, and payer mix — verify against your own remittances and billing team. Not billing or financial advice.</p>
 </div>
 
 <div id="tab-myopia" class="section">
@@ -3325,6 +3438,37 @@ function scoreMyopiaQuiz(){
 }
 
 setTimeout(renderCLList, 100);
+
+// ── MYOPIA PROFITABILITY CALCULATOR ──
+function calcMyopiaProfit(){
+  const cashM = parseFloat(document.getElementById('mp-cashmargin')?.value) || 0;
+  const mvcM  = parseFloat(document.getElementById('mp-mvcmargin')?.value) || 0;
+  const prof  = parseFloat(document.getElementById('mp-prof')?.value) || 0;
+  const mvcPct = (parseFloat(document.getElementById('mp-mvcpct')?.value) || 0) / 100;
+  const patients = parseFloat(document.getElementById('mp-patients')?.value) || 0;
+  const el = document.getElementById('mp-result');
+  if (!el) return;
+  // blended materials margin across payer mix
+  const blendedMat = cashM * (1 - mvcPct) + mvcM * mvcPct;
+  const perPatient = blendedMat + prof;
+  const annual = perPatient * patients * 12;
+  const profAnnual = prof * patients * 12;
+  const matAnnual = blendedMat * patients * 12;
+  el.innerHTML =
+    '<div style="background:var(--green-bg);border:1px solid var(--green-border);border-radius:var(--rl);padding:1rem 1.25rem">'
+    + '<table style="width:100%">'
+    + '<tr><td style="color:var(--text2);padding:3px 0">Blended materials margin / patient</td><td style="text-align:right"><strong>$'+blendedMat.toFixed(0)+'</strong></td></tr>'
+    + '<tr><td style="color:var(--text2);padding:3px 0">Professional (cash) revenue / patient</td><td style="text-align:right"><strong>$'+prof.toFixed(0)+'</strong></td></tr>'
+    + '<tr><td style="color:var(--text2);padding:3px 0">Total revenue / patient / year</td><td style="text-align:right"><strong>$'+perPatient.toFixed(0)+'</strong></td></tr>'
+    + '<tr><td style="color:var(--text3);padding:3px 0;font-size:12px">— of which materials</td><td style="text-align:right;color:var(--text3);font-size:12px">$'+Math.round(matAnnual).toLocaleString()+'/yr</td></tr>'
+    + '<tr><td style="color:var(--text3);padding:3px 0;font-size:12px">— of which cash professional</td><td style="text-align:right;color:var(--text3);font-size:12px">$'+Math.round(profAnnual).toLocaleString()+'/yr</td></tr>'
+    + '<tr><td style="color:var(--green-text);padding:6px 0 0;font-weight:600;border-top:1px solid var(--green-border)">Annualized program revenue</td><td style="text-align:right;color:var(--green-text);font-weight:600;font-size:18px;padding-top:6px;border-top:1px solid var(--green-border)">$'+Math.round(annual).toLocaleString()+'</td></tr>'
+    + '</table>'
+    + '<div style="font-size:11px;color:var(--text3);margin-top:8px">First-year estimate; the cash professional layer recurs each year the child is managed, and re-orders add materials margin — both increase lifetime value. Illustrative only.</div>'
+    + '</div>';
+}
+setTimeout(calcMyopiaProfit, 120);
+
 </script>
 </body>
 </html>
