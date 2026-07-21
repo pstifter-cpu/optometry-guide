@@ -423,7 +423,7 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
   <div class="search-results" id="search-results"></div>
 </div>
     <div class="grp-lbl">Myopia Management</div>
-  <button class="nav-btn active" onclick="switchTab('myopia-quiz',this)">Myopia Risk Assessment</button>
+  <button class="nav-btn active" onclick="switchTab('myopia-project',this)">Myopia Risk Assessment</button>
   <button class="nav-btn" onclick="switchTab('myopia-profit',this)">Profitability</button>
   <button class="nav-btn" onclick="switchTab('myopia',this)">Myopia Control Devices</button>
   <button class="nav-btn" onclick="switchTab('myopia-risk',this)">Myopia Risk Factors</button>
@@ -924,69 +924,63 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
 
 </div>
 
-<div id="tab-myopia-quiz" class="section active">
+<div id="tab-myopia-project" class="section active">
 <p style="font-size:18px;font-weight:600;margin-bottom:.2rem">Myopia Risk Assessment</p>
-<p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">Answer all six to classify risk and whether to begin myopia management. Educational tool — not a substitute for clinical judgment.</p>
+<p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">Enter the child's details once to get both a risk classification and an illustrative progression graph. Educational tool — not a substitute for clinical judgment or measured tracking.</p>
 
 <div class="card" style="padding:1.25rem">
 
-  <div style="margin-bottom:1.1rem">
-    <div style="font-size:13.5px;font-weight:600;margin-bottom:8px">1. Age</div>
-    <div class="quiz-row">
-      <button class="quiz-opt" data-q="age" data-v="0">14–17 yrs</button>
-      <button class="quiz-opt" data-q="age" data-v="1">11–13 yrs</button>
-      <button class="quiz-opt" data-q="age" data-v="2">8–10 yrs</button>
-      <button class="quiz-opt" data-q="age" data-v="3">≤7 yrs</button>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.1rem">
+    <div>
+      <div style="font-size:13.5px;font-weight:600;margin-bottom:8px">1. Exact age (years)</div>
+      <input type="number" id="pj-age" step="0.5" min="4" max="17" placeholder="e.g. 9.5" oninput="scoreProjectionQuiz()" style="width:100%;padding:9px 11px;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--r);color:var(--text);font-size:15px;font-family:inherit;" />
     </div>
-  </div>
-
-  <div style="margin-bottom:1.1rem">
-    <div style="font-size:13.5px;font-weight:600;margin-bottom:8px">2. Current refractive status (cycloplegic)</div>
-    <div class="quiz-row">
-      <button class="quiz-opt" data-q="refraction" data-v="normal">Age-normal hyperopia</button>
-      <button class="quiz-opt" data-q="refraction" data-v="premyopic">Low reserve (≤ +0.75 for age)</button>
-      <button class="quiz-opt" data-q="refraction" data-v="myopic">Already myopic (≥ −0.50)</button>
+    <div>
+      <div style="font-size:13.5px;font-weight:600;margin-bottom:8px">2. Current refraction (D)</div>
+      <input type="text" inputmode="decimal" id="pj-rx" placeholder="e.g. -1.25 or +0.75" oninput="scoreProjectionQuiz()" style="width:100%;padding:9px 11px;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--r);color:var(--text);font-size:15px;font-family:inherit;" />
+      <div style="font-size:11px;color:var(--text3);margin-top:4px">Cycloplegic spherical equivalent. Use a positive value for hyperopia (e.g. 0.75), negative for myopia (e.g. -1.25).</div>
     </div>
   </div>
 
   <div style="margin-bottom:1.1rem">
     <div style="font-size:13.5px;font-weight:600;margin-bottom:8px">3. Parental myopia</div>
     <div class="quiz-row">
-      <button class="quiz-opt" data-q="parents" data-v="0">Neither parent</button>
-      <button class="quiz-opt" data-q="parents" data-v="1">One parent</button>
-      <button class="quiz-opt" data-q="parents" data-v="2">Both parents</button>
+      <button class="quiz-opt" data-q="pparents" data-v="0">Neither parent</button>
+      <button class="quiz-opt" data-q="pparents" data-v="1">One parent</button>
+      <button class="quiz-opt" data-q="pparents" data-v="2">Both parents</button>
     </div>
   </div>
 
   <div style="margin-bottom:1.1rem">
     <div style="font-size:13.5px;font-weight:600;margin-bottom:8px">4. Near work (reading/screens, hrs/day)</div>
     <div class="quiz-row">
-      <button class="quiz-opt" data-q="near" data-v="0">&lt; 2 hrs</button>
-      <button class="quiz-opt" data-q="near" data-v="1">2–3 hrs</button>
-      <button class="quiz-opt" data-q="near" data-v="2">&gt; 3 hrs</button>
+      <button class="quiz-opt" data-q="pnear" data-v="0">&lt; 2 hrs</button>
+      <button class="quiz-opt" data-q="pnear" data-v="1">2–3 hrs</button>
+      <button class="quiz-opt" data-q="pnear" data-v="2">&gt; 3 hrs</button>
     </div>
   </div>
 
   <div style="margin-bottom:1.1rem">
     <div style="font-size:13.5px;font-weight:600;margin-bottom:8px">5. Time outdoors (hrs/day)</div>
     <div class="quiz-row">
-      <button class="quiz-opt" data-q="outdoor" data-v="0">&lt; 1 hr</button>
-      <button class="quiz-opt" data-q="outdoor" data-v="1">1–1.5 hrs</button>
-      <button class="quiz-opt" data-q="outdoor" data-v="2">&gt; 1.5 hrs</button>
+      <button class="quiz-opt" data-q="poutdoor" data-v="0">&lt; 1 hr</button>
+      <button class="quiz-opt" data-q="poutdoor" data-v="1">1–1.5 hrs</button>
+      <button class="quiz-opt" data-q="poutdoor" data-v="2">&gt; 1.5 hrs</button>
     </div>
   </div>
 
   <div style="margin-bottom:1.25rem">
     <div style="font-size:13.5px;font-weight:600;margin-bottom:8px">6. Ethnicity</div>
     <div class="quiz-row">
-      <button class="quiz-opt" data-q="ethnicity" data-v="other">Other</button>
-      <button class="quiz-opt" data-q="ethnicity" data-v="east_asian">East / South-East Asian</button>
+      <button class="quiz-opt" data-q="pethnicity" data-v="other">Other</button>
+      <button class="quiz-opt" data-q="pethnicity" data-v="east_asian">East / South-East Asian</button>
     </div>
   </div>
 
-  <div id="quiz-result" style="display:none;margin-top:1rem"></div>
+  <div id="pquiz-result" style="display:none;margin-top:1rem"></div>
+  <div id="pj-graph" style="display:none;margin-top:1.2rem"></div>
 
-  <p style="font-size:11px;color:var(--text3);margin-top:1rem;line-height:1.5">Risk factors and their relative importance are based on the IMI Risk Factors for Myopia report (Morgan et al., IOVS 2021), the CLEERE Study (Jones-Jordan et al., IOVS 2010), and Zadnik et al. (JAMA Ophthalmol 2015) on hyperopic reserve. The point weighting is a clinical construction informed by these sources, not a validated instrument; near work is weighted lightly given its debated independent effect. Use alongside clinical judgment.</p>
+  <p style="font-size:11px;color:var(--text3);margin-top:1rem;line-height:1.5">Risk factors and weighting follow the IMI Risk Factors report (Morgan et al., IOVS 2021), CLEERE (Jones-Jordan et al., IOVS 2010), and Zadnik et al. (JAMA Ophthalmol 2015). The progression graph is an illustrative population-average model, <strong>not a personalized forecast</strong>: untreated rates from Donovan et al. (Ophthalmology 2012) with age stratification (Fulk/Goss, Columbia Medical Plan); the with-management curve applies published Essilor® Stellest® refractive efficacy (~55% multi-year reduction; Bao et al., 2-year JAMA Ophthalmol 2022 plus 3- and 5-year follow-ups). Shaded bands reflect published ranges. Individual results vary; measured axial length and cycloplegic refraction over time guide actual care. For a validated calculator, see the BHVI tool in Myopia Tools &amp; Links.</p>
 </div>
 </div>
 
@@ -3402,8 +3396,7 @@ function renderCLList(){
   if (cnt) cnt.textContent = rows.length + ' of ' + CL_DATA.length + ' lenses';
 }
 
-// ── MYOPIA RISK QUIZ ──
-const quizAnswers = {};
+
 
 document.addEventListener('click', function(e){
   // quiz options
@@ -3412,8 +3405,8 @@ document.addEventListener('click', function(e){
     const q = qb.getAttribute('data-q'), v = qb.getAttribute('data-v');
     qb.parentElement.querySelectorAll('.quiz-opt').forEach(b=>b.classList.remove('selected'));
     qb.classList.add('selected');
-    quizAnswers[q] = v;
-    scoreMyopiaQuiz();
+    pQuizAnswers[q] = v;
+    scoreProjectionQuiz();
     return;
   }
   // CL filters
@@ -3449,44 +3442,247 @@ document.addEventListener('keydown', e => {
   }
 });
 
-function scoreMyopiaQuiz(){
-  const need = ['age','refraction','parents','near','outdoor','ethnicity'];
-  if (!need.every(k => k in quizAnswers)) return;
-  const a = quizAnswers;
-  let score = 0;
-  score += parseInt(a.age);
-  if (a.parents === '2') score += 3; else if (a.parents === '1') score += 2;
-  if (a.refraction === 'premyopic') score += 3;
-  if (a.near === '2') score += 1;
-  if (a.outdoor === '0') score += 2; else if (a.outdoor === '1') score += 1;
-  if (a.ethnicity === 'east_asian') score += 2;
+
+
+
+// ── PROJECTION QUIZ (clone of risk quiz, p-prefixed keys) ──
+const pQuizAnswers = {};
+
+function scoreProjectionQuiz(){
+  const age = parseFloat(document.getElementById('pj-age')?.value);
+  const rx  = parseFloat(document.getElementById('pj-rx')?.value);
+  const a = pQuizAnswers;
+  const catSelected = ['pparents','pnear','poutdoor','pethnicity'].every(k => k in a);
+  const el = document.getElementById('pquiz-result');
+
+  // derive age points (same bands as risk quiz)
+  let agePts = null;
+  if (!isNaN(age)) {
+    if (age <= 7) agePts = 3;
+    else if (age <= 10) agePts = 2;
+    else if (age <= 13) agePts = 1;
+    else agePts = 0;
+  }
+  // derive refractive category from exact Rx (spherical equivalent, D)
+  //   myopic:      <= -0.50
+  //   low reserve: between -0.50 and the age-expected hyperopic reserve
+  //   age-normal:  >= expected reserve for age
+  // Expected reserve (Zadnik-informed, approximate): younger kids should have MORE plus.
+  function expectedReserve(ag){
+    if (isNaN(ag)) return 0.75;
+    if (ag <= 6) return 1.25;
+    if (ag >= 12) return 0.50;
+    return 1.25 - (ag-6)*(1.25-0.50)/(12-6);
+  }
+  let refCat = null;
+  if (!isNaN(rx)) {
+    if (rx <= -0.50) refCat = 'myopic';
+    else if (rx < expectedReserve(age)) refCat = 'premyopic';
+    else refCat = 'normal';
+  }
+
+  // Need age, rx, and the four button questions to score
+  if (agePts === null || refCat === null || !catSelected) {
+    if (el) el.style.display = 'none';
+    calcProjection();
+    return;
+  }
+
+  let score = agePts;
+  if (a.pparents === '2') score += 3; else if (a.pparents === '1') score += 2;
+  if (refCat === 'premyopic') score += 3;
+  if (a.pnear === '2') score += 1;
+  if (a.poutdoor === '0') score += 2; else if (a.poutdoor === '1') score += 1;
+  if (a.pethnicity === 'east_asian') score += 2;
+
   let cat, color, msg;
-  if (a.refraction === 'myopic') {
+  if (refCat === 'myopic') {
     cat='Already Myopic'; color='red';
-    msg='This child is already myopic. Begin myopia management now — the goal is to slow axial elongation and limit final prescription. Discuss options (Essilor® Stellest® Lenses, soft multifocal/MiSight contact lenses, ortho-K, or low-dose atropine) and set a monitoring schedule.';
-  } else if (a.refraction === 'premyopic' && score >= 5) {
+    msg='This child is already myopic. Begin myopia management now — the goal is to slow axial elongation and limit final prescription.';
+  } else if (refCat === 'premyopic' && score >= 5) {
     cat='Pre-Myopic — High Risk'; color='red';
-    msg='Low hyperopic reserve for age plus additional risk factors places this child at high risk of imminent myopia onset. Strong case for pre-emptive intervention: prioritize outdoor time (≥90–120 min/day), reduce sustained near work, and consider low-dose atropine or a myopia-control spectacle/contact option. Monitor cycloplegic refraction and axial length closely.';
+    msg='Low hyperopic reserve for age plus additional risk factors places this child at high risk of imminent myopia onset. Strong case for pre-emptive intervention.';
   } else if (score >= 7) {
     cat='High Risk'; color='red';
-    msg='Multiple strong risk factors present. Begin the myopia management discussion now. Emphasize modifiable factors and establish baseline axial length if available. Re-check in 6 months with a treatment plan ready.';
+    msg='Multiple strong risk factors present. Begin the myopia management discussion now and establish baseline axial length if available.';
   } else if (score >= 4) {
     cat='Moderate Risk'; color='amber';
-    msg='Some risk factors present. Start the conversation with parents and reinforce protective behaviors — outdoor time and near-work hygiene. Monitor refraction annually or sooner if factors worsen.';
+    msg='Some risk factors present. Start the conversation with parents and reinforce protective behaviors — outdoor time and near-work hygiene.';
   } else {
     cat='Low Risk'; color='green';
-    msg='Few risk factors at present. Routine monitoring is appropriate. Reinforce healthy visual habits (outdoor time, the 20-20-20 rule) and reassess at the next routine exam.';
+    msg='Few risk factors at present. Routine monitoring is appropriate. Reinforce healthy visual habits and reassess at the next routine exam.';
   }
   const pal = {red:['var(--red-bg)','var(--red-text)','var(--red-border)'],amber:['var(--amber-bg)','var(--amber-text)','var(--amber-border)'],green:['var(--green-bg)','var(--green-text)','var(--green-border)']}[color];
   const start = (cat==='Low Risk') ? 'Monitor; reassess at next routine exam' : 'Yes — begin the myopia management discussion';
-  const el = document.getElementById('quiz-result');
   el.style.display='block';
   el.innerHTML = '<div style="background:'+pal[0]+';border:1px solid '+pal[2]+';border-radius:var(--rl);padding:1rem 1.25rem">'
     + '<div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:'+pal[1]+';margin-bottom:4px">Classification</div>'
     + '<div style="font-size:20px;font-weight:600;color:'+pal[1]+';margin-bottom:8px">'+cat+'</div>'
     + '<div style="font-size:13px;color:var(--text);margin-bottom:10px"><strong>Management:</strong> '+start+'</div>'
     + '<div style="font-size:13.5px;line-height:1.6;color:var(--text2)">'+msg+'</div></div>';
-  el.scrollIntoView({behavior:'smooth', block:'nearest'});
+
+  calcProjection();
+}
+
+// ── PROGRESSION PROJECTION GRAPH ──
+// Untreated rate by age (D/yr), from Donovan 2012 + Fulk/Goss age stratification.
+function untreatedRate(age){
+  if (age <= 7) return 0.60;
+  if (age >= 15) return 0.25;
+  return 0.60 - (age-7)*(0.60-0.28)/(15-7);
+}
+// ── ONSET WINDOW (pre-myopic projection, Zadnik/CLEERE) ──
+function cliffCutpoint(age){
+  // Cycloplegic SE at/below which myopia onset by 8th grade is likely (Zadnik 2015)
+  if (age <= 6) return 0.75;
+  if (age <= 8) return 0.50;
+  if (age <= 10) return 0.25;
+  return 0.00;
+}
+function onsetWindow(age, rx){
+  if (rx <= -0.50) return {level:'already', window:null};
+  const borderline = (rx <= -0.25); // -0.25 to -0.50: at the threshold
+  const cut = cliffCutpoint(age);
+  const margin = rx - cut;
+  const oneyrCut = (age <= 8) ? 0.00 : -0.25;
+  if (borderline) return {level:'At the myopia threshold', window:'onset essentially underway', color:'red', borderline:true};
+  if (rx <= oneyrCut + 0.25) return {level:'Imminent', window:'within ~1 year', color:'red'};
+  if (margin <= 0)          return {level:'High', window:'within ~1–2 years', color:'red'};
+  if (margin <= 0.50)       return {level:'Moderate', window:'within ~2–3 years', color:'amber'};
+  if (rx < 1.50)            return {level:'Low–Moderate', window:'within ~3–5 years — monitor', color:'amber'};
+  return {level:'Low', window:'low near-term risk', color:'green'};
+}
+function renderOnsetWindow(age, rx){
+  const o = onsetWindow(age, rx);
+  if (o.level === 'already') return '';
+  const cut = cliffCutpoint(age);
+  const pal = {red:['var(--red-bg)','var(--red-text)','var(--red-border)'],amber:['var(--amber-bg)','var(--amber-text)','var(--amber-border)'],green:['var(--green-bg)','var(--green-text)','var(--green-border)']}[o.color];
+  const W=680,H=150,mL=20,mR=20,mT=44,mB=40;
+  const plotW=W-mL-mR;
+  const xOf=y=>mL+(y/5)*plotW;
+  let ws=0, we=0;
+  if (o.window && o.window.includes('~1 year')) {ws=0;we=1;}
+  else if (o.window && o.window.includes('1–2')) {ws=1;we=2;}
+  else if (o.window && o.window.includes('2–3')) {ws=2;we=3;}
+  else if (o.window && o.window.includes('3–5')) {ws=3;we=5;}
+  let ticks='';
+  for(let y=0;y<=5;y++){
+    ticks += '<line x1="'+xOf(y)+'" y1="'+mT+'" x2="'+xOf(y)+'" y2="'+(H-mB)+'" stroke="var(--border)" stroke-width="0.5"/>';
+    ticks += '<text x="'+xOf(y)+'" y="'+(H-mB+20)+'" text-anchor="middle" font-size="11" fill="var(--text3)">Yr '+y+'</text>';
+  }
+  const barY=(mT+(H-mB))/2;
+  let windowBar='';
+  if (o.window && ws!==we){
+    windowBar = '<rect x="'+xOf(ws)+'" y="'+(barY-14)+'" width="'+(xOf(we)-xOf(ws))+'" height="28" rx="6" fill="'+pal[0]+'" stroke="'+pal[2]+'" stroke-width="1.5"/>'
+      + '<text x="'+((xOf(ws)+xOf(we))/2)+'" y="'+(barY+5)+'" text-anchor="middle" font-size="12" font-weight="600" fill="'+pal[1]+'">Likely onset</text>';
+  }
+  const svg = '<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;height:auto;font-family:inherit">'
+    + '<text x="'+mL+'" y="24" font-size="13" font-weight="600" fill="var(--text)">Projected myopia onset window</text>'
+    + '<line x1="'+mL+'" y1="'+barY+'" x2="'+(W-mR)+'" y2="'+barY+'" stroke="var(--border2)" stroke-width="1"/>'
+    + ticks + windowBar
+    + '</svg>';
+  // Description branches for the borderline (-0.25 to -0.50) zone
+  let label, desc;
+  if (o.borderline){
+    label = 'At the myopia threshold';
+    desc = 'This child measures '+rx.toFixed(2)+' D — in the −0.25 to −0.50 D borderline zone. This is right at the myopia threshold, and <strong>many clinicians begin management here</strong> rather than waiting, since early intervention limits the final prescription. Confirm with cycloplegic refraction and axial length, and discuss starting treatment.';
+  } else {
+    label = 'Pre-myopic — onset risk';
+    desc = 'This child is not yet myopic (entered '+(rx>=0?'+':'')+rx.toFixed(2)+' D) but has '+(rx<cut?'less':'more')+' hyperopic reserve than the age-'+age+' threshold of +'+cut.toFixed(2)+' D below which CLEERE data predict likely onset. '+(o.color!=='green'?'Consider pre-emptive measures (outdoor time, near-work hygiene) and closer monitoring; begin management discussion if reserve continues to fall.':'Routine monitoring is appropriate.');
+  }
+  return '<div style="background:'+pal[0]+';border:1px solid '+pal[2]+';border-radius:var(--rl);padding:1rem 1.25rem;margin-bottom:10px">'
+    + '<div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:'+pal[1]+';margin-bottom:4px">'+label+'</div>'
+    + '<div style="font-size:20px;font-weight:600;color:'+pal[1]+';margin-bottom:6px">'+o.level+(o.window?' — '+o.window:'')+'</div>'
+    + '<div style="font-size:13px;color:var(--text2);line-height:1.55">'+desc+'</div></div>'
+    + svg
+    + '<div class="binfo box">Onset window is an illustrative estimate from CLEERE age-specific cutpoints (Zadnik et al., JAMA Ophthalmol 2015). Once the child becomes myopic, the progression graph projects the diopter trajectory. Individual timing varies; serial cycloplegic refraction is the true guide.</div>';
+}
+
+function calcProjection(){
+  const age0 = parseFloat(document.getElementById('pj-age')?.value);
+  const rx0  = parseFloat(document.getElementById('pj-rx')?.value);
+  const g = document.getElementById('pj-graph');
+  if (!g) return;
+  if (isNaN(age0) || isNaN(rx0)) { g.style.display='none'; return; }
+  if (rx0 > -0.50) {
+    // PRE-MYOPIC: show projected onset window (Zadnik/CLEERE cutpoints)
+    g.style.display='block';
+    g.innerHTML = renderOnsetWindow(age0, rx0);
+    return;
+  }
+  const nYears = 5;
+  const years = [], uCen=[], uSlow=[], uFast=[], sCen=[], sSlow=[], sFast=[];
+  let ageBand = ['slow','cen','fast'];
+  // build cumulative curves
+  const baseRate = untreatedRate(age0);
+  let uc=rx0, us=rx0, uf=rx0, sc=rx0, ss=rx0, sf=rx0;
+  for (let y=0; y<=nYears; y++){
+    years.push(y);
+    if (y===0){ uCen.push(uc);uSlow.push(us);uFast.push(uf);sCen.push(sc);sSlow.push(ss);sFast.push(sf); continue; }
+    const slowFac = Math.pow(0.903, y-1); // physiologic slowing 9.7%/yr
+    const rCen = untreatedRate(age0 + (y-1)) * slowFac / Math.pow(0.903,0); // approx per-year using aging
+    const stepCen = untreatedRate(age0+(y-1)) * Math.pow(0.903,y-1);
+    const stepSlow = stepCen * 0.75;
+    const stepFast = stepCen * 1.35;
+    uc -= stepCen; us -= stepSlow; uf -= stepFast;
+    // Stellest: ~55% central reduction (band 45-65%)
+    sc -= stepCen * 0.45; ss -= stepSlow * 0.35; sf -= stepFast * 0.55;
+    uCen.push(+uc.toFixed(2)); uSlow.push(+us.toFixed(2)); uFast.push(+uf.toFixed(2));
+    sCen.push(+sc.toFixed(2)); sSlow.push(+ss.toFixed(2)); sFast.push(+sf.toFixed(2));
+  }
+  // SVG dimensions
+  const W=680, H=380, mL=52, mR=140, mT=20, mB=44;
+  const plotW = W-mL-mR, plotH = H-mT-mB;
+  const yMin = Math.floor(Math.min(...uFast) - 0.5);
+  const yMax = Math.max(0, Math.ceil(Math.max(rx0,0)));
+  const xOf = y => mL + (y/nYears)*plotW;
+  const yOf = d => mT + ((yMax - d)/(yMax - yMin))*plotH;
+  const pts = arr => arr.map((d,i)=>xOf(years[i])+','+yOf(d)).join(' ');
+  const bandPath = (top,bot) => {
+    let p = 'M ';
+    p += top.map((d,i)=>xOf(years[i])+' '+yOf(d)).join(' L ');
+    p += ' L ';
+    p += bot.map((d,i)=>xOf(years[i])+' '+yOf(d)).slice().reverse().join(' L ');
+    return p + ' Z';
+  };
+  // gridlines (integer diopters)
+  let grid='';
+  for(let d=yMax; d>=yMin; d--){
+    const yy=yOf(d);
+    grid += '<line x1="'+mL+'" y1="'+yy+'" x2="'+(mL+plotW)+'" y2="'+yy+'" stroke="var(--border)" stroke-width="0.5"/>';
+    grid += '<text x="'+(mL-8)+'" y="'+(yy+4)+'" text-anchor="end" font-size="11" fill="var(--text3)">'+(d>0?'+':'')+d.toFixed(0)+'</text>';
+  }
+  let xlab='';
+  for(let y=0;y<=nYears;y++){
+    xlab += '<text x="'+xOf(y)+'" y="'+(H-mB+20)+'" text-anchor="middle" font-size="11" fill="var(--text3)">Yr '+y+'</text>';
+  }
+  const uEnd=uCen[nYears], sEnd=sCen[nYears], saved=(uEnd - sEnd);
+  const svg =
+    '<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;height:auto;font-family:inherit">'
+    + grid + xlab
+    // untreated band (red-ish)
+    + '<path d="'+bandPath(uSlow,uFast)+'" fill="#e0666622" stroke="none"/>'
+    // stellest band (teal)
+    + '<path d="'+bandPath(sSlow,sFast)+'" fill="#33a89a22" stroke="none"/>'
+    // central lines
+    + '<polyline points="'+pts(uCen)+'" fill="none" stroke="#d9534f" stroke-width="2.5"/>'
+    + '<polyline points="'+pts(sCen)+'" fill="none" stroke="#2aa198" stroke-width="2.5"/>'
+    // endpoint labels
+    + '<circle cx="'+xOf(nYears)+'" cy="'+yOf(uEnd)+'" r="3.5" fill="#d9534f"/>'
+    + '<circle cx="'+xOf(nYears)+'" cy="'+yOf(sEnd)+'" r="3.5" fill="#2aa198"/>'
+    + '<text x="'+(xOf(nYears)+8)+'" y="'+(yOf(uEnd)+4)+'" font-size="12" fill="#d9534f" font-weight="600">No mgmt '+uEnd.toFixed(2)+'D</text>'
+    + '<text x="'+(xOf(nYears)+8)+'" y="'+(yOf(sEnd)+4)+'" font-size="12" fill="#2aa198" font-weight="600">Stellest '+sEnd.toFixed(2)+'D</text>'
+    + '</svg>';
+  g.style.display='block';
+  g.innerHTML =
+    '<div style="font-size:13.5px;font-weight:600;margin-bottom:2px">Illustrative 5-year projection</div>'
+    + '<div style="font-size:12px;color:var(--text3);margin-bottom:8px">Spherical equivalent (D) over time — shaded bands show the plausible range</div>'
+    + svg
+    + '<div style="display:flex;gap:16px;margin-top:6px;font-size:12px">'
+      + '<span style="color:#d9534f">■ No management</span>'
+      + '<span style="color:#2aa198">■ With Essilor® Stellest®</span>'
+    + '</div>'
+    + '<div class="btip box" style="margin-top:10px">At this starting point, the model projects roughly <strong>'+Math.abs(saved).toFixed(2)+' D less myopia</strong> over 5 years with Stellest versus no management (central estimate). Shaded bands reflect published ranges — an individual child may fall anywhere within or beyond them.</div>';
 }
 
 setTimeout(renderCLList, 100);
