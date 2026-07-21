@@ -377,6 +377,17 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
   .price-table th:nth-child(3), .price-table td:nth-child(3) { display: none; }
   .search-wrap { padding: 0.4rem 0.5rem; }
   .global-search { font-size: 14px; padding: 8px 12px; }
+
+  /* Myopia projection tab — mobile */
+  #tab-myopia-project .card { padding: 1rem !important; }
+  #tab-myopia-project [style*="grid-template-columns:1fr 1fr"],
+  #tab-myopia-profit [style*="grid-template-columns:1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+  .quiz-opt { min-width: 0 !important; font-size: 14px !important; padding: 11px 12px !important; }
+  #pj-age, #pj-rx { font-size: 16px !important; }  /* 16px prevents iOS zoom-on-focus */
+  #tab-myopia-project input, #tab-myopia-profit input { font-size: 16px !important; }
+  #pj-graph svg, #pj-graph { max-width: 100%; }
 }
 
   /* === MYOPIA QUIZ === */
@@ -401,6 +412,7 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
   .cl-filter.active { background: var(--blue-bg); border-color: var(--blue); color: var(--blue); font-weight: 600; }
   #cl-table .cl-notes { font-size: 11px; color: var(--text3); }
   .cl-row-body.open { display: block !important; }
+  .nav-hidden { display: none !important; }
 </style>
 </head>
 <body>
@@ -428,49 +440,49 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
   <button class="nav-btn" onclick="switchTab('myopia',this)">Myopia Control Devices</button>
   <button class="nav-btn" onclick="switchTab('myopia-risk',this)">Myopia Risk Factors</button>
   <button class="nav-btn" onclick="switchTab('myopia-tools',this)">Myopia Tools &amp; Links</button>
-  <div class="grp-lbl">Contact Lens</div>
+  <div class="nav-hidden"><div class="grp-lbl">Contact Lens</div>
   <button class="nav-btn" onclick="switchTab('lenses',this)">CL Parameters</button>
   <button class="nav-btn" onclick="switchTab('cl',this)">CL Fitting</button>
   <button class="nav-btn" onclick="switchTab('clmodality',this)">CL Modality Guide</button>
   <button class="nav-btn" onclick="switchTab('vertexconv',this)">Vertex Conversion</button>
-  <div class="grp-lbl">Binocular Vision</div>
+  </div><div class="nav-hidden"><div class="grp-lbl">Binocular Vision</div>
   <button class="nav-btn" onclick="switchTab('binoc',this)">Binocular Workup</button>
   <button class="nav-btn" onclick="switchTab('vergence',this)">Vergence</button>
   <button class="nav-btn" onclick="switchTab('accomm',this)">Accommodation</button>
   <button class="nav-btn" onclick="switchTab('bvkey',this)">BV Keys</button>
-  <div class="grp-lbl">Neuro</div>
+  </div><div class="nav-hidden"><div class="grp-lbl">Neuro</div>
   <button class="nav-btn" onclick="switchTab('pupils',this)">Pupils</button>
   <button class="nav-btn" onclick="switchTab('headache',this)">Headache</button>
   <button class="nav-btn" onclick="switchTab('diplopia',this)">Diplopia</button>
   <button class="nav-btn" onclick="switchTab('nystagmus',this)">Nystagmus</button>
   <button class="nav-btn" onclick="switchTab('vf',this)">Visual Fields</button>
   <button class="nav-btn" onclick="switchTab('cranialnerves',this)">Cranial Nerves</button>
-  <div class="grp-lbl">Anterior Segment</div>
+  </div><div class="nav-hidden"><div class="grp-lbl">Anterior Segment</div>
   <button class="nav-btn" onclick="switchTab('anterior',this)">Red Eye &amp; Lids</button>
   <button class="nav-btn" onclick="switchTab('angle',this)">Angle Assessment</button>
   <button class="nav-btn" onclick="switchTab('dryeye2',this)">Dry Eye</button>
   <button class="nav-btn" onclick="switchTab('dryeyrx',this)">Dry Eye Rx</button>
   <button class="nav-btn" onclick="switchTab('tearguide',this)">Artificial Tears</button>
-  <div class="grp-lbl">Posterior Segment</div>
+  </div><div class="nav-hidden"><div class="grp-lbl">Posterior Segment</div>
   <button class="nav-btn" onclick="switchTab('retina',this)">Retinal Disease</button>
   <button class="nav-btn" onclick="switchTab('amd',this)">AMD</button>
   <button class="nav-btn" onclick="switchTab('glaucoma2',this)">Glaucoma</button>
   <button class="nav-btn" onclick="switchTab('oct',this)">OCT Findings</button>
   <button class="nav-btn" onclick="switchTab('gradings',this)">Grading Scales</button>
-  <div class="grp-lbl">Optics</div>
+  </div><div class="nav-hidden"><div class="grp-lbl">Optics</div>
   <button class="nav-btn" onclick="switchTab('lensmaterial',this)">Lens Material</button>
   <button class="nav-btn" onclick="switchTab('optics',this)">Prism Formulas</button>
-  <div class="grp-lbl">Pharmacology</div>
+  </div><div class="nav-hidden"><div class="grp-lbl">Pharmacology</div>
   <button class="nav-btn" onclick="switchTab('drugs',this)">Drugs &amp; Dosing</button>
   <button class="nav-btn" onclick="switchTab('nutra',this)">Nutraceuticals</button>
-  <div class="grp-lbl">Tools</div>
+  </div><div class="nav-hidden"><div class="grp-lbl">Tools</div>
   <button class="nav-btn" onclick="switchTab('parks',this)">Parks 3-Step</button>
   <button class="nav-btn" onclick="switchTab('plaquenil',this)">Plaquenil Risk</button>
-  <div class="grp-lbl">Practice</div>
+  </div><div class="nav-hidden"><div class="grp-lbl">Practice</div>
   <button class="nav-btn" onclick="switchTab('billing',this)">Billing &amp; Coding</button>
   <button class="nav-btn" onclick="switchTab('revenue',this)">Revenue Guide</button>
   <button class="nav-btn" onclick="switchTab('icd',this)">ICD-10 Codes</button>
-</nav>
+</div></nav>
 
 <div class="main-content">
 
@@ -3128,7 +3140,8 @@ function globalSearch(q) {
   document.querySelectorAll('.section').forEach(sec => {
     const tabId = sec.id.replace('tab-','');
     const navBtn = document.querySelector('.nav-btn[onclick*="\''+tabId+'\'"]');
-    const tabName = navBtn ? navBtn.textContent.trim() : tabId;
+    if (!navBtn || navBtn.closest('.nav-hidden')) return; // skip hidden sections
+    const tabName = navBtn.textContent.trim();
     sec.querySelectorAll('.ct, .card-title').forEach(t => {
       if (t.textContent.toLowerCase().includes(q)) {
         results.push({tabId, tabName, title: t.textContent.trim()});
@@ -3557,7 +3570,9 @@ function renderOnsetWindow(age, rx){
   if (o.level === 'already') return '';
   const cut = cliffCutpoint(age);
   const pal = {red:['var(--red-bg)','var(--red-text)','var(--red-border)'],amber:['var(--amber-bg)','var(--amber-text)','var(--amber-border)'],green:['var(--green-bg)','var(--green-text)','var(--green-border)']}[o.color];
-  const W=680,H=150,mL=20,mR=20,mT=44,mB=40;
+  const isMobile = (window.innerWidth <= 680);
+  const W=680,H = isMobile ? 175 : 150,mL=20,mR=20,mT=44,mB=40;
+  const fAxis = isMobile ? 16 : 11;
   const plotW=W-mL-mR;
   const xOf=y=>mL+(y/5)*plotW;
   let ws=0, we=0;
@@ -3568,16 +3583,16 @@ function renderOnsetWindow(age, rx){
   let ticks='';
   for(let y=0;y<=5;y++){
     ticks += '<line x1="'+xOf(y)+'" y1="'+mT+'" x2="'+xOf(y)+'" y2="'+(H-mB)+'" stroke="var(--border)" stroke-width="0.5"/>';
-    ticks += '<text x="'+xOf(y)+'" y="'+(H-mB+20)+'" text-anchor="middle" font-size="11" fill="var(--text3)">Yr '+y+'</text>';
+    ticks += '<text x="'+xOf(y)+'" y="'+(H-mB+fAxis+6)+'" text-anchor="middle" font-size="'+fAxis+'" fill="var(--text3)">Yr '+y+'</text>';
   }
   const barY=(mT+(H-mB))/2;
   let windowBar='';
   if (o.window && ws!==we){
     windowBar = '<rect x="'+xOf(ws)+'" y="'+(barY-14)+'" width="'+(xOf(we)-xOf(ws))+'" height="28" rx="6" fill="'+pal[0]+'" stroke="'+pal[2]+'" stroke-width="1.5"/>'
-      + '<text x="'+((xOf(ws)+xOf(we))/2)+'" y="'+(barY+5)+'" text-anchor="middle" font-size="12" font-weight="600" fill="'+pal[1]+'">Likely onset</text>';
+      + '<text x="'+((xOf(ws)+xOf(we))/2)+'" y="'+(barY+5)+'" text-anchor="middle" font-size="'+(isMobile?16:12)+'" font-weight="600" fill="'+pal[1]+'">Likely onset</text>';
   }
   const svg = '<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;height:auto;font-family:inherit">'
-    + '<text x="'+mL+'" y="24" font-size="13" font-weight="600" fill="var(--text)">Projected myopia onset window</text>'
+    + '<text x="'+mL+'" y="24" font-size="'+(isMobile?17:13)+'" font-weight="600" fill="var(--text)">Projected myopia onset window</text>'
     + '<line x1="'+mL+'" y1="'+barY+'" x2="'+(W-mR)+'" y2="'+barY+'" stroke="var(--border2)" stroke-width="1"/>'
     + ticks + windowBar
     + '</svg>';
@@ -3631,7 +3646,13 @@ function calcProjection(){
     sCen.push(+sc.toFixed(2)); sSlow.push(+ss.toFixed(2)); sFast.push(+sf.toFixed(2));
   }
   // SVG dimensions
-  const W=680, H=380, mL=52, mR=140, mT=20, mB=44;
+  const isMobile = (window.innerWidth <= 680);
+  // On mobile: no floating endpoint labels (shown in caption instead), bigger fonts, less right margin
+  const W=680, H = isMobile ? 420 : 380;
+  const mL = isMobile ? 44 : 52;
+  const mR = isMobile ? 20 : 140;
+  const mT=20, mB = isMobile ? 52 : 44;
+  const fAxis = isMobile ? 17 : 11;   // axis label font
   const plotW = W-mL-mR, plotH = H-mT-mB;
   const yMin = Math.floor(Math.min(...uFast) - 0.5);
   const yMax = Math.max(0, Math.ceil(Math.max(rx0,0)));
@@ -3645,42 +3666,44 @@ function calcProjection(){
     p += bot.map((d,i)=>xOf(years[i])+' '+yOf(d)).slice().reverse().join(' L ');
     return p + ' Z';
   };
-  // gridlines (integer diopters)
   let grid='';
   for(let d=yMax; d>=yMin; d--){
     const yy=yOf(d);
     grid += '<line x1="'+mL+'" y1="'+yy+'" x2="'+(mL+plotW)+'" y2="'+yy+'" stroke="var(--border)" stroke-width="0.5"/>';
-    grid += '<text x="'+(mL-8)+'" y="'+(yy+4)+'" text-anchor="end" font-size="11" fill="var(--text3)">'+(d>0?'+':'')+d.toFixed(0)+'</text>';
+    grid += '<text x="'+(mL-8)+'" y="'+(yy+fAxis*0.35)+'" text-anchor="end" font-size="'+fAxis+'" fill="var(--text3)">'+(d>0?'+':'')+d.toFixed(0)+'</text>';
   }
   let xlab='';
   for(let y=0;y<=nYears;y++){
-    xlab += '<text x="'+xOf(y)+'" y="'+(H-mB+20)+'" text-anchor="middle" font-size="11" fill="var(--text3)">Yr '+y+'</text>';
+    xlab += '<text x="'+xOf(y)+'" y="'+(H-mB+fAxis+6)+'" text-anchor="middle" font-size="'+fAxis+'" fill="var(--text3)">'+(isMobile?y:'Yr '+y)+'</text>';
   }
   const uEnd=uCen[nYears], sEnd=sCen[nYears], saved=(uEnd - sEnd);
-  const svg =
-    '<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;height:auto;font-family:inherit">'
-    + grid + xlab
-    // untreated band (red-ish)
-    + '<path d="'+bandPath(uSlow,uFast)+'" fill="#e0666622" stroke="none"/>'
-    // stellest band (teal)
-    + '<path d="'+bandPath(sSlow,sFast)+'" fill="#33a89a22" stroke="none"/>'
-    // central lines
-    + '<polyline points="'+pts(uCen)+'" fill="none" stroke="#d9534f" stroke-width="2.5"/>'
-    + '<polyline points="'+pts(sCen)+'" fill="none" stroke="#2aa198" stroke-width="2.5"/>'
-    // endpoint labels
-    + '<circle cx="'+xOf(nYears)+'" cy="'+yOf(uEnd)+'" r="3.5" fill="#d9534f"/>'
+  const endLabels = isMobile ? '' : (
+      '<circle cx="'+xOf(nYears)+'" cy="'+yOf(uEnd)+'" r="3.5" fill="#d9534f"/>'
     + '<circle cx="'+xOf(nYears)+'" cy="'+yOf(sEnd)+'" r="3.5" fill="#2aa198"/>'
     + '<text x="'+(xOf(nYears)+8)+'" y="'+(yOf(uEnd)+4)+'" font-size="12" fill="#d9534f" font-weight="600">No mgmt '+uEnd.toFixed(2)+'D</text>'
     + '<text x="'+(xOf(nYears)+8)+'" y="'+(yOf(sEnd)+4)+'" font-size="12" fill="#2aa198" font-weight="600">Stellest '+sEnd.toFixed(2)+'D</text>'
+  );
+  const endDots = isMobile ? (
+      '<circle cx="'+xOf(nYears)+'" cy="'+yOf(uEnd)+'" r="4.5" fill="#d9534f"/>'
+    + '<circle cx="'+xOf(nYears)+'" cy="'+yOf(sEnd)+'" r="4.5" fill="#2aa198"/>'
+  ) : '';
+  const svg =
+    '<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;height:auto;font-family:inherit">'
+    + grid + xlab
+    + '<path d="'+bandPath(uSlow,uFast)+'" fill="#e0666622" stroke="none"/>'
+    + '<path d="'+bandPath(sSlow,sFast)+'" fill="#33a89a22" stroke="none"/>'
+    + '<polyline points="'+pts(uCen)+'" fill="none" stroke="#d9534f" stroke-width="'+(isMobile?3.5:2.5)+'"/>'
+    + '<polyline points="'+pts(sCen)+'" fill="none" stroke="#2aa198" stroke-width="'+(isMobile?3.5:2.5)+'"/>'
+    + endLabels + endDots
     + '</svg>';
   g.style.display='block';
   g.innerHTML =
     '<div style="font-size:13.5px;font-weight:600;margin-bottom:2px">Illustrative 5-year projection</div>'
     + '<div style="font-size:12px;color:var(--text3);margin-bottom:8px">Spherical equivalent (D) over time — shaded bands show the plausible range</div>'
     + svg
-    + '<div style="display:flex;gap:16px;margin-top:6px;font-size:12px">'
-      + '<span style="color:#d9534f">■ No management</span>'
-      + '<span style="color:#2aa198">■ With Essilor® Stellest®</span>'
+    + '<div style="display:flex;gap:14px;margin-top:6px;font-size:12.5px;flex-wrap:wrap">'
+      + '<span style="color:#d9534f">■ No management: <strong>'+uEnd.toFixed(2)+' D</strong></span>'
+      + '<span style="color:#2aa198">■ With Essilor® Stellest®: <strong>'+sEnd.toFixed(2)+' D</strong></span>'
     + '</div>'
     + '<div class="btip box" style="margin-top:10px">At this starting point, the model projects roughly <strong>'+Math.abs(saved).toFixed(2)+' D less myopia</strong> over 5 years with Stellest versus no management (central estimate). Shaded bands reflect published ranges — an individual child may fall anywhere within or beyond them.</div>';
 }
