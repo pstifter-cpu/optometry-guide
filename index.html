@@ -385,9 +385,13 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
     grid-template-columns: 1fr !important;
   }
   .quiz-opt { min-width: 0 !important; font-size: 14px !important; padding: 11px 12px !important; }
-  #pj-age, #pj-rx { font-size: 16px !important; }  /* 16px prevents iOS zoom-on-focus */
+  #pj-age, #pj-rx-mag { font-size: 16px !important; }  /* 16px prevents iOS zoom-on-focus */
   #tab-myopia-project input, #tab-myopia-profit input { font-size: 16px !important; }
   #pj-graph svg, #pj-graph { max-width: 100%; }
+
+  /* Hide top nav on scroll-down (mobile) */
+  .sidebar { transition: transform 0.25s ease; }
+  .sidebar.nav-hide-scroll { transform: translateY(-100%); }
 }
 
   /* === MYOPIA QUIZ === */
@@ -949,8 +953,14 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
     </div>
     <div>
       <div style="font-size:13.5px;font-weight:600;margin-bottom:8px">2. Current refraction (D)</div>
-      <input type="text" inputmode="decimal" id="pj-rx" placeholder="e.g. -1.25 or +0.75" oninput="scoreProjectionQuiz()" style="width:100%;padding:9px 11px;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--r);color:var(--text);font-size:15px;font-family:inherit;" />
-      <div style="font-size:11px;color:var(--text3);margin-top:4px">Cycloplegic spherical equivalent. Use a positive value for hyperopia (e.g. 0.75), negative for myopia (e.g. -1.25).</div>
+      <div style="display:flex;gap:8px;align-items:stretch">
+        <div style="display:flex;border:0.5px solid var(--border2);border-radius:var(--r);overflow:hidden;flex-shrink:0">
+          <button type="button" id="pj-sign-minus" onclick="setRxSign('-')" style="padding:0 14px;background:var(--blue-bg);color:var(--blue);border:none;font-size:18px;font-weight:700;cursor:pointer;font-family:inherit">−</button>
+          <button type="button" id="pj-sign-plus" onclick="setRxSign('+')" style="padding:0 14px;background:var(--bg3);color:var(--text3);border:none;border-left:0.5px solid var(--border2);font-size:18px;font-weight:700;cursor:pointer;font-family:inherit">+</button>
+        </div>
+        <input type="text" inputmode="decimal" id="pj-rx-mag" placeholder="e.g. 1.25" oninput="scoreProjectionQuiz()" style="flex:1;min-width:0;padding:9px 11px;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--r);color:var(--text);font-size:15px;font-family:inherit;" />
+      </div>
+      <div style="font-size:11px;color:var(--text3);margin-top:4px">Cycloplegic spherical equivalent. Pick − for myopia or + for hyperopia, then enter the magnitude (e.g. 1.25).</div>
     </div>
   </div>
 
@@ -3461,9 +3471,30 @@ document.addEventListener('keydown', e => {
 // ── PROJECTION QUIZ (clone of risk quiz, p-prefixed keys) ──
 const pQuizAnswers = {};
 
+// ── REFRACTION SIGN TOGGLE ──
+let pjRxSign = '-';  // default to myopia (minus)
+function setRxSign(sign){
+  pjRxSign = sign;
+  const minus = document.getElementById('pj-sign-minus');
+  const plus = document.getElementById('pj-sign-plus');
+  if (minus && plus) {
+    const active = ['var(--blue-bg)','var(--blue)'];
+    const inactive = ['var(--bg3)','var(--text3)'];
+    const m = sign==='-'?active:inactive, p = sign==='+'?active:inactive;
+    minus.style.background=m[0]; minus.style.color=m[1];
+    plus.style.background=p[0]; plus.style.color=p[1];
+  }
+  scoreProjectionQuiz();
+}
+function getRxValue(){
+  const mag = parseFloat(document.getElementById('pj-rx-mag')?.value);
+  if (isNaN(mag)) return NaN;
+  return pjRxSign==='-' ? -Math.abs(mag) : Math.abs(mag);
+}
+
 function scoreProjectionQuiz(){
   const age = parseFloat(document.getElementById('pj-age')?.value);
-  const rx  = parseFloat(document.getElementById('pj-rx')?.value);
+  const rx  = getRxValue();
   const a = pQuizAnswers;
   const catSelected = ['pparents','pnear','poutdoor','pethnicity'].every(k => k in a);
   const el = document.getElementById('pquiz-result');
@@ -3615,7 +3646,7 @@ function renderOnsetWindow(age, rx){
 
 function calcProjection(){
   const age0 = parseFloat(document.getElementById('pj-age')?.value);
-  const rx0  = parseFloat(document.getElementById('pj-rx')?.value);
+  const rx0  = getRxValue();
   const g = document.getElementById('pj-graph');
   if (!g) return;
   if (isNaN(age0) || isNaN(rx0)) { g.style.display='none'; return; }
@@ -3707,6 +3738,28 @@ function calcProjection(){
     + '</div>'
     + '<div class="btip box" style="margin-top:10px">At this starting point, the model projects roughly <strong>'+Math.abs(saved).toFixed(2)+' D less myopia</strong> over 5 years with Stellest versus no management (central estimate). Shaded bands reflect published ranges — an individual child may fall anywhere within or beyond them.</div>';
 }
+
+
+// ── HIDE TOP NAV ON SCROLL DOWN (mobile) ──
+(function(){
+  let lastY = 0, ticking = false;
+  function onScroll(){
+    if (window.innerWidth > 680) return;
+    const sidebar = document.querySelector('.sidebar');
+    if (!sidebar) return;
+    const y = window.scrollY || document.documentElement.scrollTop;
+    if (y > lastY && y > 60) {
+      sidebar.classList.add('nav-hide-scroll');      // scrolling down
+    } else {
+      sidebar.classList.remove('nav-hide-scroll');   // scrolling up
+    }
+    lastY = y <= 0 ? 0 : y;
+    ticking = false;
+  }
+  window.addEventListener('scroll', function(){
+    if (!ticking){ window.requestAnimationFrame(onScroll); ticking = true; }
+  }, {passive:true});
+})();
 
 setTimeout(renderCLList, 100);
 
