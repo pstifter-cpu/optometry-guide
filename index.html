@@ -3587,7 +3587,7 @@ function renderOnsetWindow(age, rx){
     label = 'At the myopia threshold';
     desc = 'This child measures '+rx.toFixed(2)+' D — in the −0.25 to −0.50 D borderline zone. This is right at the myopia threshold, and <strong>many clinicians begin management here</strong> rather than waiting, since early intervention limits the final prescription. Confirm with cycloplegic refraction and axial length, and discuss starting treatment.';
   } else {
-    label = 'Pre-myopic — onset risk';
+    label = 'Myopia onset risk';
     desc = 'This child is not yet myopic (entered '+(rx>=0?'+':'')+rx.toFixed(2)+' D) but has '+(rx<cut?'less':'more')+' hyperopic reserve than the age-'+age+' threshold of +'+cut.toFixed(2)+' D below which CLEERE data predict likely onset. '+(o.color!=='green'?'Consider pre-emptive measures (outdoor time, near-work hygiene) and closer monitoring; begin management discussion if reserve continues to fall.':'Routine monitoring is appropriate.');
   }
   return '<div style="background:'+pal[0]+';border:1px solid '+pal[2]+';border-radius:var(--rl);padding:1rem 1.25rem;margin-bottom:10px">'
