@@ -440,7 +440,7 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
 </div>
     <div class="grp-lbl">Myopia Management</div>
   <button class="nav-btn active" onclick="switchTab('myopia-project',this)">Myopia Risk Assessment</button>
-  <button class="nav-btn" onclick="switchTab('myopia-profit',this)">Profitability</button>
+  <button class="nav-btn" onclick="switchTab('myopia-profit',this)">Profitability/Billing</button>
   <button class="nav-btn" onclick="switchTab('myopia',this)">Myopia Control Devices</button>
   <div class="nav-hidden"><button class="nav-btn" onclick="switchTab('myopia-risk',this)">Myopia Risk Factors</button></div>
   <button class="nav-btn" onclick="switchTab('myopia-tools',this)">Myopia Tools &amp; Links</button>
@@ -1002,71 +1002,13 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
   <div id="pquiz-result" style="display:none;margin-top:1rem"></div>
   <div id="pj-graph" style="display:none;margin-top:1.2rem"></div>
 
-  <p style="font-size:11px;color:var(--text3);margin-top:1rem;line-height:1.5">Risk factors and weighting follow the IMI Risk Factors report (Morgan et al., IOVS 2021), CLEERE (Jones-Jordan et al., IOVS 2010), and Zadnik et al. (JAMA Ophthalmol 2015). The progression graph is an illustrative population-average model, <strong>not a personalized forecast</strong>: untreated rates from Donovan et al. (Ophthalmology 2012) with age stratification (Fulk/Goss, Columbia Medical Plan); the with-management curve applies published Essilor® Stellest® refractive efficacy (~55% multi-year reduction; Bao et al., 2-year JAMA Ophthalmol 2022 plus 3- and 5-year follow-ups). Shaded bands reflect published ranges. Individual results vary; measured axial length and cycloplegic refraction over time guide actual care. For a validated calculator, see the BHVI tool in Myopia Tools &amp; Links.</p>
+  <p style="font-size:11px;color:var(--text3);margin-top:1rem;line-height:1.5">Risk factors and weighting follow the IMI Risk Factors report (Morgan et al., IOVS 2021), CLEERE (Jones-Jordan et al., IOVS 2010), and Zadnik et al. (JAMA Ophthalmol 2015). The progression graph is an illustrative model, <strong>not a personalized forecast</strong>. The with-management curve uses the <strong>FIN-3101 US FDA pivotal trial</strong> (Essilor® Stellest®) overall 24-month reduction of <strong>71%</strong> in cycloplegic SER (0.64 D difference vs. single-vision control) for years 0–2. Untreated progression rates are age-modeled from Donovan et al. (Ophthalmology 2012) with age stratification (Fulk/Goss, Columbia Medical Plan). <strong>Years 3–5 are extrapolation, not trial data</strong> — the modeled efficacy tapers from the trial's 71% toward the longer-term reduction reported in the Chinese RCT and its multi-year extension (Bao et al., ~52% sustained). This reflects that early efficacy typically settles over time, and is supported directionally by that continuation data — but has not been proven in a controlled trial beyond the 2-year pivotal window. Shaded bands reflect a plausible efficacy range. Individual results vary; measured axial length and cycloplegic refraction over time guide actual care. For a validated calculator, see the BHVI tool in Myopia Tools &amp; Links.</p>
 </div>
 </div>
 
 <div id="tab-myopia-profit" class="section">
-<p style="font-size:18px;font-weight:600;margin-bottom:.2rem">Myopia Management Profitability</p>
-<p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">A high-margin, recurring-revenue service line — plus how to bill Essilor® Stellest® across the major plans</p>
-
-<div class="card-feat">
-  <div class="feat-badge">A standout service line</div>
-  <div class="ch" onclick="tog(this)" style="padding-top:10px;">
-    <div>
-      <div class="ct" style="font-size:16px;">Why myopia management is worth building</div>
-      <div class="cs">Premium margins and revenue that recurs for years</div>
-    </div>
-    <div class="cm"><span class="tag tag-teal">Start Here</span><span class="chevron">▾</span></div>
-  </div>
-  <div class="cb">
-    <p>Myopia management is one of the most rewarding service lines an optometric practice can add. It pairs a <strong>premium-margin product</strong> with a <strong>recurring stream of professional-service revenue</strong> that continues for the three to five years each child is managed — and it does so while delivering care that genuinely changes a child's visual future.</p>
-    <p style="margin-top:8px">The revenue comes from two complementary sources:</p>
-    <p style="margin-top:6px"><strong>1. The Essilor® Stellest® lens.</strong> A premium spectacle lens with strong materials margin — and unlike contact-lens or ortho-K programs, it earns that margin with the simple workflow of a routine spectacle dispense.</p>
-    <p style="margin-top:6px"><strong>2. The professional visits.</strong> A dedicated evaluation plus follow-ups every six months — largely cash-pay, and they recur every year the child stays in the program.</p>
-    <div class="btip box">Together these make myopia management both immediately profitable and durable: a premium product that families return for annually, layered with recurring visit revenue that compounds over the full course of care.</div>
-  </div>
-</div>
-
-<div class="card"><div class="ch" onclick="tog(this)">
-  <div><div class="ct">The Essilor® Stellest® margin</div><div class="cs">Strong on cash, still worthwhile in-network</div></div>
-  <div class="cm"><span class="tag tag-teal">Materials</span><span class="chevron">▾</span></div>
-</div><div class="cb">
-  <p style="font-size:13.5px;margin-bottom:8px">Stellest runs about $179 wholesale to the practice. What you keep depends on the payer:</p>
-  <table>
-    <tr style="font-size:12px;color:var(--text2)"><td>&nbsp;</td><td>You collect</td><td>You keep</td></tr>
-    <tr><td><strong>Cash / private pay</strong></td><td>~$450–$550</td><td><strong>~$270–$370 (a healthy 60%+ margin)</strong></td></tr>
-    <tr><td><strong>In-network (MVC)</strong></td><td>~$250–$380*</td><td><strong>~$70–$200*</strong></td></tr>
-  </table>
-  <div class="binfo box">Cash-pay Stellest delivers an excellent premium-lens margin. In-network the plan takes a share, but the lens still contributes — and the professional visits below more than make up the difference. *In-network figures are projected; confirm against your plan remittances.</div>
-</div></div>
-
-<div class="card"><div class="ch" onclick="tog(this)">
-  <div><div class="ct">The recurring visit revenue</div><div class="cs">The engine that compounds year over year</div></div>
-  <div class="cm"><span class="tag tag-blue">Services</span><span class="chevron">▾</span></div>
-</div><div class="cb">
-  <table>
-    <tr style="font-size:12px;color:var(--text2)"><td>Visit</td><td>Fee</td><td>How often</td></tr>
-    <tr><td>Myopia management evaluation</td><td>~$100–$150</td><td>Once, to start</td></tr>
-    <tr><td>Follow-up visit</td><td>~$100</td><td>Every 6 months</td></tr>
-    <tr><td>Axial length measurement (optional)</td><td>~$40</td><td>1–2× per year</td></tr>
-    <tr><td style="font-weight:600;border-top:1px solid var(--border)">Recurring, per year</td><td style="font-weight:600;border-top:1px solid var(--border)" colspan="2"><strong>~$380–$430 per patient</strong></td></tr>
-  </table>
-  <div class="btip box">This visit revenue is largely cash-pay, so it isn't reduced by vision-plan allowances — and it repeats every single year the child is managed. Many practices simply set a flat cash fee per follow-up. Over a full course of care, this recurring layer becomes the largest part of the program's value.</div>
-</div></div>
-
-<div class="card"><div class="ch" onclick="tog(this)">
-  <div><div class="ct">What one patient is worth over 4 years</div><div class="cs">The full picture is very attractive</div></div>
-  <div class="cm"><span class="tag tag-teal">Example</span><span class="chevron">▾</span></div>
-</div><div class="cb">
-  <p style="font-size:13.5px;margin-bottom:8px">One child managed for four years — roughly a new Stellest pair each year as the Rx progresses, plus ~$400/year in visits:</p>
-  <table>
-    <tr style="font-size:12px;color:var(--text2)"><td>Family type</td><td>Stellest lenses</td><td>Visits</td><td>4-year total</td></tr>
-    <tr><td>Cash-pay</td><td>~$1,280</td><td>~$1,600</td><td><strong>~$2,880</strong></td></tr>
-    <tr><td>In-network</td><td>~$540</td><td>~$1,600</td><td><strong>~$2,140</strong></td></tr>
-  </table>
-  <div class="btip box">Every managed child represents a couple thousand dollars of revenue over the course of care — and a practice building even a modest program adds a meaningful, recurring, high-margin service line. Multiply by a steady flow of new patients and it becomes a genuine growth driver.</div>
-</div></div>
+<p style="font-size:18px;font-weight:600;margin-bottom:.2rem">Profitability / Billing</p>
+<p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">Estimate program revenue, and bill Essilor® Stellest® across the major managed vision care plans</p>
 
 <div class="card"><div class="ch" onclick="tog(this)">
   <div><div class="ct">Estimate your program</div><div class="cs">Plug in your own numbers</div></div>
@@ -1095,21 +1037,6 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
     </div>
   </div>
   <div id="mp-result"></div>
-</div></div>
-
-<div class="card"><div class="ch" onclick="tog(this)">
-  <div><div class="ct">Most efficient modality: spectacles</div><div class="cs">Best margin per minute of chair time</div></div>
-  <div class="cm"><span class="tag tag-gray">Comparison</span><span class="chevron">▾</span></div>
-</div><div class="cb">
-  <p style="font-size:13.5px;margin-bottom:8px">Every modality can be profitable, but Stellest's spectacle format earns its margin with the least chair time:</p>
-  <table>
-    <tr style="font-size:12px;color:var(--text2)"><td>Modality</td><td>Chair time</td><td>Notes</td></tr>
-    <tr><td><strong>Essilor® Stellest® (spectacle)</strong></td><td>Low</td><td>No fitting, training, or annual CL evaluation — the workflow of a routine premium dispense. Best margin per chair-minute.</td></tr>
-    <tr><td>Soft multifocal / dual-focus CLs</td><td>Medium–High</td><td>Fitting visit, insertion/removal training, mandatory annual CL evaluation, ongoing supply</td></tr>
-    <tr><td>Ortho-K</td><td>Highest</td><td>Multiple fitting visits and topography; highest per-case fee but the most labor-intensive</td></tr>
-    <tr><td>Low-dose atropine</td><td>Low</td><td>Minimal materials margin; compounding-dependent; often an adjunct rather than standalone revenue</td></tr>
-  </table>
-  <div class="btip box">Ortho-K earns the biggest single fee, but Stellest delivers the most revenue per minute of chair time — premium margin with the simplest workflow. Offering the full menu lets you match each family to the right option.</div>
 </div></div>
 
 <div class="card"><div class="ch" onclick="tog(this)">
@@ -3659,20 +3586,28 @@ function calcProjection(){
   const nYears = 5;
   const years = [], uCen=[], uSlow=[], uFast=[], sCen=[], sSlow=[], sFast=[];
   let ageBand = ['slow','cen','fast'];
-  // build cumulative curves
-  const baseRate = untreatedRate(age0);
+  // build cumulative curves — FIN-3101 (US FDA pivotal trial) overall 71% reduction for
+  // yrs 0-2, then efficacy tapers toward the Bao et al. long-term figure (~52%) for yrs 3-5.
+  const trialRed = 0.71;   // FIN-3101 overall 24-month SER reduction (all ages)
+  const LT = 0.52;         // Bao et al. sustained long-term reduction assumption
+  function reductionAtYear(y){
+    if (y <= 2) return trialRed;              // trial-anchored (FIN-3101)
+    return Math.max(LT, trialRed - (trialRed - LT) * 0.33 * (y - 2)); // taper to Bao long-term
+  }
   let uc=rx0, us=rx0, uf=rx0, sc=rx0, ss=rx0, sf=rx0;
   for (let y=0; y<=nYears; y++){
     years.push(y);
     if (y===0){ uCen.push(uc);uSlow.push(us);uFast.push(uf);sCen.push(sc);sSlow.push(ss);sFast.push(sf); continue; }
-    const slowFac = Math.pow(0.903, y-1); // physiologic slowing 9.7%/yr
-    const rCen = untreatedRate(age0 + (y-1)) * slowFac / Math.pow(0.903,0); // approx per-year using aging
     const stepCen = untreatedRate(age0+(y-1)) * Math.pow(0.903,y-1);
     const stepSlow = stepCen * 0.75;
     const stepFast = stepCen * 1.35;
     uc -= stepCen; us -= stepSlow; uf -= stepFast;
-    // Stellest: ~55% central reduction (band 45-65%)
-    sc -= stepCen * 0.45; ss -= stepSlow * 0.35; sf -= stepFast * 0.55;
+    const redCen = reductionAtYear(y);
+    const redSlow = Math.min(0.95, redCen + 0.10); // optimistic efficacy band
+    const redFast = Math.max(0.35, redCen - 0.15); // conservative efficacy band
+    sc -= stepCen * (1 - redCen);
+    ss -= stepSlow * (1 - redSlow);
+    sf -= stepFast * (1 - redFast);
     uCen.push(+uc.toFixed(2)); uSlow.push(+us.toFixed(2)); uFast.push(+uf.toFixed(2));
     sCen.push(+sc.toFixed(2)); sSlow.push(+ss.toFixed(2)); sFast.push(+sf.toFixed(2));
   }
@@ -3718,9 +3653,15 @@ function calcProjection(){
       '<circle cx="'+xOf(nYears)+'" cy="'+yOf(uEnd)+'" r="4.5" fill="#d9534f"/>'
     + '<circle cx="'+xOf(nYears)+'" cy="'+yOf(sEnd)+'" r="4.5" fill="#2aa198"/>'
   ) : '';
+  // year-2 boundary between trial data and extrapolation
+  const x2 = xOf(2);
+  const divider = '<line x1="'+x2+'" y1="'+mT+'" x2="'+x2+'" y2="'+(H-mB)+'" stroke="var(--text3)" stroke-width="1" stroke-dasharray="4 3"/>'
+    + '<rect x="'+x2+'" y="'+mT+'" width="'+(mL+plotW-x2)+'" height="'+plotH+'" fill="var(--text3)" opacity="0.04"/>'
+    + '<text x="'+((mL+x2)/2)+'" y="'+(mT+12)+'" text-anchor="middle" font-size="'+(fAxis-2)+'" fill="var(--text3)">FIN-3101 trial</text>'
+    + '<text x="'+((x2+mL+plotW)/2)+'" y="'+(mT+12)+'" text-anchor="middle" font-size="'+(fAxis-2)+'" fill="var(--text3)">projected</text>';
   const svg =
     '<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;height:auto;font-family:inherit">'
-    + grid + xlab
+    + grid + xlab + divider
     + '<path d="'+bandPath(uSlow,uFast)+'" fill="#e0666622" stroke="none"/>'
     + '<path d="'+bandPath(sSlow,sFast)+'" fill="#33a89a22" stroke="none"/>'
     + '<polyline points="'+pts(uCen)+'" fill="none" stroke="#d9534f" stroke-width="'+(isMobile?3.5:2.5)+'"/>'
@@ -3736,7 +3677,7 @@ function calcProjection(){
       + '<span style="color:#d9534f">■ No management: <strong>'+uEnd.toFixed(2)+' D</strong></span>'
       + '<span style="color:#2aa198">■ With Essilor® Stellest®: <strong>'+sEnd.toFixed(2)+' D</strong></span>'
     + '</div>'
-    + '<div class="btip box" style="margin-top:10px">At this starting point, the model projects roughly <strong>'+Math.abs(saved).toFixed(2)+' D less myopia</strong> over 5 years with Stellest versus no management (central estimate). Shaded bands reflect published ranges — an individual child may fall anywhere within or beyond them.</div>';
+    + '<div class="btip box" style="margin-top:10px">At this starting point, the model projects roughly <strong>'+Math.abs(saved).toFixed(2)+' D less myopia</strong> over 5 years with Essilor® Stellest® versus no management (central estimate). <strong>Years 0–2 use the FIN-3101 US pivotal trial</strong> (71% reduction); <strong>years 3–5 are projected</strong>, tapering toward the Bao et al. long-term figure — not trial-proven. Shaded bands reflect a plausible efficacy range; an individual child may fall anywhere within or beyond them.</div>';
 }
 
 
