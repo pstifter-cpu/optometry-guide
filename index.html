@@ -3460,10 +3460,10 @@ function scoreProjectionQuiz(){
   }
 
   let score = agePts;
-  if (a.pparents === '2') score += 3; else if (a.pparents === '1') score += 2;
-  if (refCat === 'premyopic') score += 3;
+  if (a.pparents === '2') score += 2; else if (a.pparents === '1') score += 1;
+  if (refCat === 'premyopic') score += 2;
   if (a.pnear === '2') score += 1;
-  if (a.poutdoor === '0') score += 2; else if (a.poutdoor === '1') score += 1;
+  if (a.poutdoor === '0') score += 3; else if (a.poutdoor === '1') score += 1;
   if (a.pethnicity === 'east_asian') score += 2;
 
   let cat, color, msg;
