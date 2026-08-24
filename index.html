@@ -21,6 +21,9 @@
   --blue:        #5ba3e8;
   --blue-bg:     #0c2236;
   --blue-text:   #8dc4f5;
+  --orange-bg:   #2a1200;
+  --orange-text: #f59a4a;
+  --orange-border:#c86a1a;
   --amber-bg:    #2a1c00;
   --amber-text:  #f5c97a;
   --amber-border:#c88a1a;
@@ -942,7 +945,7 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
 
 <div id="tab-myopia-project" class="section active">
 <p style="font-size:18px;font-weight:600;margin-bottom:.2rem">Myopia Risk Assessment</p>
-<p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">Enter the child's details once to get both a risk classification and an illustrative progression graph. Educational tool — not a substitute for clinical judgment or measured tracking.</p>
+<p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">Enter the child's details once to get a classification and, for myopic children, an illustrative progression graph. Educational tool — not a substitute for clinical judgment or measured tracking.</p>
 
 <div class="card" style="padding:1.25rem">
 
@@ -1010,7 +1013,7 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
   <div id="pquiz-result" style="display:none;margin-top:1rem"></div>
   <div id="pj-graph" style="display:none;margin-top:1.2rem"></div>
 
-  <p style="font-size:11px;color:var(--text3);margin-top:1rem;line-height:1.5">Risk factors and weighting follow the IMI Risk Factors report (Morgan et al., IOVS 2021), CLEERE (Jones-Jordan et al., IOVS 2010), and Zadnik et al. (JAMA Ophthalmol 2015). The progression graph is an illustrative model, <strong>not a personalized forecast</strong>. The with-management curve uses the <strong>FIN-3101 US FDA pivotal trial</strong> (Essilor® Stellest®) overall 24-month reduction of <strong>71%</strong> in cycloplegic SER (0.64 D difference vs. single-vision control) for years 0–2. Untreated progression rates are age-modeled from Donovan et al. (Ophthalmology 2012) with age stratification (Fulk/Goss, Columbia Medical Plan). <strong>Years 3–5 are extrapolation, not trial data</strong> — the modeled efficacy tapers from the trial's 71% toward the longer-term reduction reported in the Chinese RCT and its multi-year extension (Bao et al., ~52% sustained). This reflects that early efficacy typically settles over time, and is supported directionally by that continuation data — but has not been proven in a controlled trial beyond the 2-year pivotal window. Shaded bands reflect a plausible efficacy range. Individual results vary; measured axial length and cycloplegic refraction over time guide actual care. For a validated calculator, see the BHVI tool in Myopia Tools &amp; Links.</p>
+  <p style="font-size:11px;color:var(--text3);margin-top:1rem;line-height:1.5">Pre-myopia is defined by the CLEERE age-specific cycloplegic cut points (+0.50 D at ages 6\u20138, +0.25 D at 9\u201310, 0.00 D at 11 and older; Zadnik et al., JAMA Ophthalmol 2015). Myopia is defined as \u22120.50 D or more. Risk-factor weighting follows the IMI Risk Factors report (Morgan et al., IOVS 2021) and CLEERE (Jones-Jordan et al., IOVS 2010); the risk score sorts pre-myopic children by urgency and does not include age, which is already reflected in the age-specific threshold. The progression graph is an illustrative model, <strong>not a personalized forecast</strong>. The with-management curve uses the <strong>FIN-3101 US FDA pivotal trial</strong> (Essilor® Stellest®) overall 24-month reduction of <strong>71%</strong> in cycloplegic SER (0.64 D difference vs. single-vision control) for years 0–2. Untreated progression rates are age-modeled from Donovan et al. (Ophthalmology 2012) with age stratification (Fulk/Goss, Columbia Medical Plan). <strong>Years 3–5 are extrapolation, not trial data</strong> — the modeled efficacy tapers from the trial's 71% toward the longer-term reduction reported in the Chinese RCT and its multi-year extension (Bao et al., ~52% sustained). This reflects that early efficacy typically settles over time, and is supported directionally by that continuation data — but has not been proven in a controlled trial beyond the 2-year pivotal window. Shaded bands reflect a plausible efficacy range. Individual results vary; measured axial length and cycloplegic refraction over time guide actual care. For a validated calculator, see the BHVI tool in Myopia Tools &amp; Links.</p>
 </div>
 </div>
 
@@ -3434,73 +3437,72 @@ function scoreProjectionQuiz(){
   const catSelected = ['pparents','pnear','poutdoor','pethnicity','psex'].every(k => k in a);
   const el = document.getElementById('pquiz-result');
 
-  // derive age points (CLEERE age bands)
-  let agePts = null;
-  if (!isNaN(age)) {
-    if (age <= 6) agePts = 4;
-    else if (age <= 8) agePts = 3;
-    else if (age <= 10) agePts = 2;
-    else if (age <= 12) agePts = 1;
-    else agePts = 0;
-  }
-  // derive refractive category from exact Rx (spherical equivalent, D)
-  //   myopic:      <= -0.50
-  //   low reserve: between -0.50 and the age-expected hyperopic reserve
-  //   age-normal:  >= expected reserve for age
-  // Expected reserve (Zadnik-informed, approximate): younger kids should have MORE plus.
-  function expectedReserve(ag){
-    if (isNaN(ag)) return 0.75;
-    if (ag <= 6) return 1.25;
-    if (ag >= 12) return 0.50;
-    return 1.25 - (ag-6)*(1.25-0.50)/(12-6);
-  }
-  let refCat = null;
-  if (!isNaN(rx)) {
-    if (rx <= -0.50) refCat = 'myopic';
-    else if (rx < expectedReserve(age)) refCat = 'premyopic';
-    else refCat = 'normal';
-  }
-
-  // Need age, rx, and the four button questions to score
-  if (agePts === null || refCat === null || !catSelected) {
+  if (isNaN(age) || isNaN(rx) || !catSelected) {
     if (el) el.style.display = 'none';
     calcProjection();
     return;
   }
 
-  let score = agePts;
+  // Refractive category — myopia at -0.50 D; pre-myopia per CLEERE age cut points
+  const cut = cliffCutpoint(age);
+  let refCat;
+  if (rx <= -0.50) refCat = 'myopic';
+  else if (rx <= cut) refCat = 'premyopic';
+  else refCat = 'normal';
+
+  // Risk points (age contributes no points)
+  let score = 0;
+  if (refCat === 'premyopic') score += 4;
   if (a.pparents === '2') score += 2; else if (a.pparents === '1') score += 1;
-  if (refCat === 'premyopic') score += 2;
-  if (a.pnear === '2') score += 1;
   if (a.poutdoor === '0') score += 3; else if (a.poutdoor === '1') score += 1;
   if (a.pethnicity === 'east_asian') score += 2;
+  if (a.pnear === '2') score += 1;
   if (a.psex === 'female') score += 1;
 
-  let cat, color, msg;
+  let cat, color, msg, showScore = true;
   if (refCat === 'myopic') {
-    cat='Already Myopic'; color='red';
-    msg='This child is already myopic. Begin myopia management now — the goal is to slow axial elongation and limit final prescription.';
-  } else if (refCat === 'premyopic' && score >= 5) {
-    cat='Pre-Myopic — High Risk'; color='red';
-    msg='Low hyperopic reserve for age plus additional risk factors places this child at high risk of imminent myopia onset. Strong case for pre-emptive intervention.';
-  } else if (score >= 7) {
-    cat='High Risk'; color='red';
-    msg='Multiple strong risk factors present. Begin the myopia management discussion now and establish baseline axial length if available.';
-  } else if (score >= 4) {
-    cat='Moderate Risk'; color='amber';
-    msg='Some risk factors present. Start the conversation with parents and reinforce protective behaviors — outdoor time and near-work hygiene.';
+    cat = 'Myopia';
+    color = 'red';
+    msg = 'This child is myopic. Treat as soon as possible — the goal is to slow axial elongation and limit the final prescription.';
+    showScore = false;
+  } else if (refCat === 'premyopic' && score >= 9) {
+    cat = 'Pre-myopia — more urgent';
+    color = 'orange';
+    msg = 'This child has pre-myopia for their age and carries a high burden of additional risk factors. Consider re-evaluating within 3 months, or beginning treatment now.';
+  } else if (refCat === 'premyopic') {
+    cat = 'Pre-myopia — less urgent';
+    color = 'amber';
+    msg = 'This child has pre-myopia for their age. Consider re-evaluating within 6 months, and reinforce protective habits — outdoor time and near-work hygiene.';
   } else {
-    cat='Low Risk'; color='green';
-    msg='Few risk factors at present. Routine monitoring is appropriate. Reinforce healthy visual habits and reassess at the next routine exam.';
+    cat = 'Adequate hyperopic buffer';
+    color = 'green';
+    msg = 'This child has enough hyperopia for their age. Continue annual comprehensive eye exams and reinforce healthy visual habits.';
+    showScore = false;
   }
-  const pal = {red:['var(--red-bg)','var(--red-text)','var(--red-border)'],amber:['var(--amber-bg)','var(--amber-text)','var(--amber-border)'],green:['var(--green-bg)','var(--green-text)','var(--green-border)']}[color];
-  const start = (cat==='Low Risk') ? 'Monitor; reassess at next routine exam' : 'Yes — begin the myopia management discussion';
+
+  const pal = {
+    red:   ['var(--red-bg)','var(--red-text)','var(--red-border)'],
+    orange:['var(--orange-bg)','var(--orange-text)','var(--orange-border)'],
+    amber: ['var(--amber-bg)','var(--amber-text)','var(--amber-border)'],
+    green: ['var(--green-bg)','var(--green-text)','var(--green-border)']
+  }[color];
+
+  const rxTxt = (rx>=0?'+':'') + rx.toFixed(2) + ' D';
+  const cutTxt = '+' + cut.toFixed(2) + ' D';
+  const detail = (refCat === 'myopic')
+    ? 'Entered refraction ' + rxTxt + ' (myopia is defined here as \u22120.50 D or more).'
+    : (refCat === 'premyopic')
+      ? 'Entered refraction ' + rxTxt + ', at or below the age-' + Math.floor(age) + ' pre-myopia threshold of ' + cutTxt + ' (CLEERE).'
+      : 'Entered refraction ' + rxTxt + ', above the age-' + Math.floor(age) + ' pre-myopia threshold of ' + cutTxt + ' (CLEERE).';
+
   el.style.display='block';
   el.innerHTML = '<div style="background:'+pal[0]+';border:1px solid '+pal[2]+';border-radius:var(--rl);padding:1rem 1.25rem">'
     + '<div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:'+pal[1]+';margin-bottom:4px">Classification</div>'
     + '<div style="font-size:20px;font-weight:600;color:'+pal[1]+';margin-bottom:8px">'+cat+'</div>'
-    + '<div style="font-size:13px;color:var(--text);margin-bottom:10px"><strong>Management:</strong> '+start+'</div>'
-    + '<div style="font-size:13.5px;line-height:1.6;color:var(--text2)">'+msg+'</div></div>';
+    + '<div style="font-size:13.5px;line-height:1.6;color:var(--text2);margin-bottom:8px">'+msg+'</div>'
+    + '<div style="font-size:11.5px;color:var(--text3);line-height:1.5">'+detail
+    + (showScore ? ' &middot; Risk score '+score+'/13.' : '')
+    + '</div></div>';
 
   calcProjection();
 }
@@ -3512,92 +3514,32 @@ function untreatedRate(age){
   if (age >= 15) return 0.25;
   return 0.60 - (age-7)*(0.60-0.28)/(15-7);
 }
-// ── ONSET WINDOW (pre-myopic projection, Zadnik/CLEERE) ──
+// ── PRE-MYOPIA THRESHOLD (CLEERE age-specific cut points) ──
+// Cycloplegic SE at or below which a child is considered pre-myopic for their age.
 function cliffCutpoint(age){
-  // Cycloplegic SE at/below which myopia onset by 8th grade is likely (Zadnik 2015)
-  if (age <= 6) return 0.75;
-  if (age <= 8) return 0.50;
-  if (age <= 10) return 0.25;
-  return 0.00;
-}
-function onsetWindow(age, rx){
-  if (rx <= -0.50) return {level:'already', window:null};
-  const borderline = (rx <= -0.25); // -0.25 to -0.50: at the threshold
-  const cut = cliffCutpoint(age);
-  const margin = rx - cut;
-  const oneyrCut = (age <= 8) ? 0.00 : -0.25;
-  if (borderline) return {level:'At the myopia threshold', window:'onset essentially underway', color:'red', borderline:true};
-  if (rx <= oneyrCut + 0.25) return {level:'Imminent', window:'within ~1 year', color:'red'};
-  if (margin <= 0)          return {level:'High', window:'within ~1–2 years', color:'red'};
-  if (margin <= 0.50)       return {level:'Moderate', window:'within ~2–3 years', color:'amber'};
-  if (rx < 1.50)            return {level:'Low–Moderate', window:'within ~3–5 years — monitor', color:'amber'};
-  return {level:'Low', window:'low near-term risk', color:'green'};
-}
-function renderOnsetWindow(age, rx){
-  const o = onsetWindow(age, rx);
-  if (o.level === 'already') return '';
-  const cut = cliffCutpoint(age);
-  const pal = {red:['var(--red-bg)','var(--red-text)','var(--red-border)'],amber:['var(--amber-bg)','var(--amber-text)','var(--amber-border)'],green:['var(--green-bg)','var(--green-text)','var(--green-border)']}[o.color];
-  const isMobile = (window.innerWidth <= 680);
-  const W=680,H = isMobile ? 175 : 150,mL=20,mR=20,mT=44,mB=40;
-  const fAxis = isMobile ? 16 : 11;
-  const plotW=W-mL-mR;
-  const xOf=y=>mL+(y/5)*plotW;
-  let ws=0, we=0;
-  if (o.window && o.window.includes('~1 year')) {ws=0;we=1;}
-  else if (o.window && o.window.includes('1–2')) {ws=1;we=2;}
-  else if (o.window && o.window.includes('2–3')) {ws=2;we=3;}
-  else if (o.window && o.window.includes('3–5')) {ws=3;we=5;}
-  let ticks='';
-  for(let y=0;y<=5;y++){
-    ticks += '<line x1="'+xOf(y)+'" y1="'+mT+'" x2="'+xOf(y)+'" y2="'+(H-mB)+'" stroke="var(--border)" stroke-width="0.5"/>';
-    ticks += '<text x="'+xOf(y)+'" y="'+(H-mB+fAxis+6)+'" text-anchor="middle" font-size="'+fAxis+'" fill="var(--text3)">Yr '+y+'</text>';
-  }
-  const barY=(mT+(H-mB))/2;
-  let windowBar='';
-  if (o.window && ws!==we){
-    windowBar = '<rect x="'+xOf(ws)+'" y="'+(barY-14)+'" width="'+(xOf(we)-xOf(ws))+'" height="28" rx="6" fill="'+pal[0]+'" stroke="'+pal[2]+'" stroke-width="1.5"/>'
-      + '<text x="'+((xOf(ws)+xOf(we))/2)+'" y="'+(barY+5)+'" text-anchor="middle" font-size="'+(isMobile?16:12)+'" font-weight="600" fill="'+pal[1]+'">Likely onset</text>';
-  }
-  const svg = '<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;height:auto;font-family:inherit">'
-    + '<text x="'+mL+'" y="24" font-size="'+(isMobile?17:13)+'" font-weight="600" fill="var(--text)">Projected myopia onset window</text>'
-    + '<line x1="'+mL+'" y1="'+barY+'" x2="'+(W-mR)+'" y2="'+barY+'" stroke="var(--border2)" stroke-width="1"/>'
-    + ticks + windowBar
-    + '</svg>';
-  // Description branches for the borderline (-0.25 to -0.50) zone
-  let label, desc;
-  if (o.borderline){
-    label = 'At the myopia threshold';
-    desc = 'This child measures '+rx.toFixed(2)+' D — in the −0.25 to −0.50 D borderline zone. This is right at the myopia threshold, and <strong>many clinicians begin management here</strong> rather than waiting, since early intervention limits the final prescription. Confirm with cycloplegic refraction and axial length, and discuss starting treatment.';
-  } else {
-    label = 'Myopia onset risk';
-    desc = 'This child is not yet myopic (entered '+(rx>=0?'+':'')+rx.toFixed(2)+' D) but has '+(rx<cut?'less':'more')+' hyperopic reserve than the age-'+age+' threshold of +'+cut.toFixed(2)+' D below which CLEERE data predict likely onset. '+(o.color!=='green'?'Consider pre-emptive measures (outdoor time, near-work hygiene) and closer monitoring; begin management discussion if reserve continues to fall.':'Routine monitoring is appropriate.');
-  }
-  return '<div style="background:'+pal[0]+';border:1px solid '+pal[2]+';border-radius:var(--rl);padding:1rem 1.25rem;margin-bottom:10px">'
-    + '<div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:'+pal[1]+';margin-bottom:4px">'+label+'</div>'
-    + '<div style="font-size:20px;font-weight:600;color:'+pal[1]+';margin-bottom:6px">'+o.level+(o.window?' — '+o.window:'')+'</div>'
-    + '<div style="font-size:13px;color:var(--text2);line-height:1.55">'+desc+'</div></div>'
-    + svg
-    + '<div class="binfo box">Onset window is an illustrative estimate from CLEERE age-specific cutpoints (Zadnik et al., JAMA Ophthalmol 2015). Once the child becomes myopic, the progression graph projects the diopter trajectory. Individual timing varies; serial cycloplegic refraction is the true guide.</div>';
+  if (age <= 8) return 0.50;   // 6-8 years
+  if (age <= 10) return 0.25;  // 9-10 years
+  return 0.00;                 // 11 and older
 }
 
+// Untreated progression rate by age (D/yr) — Donovan 2012 + Fulk/Goss stratification
+function untreatedRate(age){
+  if (age <= 7) return 0.60;
+  if (age >= 15) return 0.25;
+  return 0.60 - (age-7)*(0.60-0.28)/(15-7);
+}
 function calcProjection(){
   const age0 = parseFloat(document.getElementById('pj-age')?.value);
   const rx0  = getRxValue();
   const g = document.getElementById('pj-graph');
   if (!g) return;
   if (isNaN(age0) || isNaN(rx0)) { g.style.display='none'; return; }
-  if (rx0 > -0.50) {
-    // PRE-MYOPIC: show projected onset window (Zadnik/CLEERE cutpoints)
-    g.style.display='block';
-    g.innerHTML = renderOnsetWindow(age0, rx0);
-    return;
-  }
+  // Progression graph is shown only for children who are already myopic
+  if (rx0 > -0.50) { g.style.display='none'; g.innerHTML=''; return; }
   const nYears = 5;
   const years = [], uCen=[], uSlow=[], uFast=[], sCen=[], sSlow=[], sFast=[];
-  let ageBand = ['slow','cen','fast'];
-  // build cumulative curves — FIN-3101 (US FDA pivotal trial) overall 71% reduction for
-  // yrs 0-2, then efficacy tapers toward the Bao et al. long-term figure (~52%) for yrs 3-5.
+  // Curves: FIN-3101 (US FDA pivotal trial) 71% reduction for yrs 0-2,
+  // then tapering toward the Bao et al. long-term figure for yrs 3-5.
   const trialRed = 0.71;   // FIN-3101 overall 24-month SER reduction (all ages)
   const LT = 0.52;         // Bao et al. sustained long-term reduction assumption
   function reductionAtYear(y){
@@ -3687,7 +3629,7 @@ function calcProjection(){
       + '<span style="color:#d9534f">■ No management: <strong>'+uEnd.toFixed(2)+' D</strong></span>'
       + '<span style="color:#2aa198">■ With Essilor® Stellest®: <strong>'+sEnd.toFixed(2)+' D</strong></span>'
     + '</div>'
-    + '<div class="btip box" style="margin-top:10px">At this starting point, the model projects roughly <strong>'+Math.abs(saved).toFixed(2)+' D less myopia</strong> over 5 years with Essilor® Stellest® versus no management (central estimate). <strong>Years 0–2 use the FIN-3101 US pivotal trial</strong> (71% reduction); <strong>years 3–5 are projected</strong>, tapering toward the Bao et al. long-term figure — not trial-proven. Shaded bands reflect a plausible efficacy range; an individual child may fall anywhere within or beyond them.</div>';
+    + '<div class="btip box" style="margin-top:10px">At this starting point, the model projects roughly <strong>'+Math.abs(saved).toFixed(2)+' D less myopia</strong> over 5 years with Essilor® Stellest® versus no management (central estimate). <strong>Years 0–2 use the FIN-3101 US pivotal trial</strong> (71% reduction); <strong>years 3–5 are projected</strong>, tapering toward the Bao et al. long-term figure — not trial-proven. Shaded bands reflect a plausible efficacy range; an individual child may fall anywhere within or beyond them.<br><br><em>On when to start:</em> this tool defines myopia at \u22120.50 D, but beginning treatment as early as \u22120.25 D is a reasonable and defensible choice \u2014 there is no benefit to waiting once a child has crossed into myopia, and earlier intervention means fewer diopters accumulated overall.</div>';
 }
 
 
