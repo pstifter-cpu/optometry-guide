@@ -952,7 +952,7 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.1rem">
     <div>
       <div style="font-size:13.5px;font-weight:600;margin-bottom:8px">1. Exact age (years)</div>
-      <input type="number" id="pj-age" step="0.5" min="4" max="17" placeholder="e.g. 9.5" oninput="scoreProjectionQuiz()" style="width:100%;padding:9px 11px;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--r);color:var(--text);font-size:15px;font-family:inherit;" />
+      <input type="number" id="pj-age" step="0.5" min="1" max="17" placeholder="e.g. 9.5" oninput="scoreProjectionQuiz()" style="width:100%;padding:9px 11px;background:var(--bg2);border:0.5px solid var(--border2);border-radius:var(--r);color:var(--text);font-size:15px;font-family:inherit;" />
     </div>
     <div>
       <div style="font-size:13.5px;font-weight:600;margin-bottom:8px">2. Current refraction (D)</div>
@@ -1013,7 +1013,7 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
   <div id="pquiz-result" style="display:none;margin-top:1rem"></div>
   <div id="pj-graph" style="display:none;margin-top:1.2rem"></div>
 
-  <p style="font-size:11px;color:var(--text3);margin-top:1rem;line-height:1.5">Pre-myopia is defined by the CLEERE age-specific cycloplegic cut points (+0.50 D at ages 6\u20138, +0.25 D at 9\u201310, 0.00 D at 11 and older; Zadnik et al., JAMA Ophthalmol 2015). Myopia is defined as \u22120.50 D or more. Risk-factor weighting follows the IMI Risk Factors report (Morgan et al., IOVS 2021) and CLEERE (Jones-Jordan et al., IOVS 2010); the risk score sorts pre-myopic children by urgency and does not include age, which is already reflected in the age-specific threshold. The progression graph is an illustrative model, <strong>not a personalized forecast</strong>. The with-management curve uses the <strong>FIN-3101 US FDA pivotal trial</strong> (Essilor® Stellest®) overall 24-month reduction of <strong>71%</strong> in cycloplegic SER (0.64 D difference vs. single-vision control) for years 0–2. Untreated progression rates are age-modeled from Donovan et al. (Ophthalmology 2012) with age stratification (Fulk/Goss, Columbia Medical Plan). <strong>Years 3–5 are extrapolation, not trial data</strong> — the modeled efficacy tapers from the trial's 71% toward the longer-term reduction reported in the Chinese RCT and its multi-year extension (Bao et al., ~52% sustained). This reflects that early efficacy typically settles over time, and is supported directionally by that continuation data — but has not been proven in a controlled trial beyond the 2-year pivotal window. Shaded bands reflect a plausible efficacy range. Individual results vary; measured axial length and cycloplegic refraction over time guide actual care. For a validated calculator, see the BHVI tool in Myopia Tools &amp; Links.</p>
+  <p style="font-size:11px;color:var(--text3);margin-top:1rem;line-height:1.5">Pre-myopia is defined by age-specific cycloplegic cut points. Ages 1–5 follow Mayer et al. (Arch Ophthalmol 2001;119:1625–8): +1.50 D at 1, +1.25 at 2, +1.00 at 3–4, +0.75 at 5. Ages 6 and older follow CLEERE: +0.50 D at 6–8, +0.25 at 9–10, 0.00 at 11 and older (Zadnik et al., JAMA Ophthalmol 2015). Myopia is defined as −0.50 D or more. Risk-factor weighting follows the IMI Risk Factors report (Morgan et al., IOVS 2021) and CLEERE (Jones-Jordan et al., IOVS 2010); the risk score sorts pre-myopic children by urgency and does not include age, which is already reflected in the age-specific threshold. The progression graph is an illustrative model, <strong>not a personalized forecast</strong>. Untreated progression rates are age- and ethnicity-specific, from Brennan NA, Shamp W, Maynes E, Cheng X, Bullimore MA, <em>Influence of age and race on axial elongation in myopic children: a systematic review and meta-regression</em>, Optom Vis Sci 2024;101(8):497–507. The with-management curve applies the <strong>FIN-3101 US FDA pivotal trial</strong> (Essilor® Stellest®) overall 24-month reduction of <strong>71%</strong> in cycloplegic SER (0.64 D difference vs. single-vision control). The shaded band is that trial's published 95% confidence interval: a treatment difference of 0.64 D (95% CI 0.50–0.79 D) against 0.90 D of control progression over 24 months, i.e. an efficacy interval of 56–88%. That interval is drawn for years 1–2 only; beyond the trial window there is no measured sample for a confidence interval to describe, so none is shown and the treated curve is dashed. Years 3–5 are not trial-supported at that level: the modelled efficacy tapers (58%, 45%, 32%) so that <strong>cumulative 5-year efficacy equals the 58% observed</strong> in the Stellest 5-year extended trial (Li X, Bao J, et al., Eye Vis 2025: −1.27 D with HAL vs −3.03 D control, a 1.75 D difference). Note that trial's control arm was itself extrapolated beyond year 2. No band is drawn on the untreated curve, which is shown as the meta-regression central estimate only. Shaded bands reflect a plausible efficacy range. Individual results vary; measured axial length and cycloplegic refraction over time guide actual care. For a validated calculator, see the BHVI tool in Myopia Tools &amp; Links.</p>
 </div>
 </div>
 
@@ -3507,26 +3507,35 @@ function scoreProjectionQuiz(){
   calcProjection();
 }
 
-// ── PROGRESSION PROJECTION GRAPH ──
-// Untreated rate by age (D/yr), from Donovan 2012 + Fulk/Goss age stratification.
-function untreatedRate(age){
-  if (age <= 7) return 0.60;
-  if (age >= 15) return 0.25;
-  return 0.60 - (age-7)*(0.60-0.28)/(15-7);
-}
-// ── PRE-MYOPIA THRESHOLD (CLEERE age-specific cut points) ──
-// Cycloplegic SE at or below which a child is considered pre-myopic for their age.
+// ── PRE-MYOPIA THRESHOLD ──
+// Ages 1-5: Mayer et al., Arch Ophthalmol 2001 (cycloplegic refractions, 1-48 months).
+// Ages 6+:  CLEERE age-specific cut points (Zadnik et al., JAMA Ophthalmol 2015).
 function cliffCutpoint(age){
-  if (age <= 8) return 0.50;   // 6-8 years
-  if (age <= 10) return 0.25;  // 9-10 years
-  return 0.00;                 // 11 and older
+  const a = Math.floor(age);
+  if (a <= 1) return 1.50;
+  if (a === 2) return 1.25;
+  if (a === 3) return 1.00;
+  if (a === 4) return 1.00;
+  if (a === 5) return 0.75;
+  if (a <= 8)  return 0.50;
+  if (a <= 10) return 0.25;
+  return 0.00;
 }
 
-// Untreated progression rate by age (D/yr) — Donovan 2012 + Fulk/Goss stratification
-function untreatedRate(age){
-  if (age <= 7) return 0.60;
-  if (age >= 15) return 0.25;
-  return 0.60 - (age-7)*(0.60-0.28)/(15-7);
+// ── UNTREATED MYOPIA PROGRESSION (D/yr) ──
+// Brennan NA, Shamp W, Maynes E, Cheng X, Bullimore MA. Influence of age and race on
+// axial elongation in myopic children: systematic review and meta-regression.
+// Optom Vis Sci. 2024;101(8):497-507.
+const PROG_EA = {6:1.292707,7:1.138938,8:1.00346,9:0.884097,10:0.778933,11:0.686278,
+  12:0.604644,13:0.532721,14:0.469353,15:0.413523,16:0.364334,17:0.320996,18:0.282813};
+const PROG_NEA = {6:0.867961,7:0.764716,8:0.673752,9:0.593608,10:0.522998,11:0.460787,
+  12:0.405976,13:0.357684,14:0.315137,15:0.277651,16:0.244625,17:0.215526,18:0.189889};
+function untreatedRate(age, eastAsian){
+  const tbl = eastAsian ? PROG_EA : PROG_NEA;
+  let a = Math.floor(age);
+  if (a < 6) a = 6;                       // clamp: table starts at 6
+  if (a <= 18) return tbl[a];
+  return tbl[18] * Math.pow(0.88105, a - 18); // continue observed ~11.9%/yr decline
 }
 function calcProjection(){
   const age0 = parseFloat(document.getElementById('pj-age')?.value);
@@ -3536,32 +3545,50 @@ function calcProjection(){
   if (isNaN(age0) || isNaN(rx0)) { g.style.display='none'; return; }
   // Progression graph is shown only for children who are already myopic
   if (rx0 > -0.50) { g.style.display='none'; g.innerHTML=''; return; }
-  const nYears = 5;
-  const years = [], uCen=[], uSlow=[], uFast=[], sCen=[], sSlow=[], sFast=[];
-  // Curves: FIN-3101 (US FDA pivotal trial) 71% reduction for yrs 0-2,
-  // then tapering toward the Bao et al. long-term figure for yrs 3-5.
-  const trialRed = 0.71;   // FIN-3101 overall 24-month SER reduction (all ages)
-  const LT = 0.52;         // Bao et al. sustained long-term reduction assumption
-  function reductionAtYear(y){
-    if (y <= 2) return trialRed;              // trial-anchored (FIN-3101)
-    return Math.max(LT, trialRed - (trialRed - LT) * 0.33 * (y - 2)); // taper to Bao long-term
+  // Under 6: published progression rates do not extend below age 6, so no curve is drawn.
+  if (age0 < 6) {
+    g.style.display='block';
+    g.innerHTML = '<div class="bred box"><strong>Myopia before age 6 — treat urgently.</strong> '
+      + 'No progression projection is shown: published age-specific progression rates do not extend below age 6, '
+      + 'and extrapolating them here would understate the trajectory. '
+      + 'Myopia at this age carries the highest lifetime risk simply because so many growth years remain, so the case '
+      + 'for starting management now is stronger than at any older age, not weaker.</div>';
+    return;
   }
-  let uc=rx0, us=rx0, uf=rx0, sc=rx0, ss=rx0, sf=rx0;
+  const nYears = 5;
+  const eastAsian = (pQuizAnswers.pethnicity === 'east_asian');
+  const years = [], uCen=[], sCen=[], sBest=[], sWorst=[];
+  // Untreated: Brennan/Bullimore meta-regression rates by age and ethnicity (central estimate).
+  // Treated: FIN-3101 (US FDA pivotal trial) 71% reduction in cycloplegic SER.
+  //   Published 95% CI on the treatment difference is 0.50-0.79 D against a 0.90 D
+  //   control progression over 24 months, i.e. an efficacy CI of 56% to 88%.
+  //   The band below IS that published interval, applied to the central untreated rate.
+  // Efficacy by projection year.
+  //   Years 1-2: FIN-3101 71% reduction (trial-supported).
+  //   Years 3-5: smooth taper (58% / 45% / 32%) chosen so that CUMULATIVE 5-year
+  //   efficacy lands on 58% - the observed result of the HAL 5-year extended trial
+  //   (Li X, Bao J et al., Eye Vis 2025: -1.27 D treated vs -3.03 D control = 1.75 D).
+  //   Because consecutive-year rates fall by a constant factor, this cumulative
+  //   calibration holds at every starting age and for both ethnicity columns.
+  function efficacyAtYear(y){
+    if (y <= 2) return 0.71;
+    if (y === 3) return 0.58;
+    if (y === 4) return 0.45;
+    return 0.32;
+  }
+  const CI_HI = 88/71, CI_LO = 56/71;  // FIN-3101 95% CI as a proportion of central
+  let uc=rx0, sc=rx0, sb=rx0, sw=rx0;
   for (let y=0; y<=nYears; y++){
     years.push(y);
-    if (y===0){ uCen.push(uc);uSlow.push(us);uFast.push(uf);sCen.push(sc);sSlow.push(ss);sFast.push(sf); continue; }
-    const stepCen = untreatedRate(age0+(y-1)) * Math.pow(0.903,y-1);
-    const stepSlow = stepCen * 0.75;
-    const stepFast = stepCen * 1.35;
-    uc -= stepCen; us -= stepSlow; uf -= stepFast;
-    const redCen = reductionAtYear(y);
-    const redSlow = Math.min(0.95, redCen + 0.10); // optimistic efficacy band
-    const redFast = Math.max(0.35, redCen - 0.15); // conservative efficacy band
-    sc -= stepCen * (1 - redCen);
-    ss -= stepSlow * (1 - redSlow);
-    sf -= stepFast * (1 - redFast);
-    uCen.push(+uc.toFixed(2)); uSlow.push(+us.toFixed(2)); uFast.push(+uf.toFixed(2));
-    sCen.push(+sc.toFixed(2)); sSlow.push(+ss.toFixed(2)); sFast.push(+sf.toFixed(2));
+    if (y===0){ uCen.push(uc); sCen.push(sc); sBest.push(sb); sWorst.push(sw); continue; }
+    const step = untreatedRate(age0 + (y-1), eastAsian);
+    const red = efficacyAtYear(y);
+    uc -= step;
+    sc -= step * (1 - red);
+    sb -= step * (1 - Math.min(0.95, red*CI_HI));
+    sw -= step * (1 - red*CI_LO);
+    uCen.push(+uc.toFixed(2)); sCen.push(+sc.toFixed(2));
+    sBest.push(+sb.toFixed(2)); sWorst.push(+sw.toFixed(2));
   }
   // SVG dimensions
   const isMobile = (window.innerWidth <= 680);
@@ -3572,17 +3599,24 @@ function calcProjection(){
   const mT=20, mB = isMobile ? 52 : 44;
   const fAxis = isMobile ? 17 : 11;   // axis label font
   const plotW = W-mL-mR, plotH = H-mT-mB;
-  const yMin = Math.floor(Math.min(...uFast) - 0.5);
+  const yMin = Math.floor(Math.min(...uCen) - 0.5);
   const yMax = Math.max(0, Math.ceil(Math.max(rx0,0)));
   const xOf = y => mL + (y/nYears)*plotW;
   const yOf = d => mT + ((yMax - d)/(yMax - yMin))*plotH;
   const pts = arr => arr.map((d,i)=>xOf(years[i])+','+yOf(d)).join(' ');
-  const bandPath = (top,bot) => {
+  // Band/line builders over a year range [a,b] so the CI can stop at the trial window
+  const bandPath = (top,bot,a,b) => {
+    const A = (a===undefined?0:a), B = (b===undefined?nYears:b);
     let p = 'M ';
-    p += top.map((d,i)=>xOf(years[i])+' '+yOf(d)).join(' L ');
-    p += ' L ';
-    p += bot.map((d,i)=>xOf(years[i])+' '+yOf(d)).slice().reverse().join(' L ');
+    const t=[], o=[];
+    for(let i=A;i<=B;i++){ t.push(xOf(years[i])+' '+yOf(top[i])); o.push(xOf(years[i])+' '+yOf(bot[i])); }
+    p += t.join(' L ') + ' L ' + o.reverse().join(' L ');
     return p + ' Z';
+  };
+  const ptsRange = (arr,a,b) => {
+    const out=[];
+    for(let i=a;i<=b;i++) out.push(xOf(years[i])+','+yOf(arr[i]));
+    return out.join(' ');
   };
   let grid='';
   for(let d=yMax; d>=yMin; d--){
@@ -3609,27 +3643,27 @@ function calcProjection(){
   const x2 = xOf(2);
   const divider = '<line x1="'+x2+'" y1="'+mT+'" x2="'+x2+'" y2="'+(H-mB)+'" stroke="var(--text3)" stroke-width="1" stroke-dasharray="4 3"/>'
     + '<rect x="'+x2+'" y="'+mT+'" width="'+(mL+plotW-x2)+'" height="'+plotH+'" fill="var(--text3)" opacity="0.04"/>'
-    + '<text x="'+((mL+x2)/2)+'" y="'+(mT+12)+'" text-anchor="middle" font-size="'+(fAxis-2)+'" fill="var(--text3)">FIN-3101 trial</text>'
+    + '<text x="'+((mL+x2)/2)+'" y="'+(mT+12)+'" text-anchor="middle" font-size="'+(fAxis-2)+'" fill="var(--text3)">trial-supported</text>'
     + '<text x="'+((x2+mL+plotW)/2)+'" y="'+(mT+12)+'" text-anchor="middle" font-size="'+(fAxis-2)+'" fill="var(--text3)">projected</text>';
   const svg =
     '<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;height:auto;font-family:inherit">'
     + grid + xlab + divider
-    + '<path d="'+bandPath(uSlow,uFast)+'" fill="#e0666622" stroke="none"/>'
-    + '<path d="'+bandPath(sSlow,sFast)+'" fill="#33a89a22" stroke="none"/>'
+    + '<path d="'+bandPath(sBest,sWorst,0,2)+'" fill="#33a89a22" stroke="none"/>'
     + '<polyline points="'+pts(uCen)+'" fill="none" stroke="#d9534f" stroke-width="'+(isMobile?3.5:2.5)+'"/>'
-    + '<polyline points="'+pts(sCen)+'" fill="none" stroke="#2aa198" stroke-width="'+(isMobile?3.5:2.5)+'"/>'
+    + '<polyline points="'+ptsRange(sCen,0,2)+'" fill="none" stroke="#2aa198" stroke-width="'+(isMobile?3.5:2.5)+'"/>'
+    + '<polyline points="'+ptsRange(sCen,2,nYears)+'" fill="none" stroke="#2aa198" stroke-width="'+(isMobile?3.5:2.5)+'" stroke-dasharray="'+(isMobile?'7 5':'6 4')+'"/>'
     + endLabels + endDots
     + '</svg>';
   g.style.display='block';
   g.innerHTML =
     '<div style="font-size:13.5px;font-weight:600;margin-bottom:2px">Illustrative 5-year projection</div>'
-    + '<div style="font-size:12px;color:var(--text3);margin-bottom:8px">Spherical equivalent (D) over time — shaded bands show the plausible range</div>'
+    + '<div style="font-size:12px;color:var(--text3);margin-bottom:8px">Spherical equivalent (D) over time — shaded band is the FIN-3101 95% confidence interval</div>'
     + svg
     + '<div style="display:flex;gap:14px;margin-top:6px;font-size:12.5px;flex-wrap:wrap">'
       + '<span style="color:#d9534f">■ No management: <strong>'+uEnd.toFixed(2)+' D</strong></span>'
       + '<span style="color:#2aa198">■ With Essilor® Stellest®: <strong>'+sEnd.toFixed(2)+' D</strong></span>'
     + '</div>'
-    + '<div class="btip box" style="margin-top:10px">At this starting point, the model projects roughly <strong>'+Math.abs(saved).toFixed(2)+' D less myopia</strong> over 5 years with Essilor® Stellest® versus no management (central estimate). <strong>Years 0–2 use the FIN-3101 US pivotal trial</strong> (71% reduction); <strong>years 3–5 are projected</strong>, tapering toward the Bao et al. long-term figure — not trial-proven. Shaded bands reflect a plausible efficacy range; an individual child may fall anywhere within or beyond them.<br><br><em>On when to start:</em> this tool defines myopia at \u22120.50 D, but beginning treatment as early as \u22120.25 D is a reasonable and defensible choice \u2014 there is no benefit to waiting once a child has crossed into myopia, and earlier intervention means fewer diopters accumulated overall.</div>';
+    + '<div class="btip box" style="margin-top:10px">At this starting point, the model projects roughly <strong>'+Math.abs(saved).toFixed(2)+' D less myopia</strong> over 5 years with Essilor® Stellest® versus no management (central estimate). Untreated rates are age- and ethnicity-specific (Brennan/Bullimore 2024). The treated curve uses the <strong>FIN-3101</strong> 71% reduction for years 1–2, then tapers so the <strong>5-year cumulative efficacy matches the observed 58%</strong> from the Stellest 5-year extended trial. The shaded band is the FIN-3101 95% confidence interval and <strong>stops at year 2, where the trial data stops</strong> — the dashed segment beyond is projected, with no interval shown because none has been measured. An individual child may progress outside this interval.<br><br><em>On when to start:</em> this tool defines myopia at \u22120.50 D, but beginning treatment as early as \u22120.25 D is a reasonable and defensible choice \u2014 there is no benefit to waiting once a child has crossed into myopia, and earlier intervention means fewer diopters accumulated overall.</div>';
 }
 
 
