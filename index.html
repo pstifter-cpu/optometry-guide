@@ -463,6 +463,27 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
     .pj-age-wrap { max-width: none; }
     .pj-input    { font-size: 16px; }   /* prevents iOS zoom on focus */
   }
+
+  /* ── Collapsible sources / limitations ────────────────────── */
+  .pj-notes { margin-top: 1.25rem; border-top: 1px solid var(--border); padding-top: .75rem; }
+  .pj-notes > summary {
+    cursor: pointer; list-style: none; font-size: 12px; color: var(--text2);
+    display: flex; align-items: center; gap: 6px; padding: 4px 0; user-select: none;
+  }
+  .pj-notes > summary::-webkit-details-marker { display: none; }
+  .pj-notes > summary::before {
+    content: '▸'; font-size: 10px; color: var(--text3);
+    transition: transform .15s ease; display: inline-block;
+  }
+  .pj-notes[open] > summary::before { transform: rotate(90deg); }
+  .pj-notes > summary:hover { color: var(--text); }
+  .pj-notes > summary:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; border-radius: 3px; }
+  .pj-notes .nb { margin-top: .85rem; }
+  .pj-notes h4 {
+    font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--text2); margin: 0 0 .3rem;
+  }
+  .pj-notes p { font-size: 11px; color: var(--text3); line-height: 1.55; margin: 0 0 .5rem; }
 </style>
 </head>
 <body>
@@ -866,19 +887,6 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
 <p style="font-size:18px;font-weight:600;margin-bottom:.2rem">Myopia Tools &amp; Links</p>
 <p style="font-size:13px;color:var(--text2);margin-bottom:1.25rem">External calculators and resources for myopia management</p>
 
-<div class="card">
-  <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem">
-    <div>
-      <div class="ct">BHVI Myopia Calculator</div>
-      <div class="cs" style="margin-top:4px">Brien Holden Vision Institute — risk prediction and management planning tool</div>
-      <p style="font-size:13.5px;margin-top:10px;color:var(--text2)">Estimates a child's likely myopia progression based on age, current refraction, and ethnicity. Helps set realistic expectations with parents and guides treatment decisions.</p>
-    </div>
-    <a href="https://bhvi.org/myopia-calculator-resources/" target="_blank" rel="noopener"
-       style="flex-shrink:0;display:inline-block;padding:8px 16px;background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue);border-radius:var(--r);font-size:13px;font-weight:500;text-decoration:none;white-space:nowrap;">
-      Open ↗
-    </a>
-  </div>
-</div>
 
 <div class="card">
   <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:1rem">
@@ -943,7 +951,7 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
     <li><strong>East Asian ethnicity</strong> — population prevalence up to 80–90% in urban areas; lower threshold to treat</li>
   </ul>
   <div class="bwarn box">⚠ Start the myopia control conversation with parents at this stage. Lifestyle modification (outdoor time, near work breaks) is low-cost and should begin immediately. Consider starting optical myopia control if &gt;2 moderate risk factors present.</div>
-<div style="font-size:10.5px;color:var(--text3);margin-top:12px;padding-top:8px;border-top:0.5px solid var(--border);line-height:1.45">Ref: IMI Clinical Management Guidelines, Gifford et al., IOVS 2019;60:M184. WHO–Brien Holden Vision Institute report 2015.</div></div></div>
+<div style="font-size:10.5px;color:var(--text3);margin-top:12px;padding-top:8px;border-top:0.5px solid var(--border);line-height:1.45">Ref: IMI Clinical Management Guidelines, Gifford et al., IOVS 2019;60:M184.</div></div></div>
 
 <div class="card"><div class="ch" onclick="tog(this)">
   <div><div class="ct">Pre-myopic intervention — treating before –0.50 D</div><div class="cs">Emerging evidence supports acting earlier than the prescription suggests</div></div>
@@ -1071,7 +1079,56 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
   <div id="pquiz-result" style="display:none;margin-top:1rem"></div>
   <div id="pj-graph" style="display:none;margin-top:1.2rem"></div>
 
-  <p style="font-size:11px;color:var(--text3);margin-top:1rem;line-height:1.5">Pre-myopia is defined by age-specific cycloplegic cut points. Ages 1–5 follow Mayer et al. (Arch Ophthalmol 2001;119:1625–8): +1.50 D at 1, +1.25 at 2, +1.00 at 3–4, +0.75 at 5. Ages 6 and older follow CLEERE: +0.50 D at 6–8, +0.25 at 9–10, 0.00 at 11 and older (Zadnik et al., JAMA Ophthalmol 2015). Myopia is defined as −0.50 D or more. Risk-factor weighting follows the IMI Risk Factors report (Morgan et al., IOVS 2021) and CLEERE (Jones-Jordan et al., IOVS 2010); the risk score sorts pre-myopic children by urgency and does not include age, which is already reflected in the age-specific threshold. The progression graph is an illustrative model, <strong>not a personalized forecast</strong>. Untreated progression rates are age- and ethnicity-specific, from Brennan NA, Shamp W, Maynes E, Cheng X, Bullimore MA, <em>Influence of age and race on axial elongation in myopic children: a systematic review and meta-regression</em>, Optom Vis Sci 2024;101(8):497–507. The with-management curve applies a constant <strong>58% reduction</strong> in cycloplegic SER, the efficacy measured over 5 years in the Essilor® Stellest® extended trial (Li X, Bao J, et al., <em>Eye Vis</em> 2025: −1.27 ± 0.14 D with HAL vs −3.03 ± 0.18 D control, a difference of −1.75 ± 0.24 D, n = 43). The shaded band is the 95% confidence interval derived from that standard error: 1.75 ± 1.96 × 0.24 = 1.28 to 2.22 D, which against 3.03 D of control progression is an <strong>efficacy interval of 42% to 73%</strong>. Because the trial measured 5 years, the interval is drawn across the full projection. Two caveats: the trial's control arm was extrapolated beyond year 2 using a 9.7%/year assumption, and the trial enrolled children aged 8–13, so applying this efficacy outside that age range is an extension. No band is drawn on the untreated curve, which is shown as the meta-regression central estimate only. Individual results vary; measured axial length and cycloplegic refraction over time guide actual care. For a validated calculator, see the BHVI tool in Myopia Tools &amp; Links.</p>
+  <details class="pj-notes">
+  <summary>Sources and limitations</summary>
+
+  <div class="nb">
+    <h4>How the categories are set</h4>
+    <p>Refraction alone decides the category. Myopia is defined as −0.50 D or more. Pre-myopia is defined by
+    age-specific cycloplegic cut points: ages 1–5 from Mayer et al. (<em>Arch Ophthalmol</em> 2001;119:1625–8) —
+    +1.50 D at age 1, +1.25 at 2, +1.00 at 3–4, +0.75 at 5 — and ages 6 and older from CLEERE — +0.50 D at 6–8,
+    +0.25 at 9–10, 0.00 at 11 and older (Zadnik et al., <em>JAMA Ophthalmol</em> 2015).</p>
+    <p>If a cylinder is entered, the spherical equivalent is calculated as sphere + cylinder ÷ 2. This holds in
+    either plus- or minus-cylinder notation as long as the signs are entered as written. Thresholds come from
+    cycloplegic refractions, so an undilated prescription will tend to over-call pre-myopia.</p>
+  </div>
+
+  <div class="nb">
+    <h4>The risk score</h4>
+    <p>The score separates the two pre-myopia tiers and is applied from age 6 onward. It carries no weight for age,
+    which is already built into the threshold above. Weighting follows the IMI Risk Factors report (Morgan et al.,
+    <em>IOVS</em> 2021) and CLEERE (Jones-Jordan et al., <em>IOVS</em> 2010). Below age 6 the tier does not depend on
+    the score. Under age 1 no classification is shown; the tool recommends an InfantSEE® assessment instead.</p>
+  </div>
+
+  <div class="nb">
+    <h4>The progression graph</h4>
+    <p>Shown only for children who are already myopic and aged 4 to 17. It is an illustrative model,
+    <strong>not a personalised forecast</strong>.</p>
+    <p>Untreated progression is age- and ethnicity-specific, from Brennan NA, Shamp W, Maynes E, Cheng X,
+    Bullimore MA, <em>Influence of age and race on axial elongation in myopic children: a systematic review and
+    meta-regression</em>, <em>Optom Vis Sci</em> 2024;101(8):497–507. Published rates begin at age 4, which is why no
+    curve is drawn for younger children.</p>
+    <p>The treated curve applies a constant <strong>58% reduction</strong> in cycloplegic spherical equivalent — the
+    efficacy measured over five years in the Essilor® Stellest® extended trial (Li X, Bao J, et al.,
+    <em>Eye Vis</em> 2025: −1.27 ± 0.14 D with HAL versus −3.03 ± 0.18 D control, a difference of −1.75 ± 0.24 D,
+    n = 43). The shaded band is the 95% confidence interval derived from that standard error: 1.75 ± 1.96 × 0.24 =
+    1.28 to 2.22 D, or an <strong>efficacy interval of 42% to 73%</strong>. Because the trial measured five years,
+    the band spans the full projection.</p>
+  </div>
+
+  <div class="nb">
+    <h4>Limitations</h4>
+    <p>The control arm in that trial was extrapolated beyond year 2 using a 9.7% annual reduction, so the 58% figure
+    is not measured against fully observed controls. The trial enrolled children aged 8–13, so applying the same
+    efficacy from age 4 to 17 is an extension, and Stellest is FDA-authorised for ages 6–12. CLEERE followed children
+    to roughly age 13–14, so the 0.00 D threshold at ages 15–17 continues its final cut point rather than measuring
+    it. No confidence band is drawn on the untreated curve, which is a central estimate only. The point values and
+    the urgency split are a clinically informed construction, not a validated instrument.</p>
+    <p>Individual results vary widely. Serial cycloplegic refraction and axial length measurement remain the basis
+    for management decisions.</p>
+  </div>
+</details>
 </div>
 </div>
 
@@ -3025,7 +3082,6 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
 </div></div>
 </div>
 
-<p class="disclaimer">⚕ Clinical reference only. Always verify drug dosages with current prescribing information, confirm ICD-10 codes with your billing department, and apply clinical judgment. Drug and lens prices are approximate retail figures as of April 2026.</p>
 </div>
 </div>
 
