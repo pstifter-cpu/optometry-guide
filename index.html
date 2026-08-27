@@ -484,6 +484,9 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
     color: var(--text2); margin: 0 0 .3rem;
   }
   .pj-notes p { font-size: 11px; color: var(--text3); line-height: 1.55; margin: 0 0 .5rem; }
+  .pj-refs { margin: 0 0 .7rem; padding-left: 1.3rem; }
+  .pj-refs li { font-size: 11px; color: var(--text3); line-height: 1.55; margin-bottom: .45rem; }
+
 </style>
 </head>
 <body>
@@ -1080,53 +1083,17 @@ ol.cb-list li { padding: 3px 0; font-size: 14px; }
   <div id="pj-graph" style="display:none;margin-top:1.2rem"></div>
 
   <details class="pj-notes">
-  <summary>Sources and limitations</summary>
-
+  <summary>References</summary>
   <div class="nb">
-    <h4>How the categories are set</h4>
-    <p>Refraction alone decides the category. Myopia is defined as −0.50 D or more. Pre-myopia is defined by
-    age-specific cycloplegic cut points: ages 1–5 from Mayer et al. (<em>Arch Ophthalmol</em> 2001;119:1625–8) —
-    +1.50 D at age 1, +1.25 at 2, +1.00 at 3–4, +0.75 at 5 — and ages 6 and older from CLEERE — +0.50 D at 6–8,
-    +0.25 at 9–10, 0.00 at 11 and older (Zadnik et al., <em>JAMA Ophthalmol</em> 2015).</p>
-    <p>If a cylinder is entered, the spherical equivalent is calculated as sphere + cylinder ÷ 2. This holds in
-    either plus- or minus-cylinder notation as long as the signs are entered as written. Thresholds come from
-    cycloplegic refractions, so an undilated prescription will tend to over-call pre-myopia.</p>
-  </div>
-
-  <div class="nb">
-    <h4>The risk score</h4>
-    <p>The score separates the two pre-myopia tiers and is applied from age 6 onward. It carries no weight for age,
-    which is already built into the threshold above. Weighting follows the IMI Risk Factors report (Morgan et al.,
-    <em>IOVS</em> 2021) and CLEERE (Jones-Jordan et al., <em>IOVS</em> 2010). Below age 6 the tier does not depend on
-    the score. Under age 1 no classification is shown; the tool recommends an InfantSEE® assessment instead.</p>
-  </div>
-
-  <div class="nb">
-    <h4>The progression graph</h4>
-    <p>Shown only for children who are already myopic and aged 4 to 17. It is an illustrative model,
-    <strong>not a personalised forecast</strong>.</p>
-    <p>Untreated progression is age- and ethnicity-specific, from Brennan NA, Shamp W, Maynes E, Cheng X,
-    Bullimore MA, <em>Influence of age and race on axial elongation in myopic children: a systematic review and
-    meta-regression</em>, <em>Optom Vis Sci</em> 2024;101(8):497–507. Published rates begin at age 4, which is why no
-    curve is drawn for younger children.</p>
-    <p>The treated curve applies a constant <strong>58% reduction</strong> in cycloplegic spherical equivalent — the
-    efficacy measured over five years in the Essilor® Stellest® extended trial (Li X, Bao J, et al.,
-    <em>Eye Vis</em> 2025: −1.27 ± 0.14 D with HAL versus −3.03 ± 0.18 D control, a difference of −1.75 ± 0.24 D,
-    n = 43). The shaded band is the 95% confidence interval derived from that standard error: 1.75 ± 1.96 × 0.24 =
-    1.28 to 2.22 D, or an <strong>efficacy interval of 42% to 73%</strong>. Because the trial measured five years,
-    the band spans the full projection.</p>
-  </div>
-
-  <div class="nb">
-    <h4>Limitations</h4>
-    <p>The control arm in that trial was extrapolated beyond year 2 using a 9.7% annual reduction, so the 58% figure
-    is not measured against fully observed controls. The trial enrolled children aged 8–13, so applying the same
-    efficacy from age 4 to 17 is an extension, and Stellest is FDA-authorised for ages 6–12. CLEERE followed children
-    to roughly age 13–14, so the 0.00 D threshold at ages 15–17 continues its final cut point rather than measuring
-    it. No confidence band is drawn on the untreated curve, which is a central estimate only. The point values and
-    the urgency split are a clinically informed construction, not a validated instrument.</p>
-    <p>Individual results vary widely. Serial cycloplegic refraction and axial length measurement remain the basis
-    for management decisions.</p>
+    <ol class="pj-refs">
+      <li>Mayer DL, Hansen RM, Moore BD, Kim S, Fulton AB. Cycloplegic refractions in healthy children aged 1 through 48 months. Arch Ophthalmol. 2001;119(11):1625–8.</li>
+      <li>Zadnik K, Sinnott LT, Cotter SA, Jones-Jordan LA, Kleinstein RN, Manny RE, et al. Prediction of juvenile-onset myopia. JAMA Ophthalmol. 2015;133(6):683–9.</li>
+      <li>Jones-Jordan LA, Sinnott LT, Manny RE, Cotter SA, Kleinstein RN, Mutti DO, et al. Early childhood refractive error and parental history of myopia as predictors of myopia. Invest Ophthalmol Vis Sci. 2010;51(1):115–21.</li>
+      <li>Morgan IG, Wu PC, Ostrin LA, Tideman JWL, Yam JC, Lan W, et al. IMI risk factors for myopia. Invest Ophthalmol Vis Sci. 2021;62(5):3.</li>
+      <li>Brennan NA, Shamp W, Maynes E, Cheng X, Bullimore MA. Influence of age and race on axial elongation in myopic children: a systematic review and meta-regression. Optom Vis Sci. 2024;101(8):497–507.</li>
+      <li>Li X, Huang Y, Liu C, Chang X, Cui Z, Yang Q, et al. Myopia control efficacy of spectacle lenses with highly aspherical lenslets: results of a 5-year follow-up study. Eye Vis (Lond). 2025;12(1):10.</li>
+    </ol>
+    <p>Individual results vary widely. Serial cycloplegic refraction and axial length measurement remain the basis for management decisions.</p>
   </div>
 </details>
 </div>
